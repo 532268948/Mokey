@@ -22,6 +22,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api rootProject.ext.support.appcompatv7
+    api rootProject.ext.support.design
 
     //dependencies
     api rootProject.ext.dependencies.skin_support

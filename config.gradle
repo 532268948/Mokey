@@ -9,20 +9,21 @@ ext {
             minSdkVersion    : 15,
             targetSdkVersion : 28,
             versionCode      : 1,
-            versionName      : "1.0.0"
+            versionName      : "1.0.0",
     ]
 
     dependencies = [
-            skin_support : "skin.support:skin-support:3.1.1",
-            rxJava       : "io.reactivex.rxjava2:rxjava:2.2.3",
-            rxAndroid    : "io.reactivex.rxjava2:rxandroid:2.1.0",
-            retrofit     : "com.squareup.retrofit2:retrofit:2.4.0",
-            retrofit_gson: "com.squareup.retrofit2:converter-gson:2.4.0"
+            skin_support           : "skin.support:skin-support:3.1.1",
+            rxJava                 : "io.reactivex.rxjava2:rxjava:2.2.3",
+            rxAndroid              : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            retrofit               : "com.squareup.retrofit2:retrofit:2.4.0",
+            retrofit_gson          : "com.squareup.retrofit2:converter-gson:2.4.0",
+            retrofit_rxJava_adapter: "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
     ]
 
     support = [
             appcompatv7 : "com.android.support:appcompat-v7:$versions.support",
             recyclerview: "com.android.support:recyclerview-v7:$versions.support",
-
+            design      : "com.android.support:design:$versions.support",
     ]
 }
