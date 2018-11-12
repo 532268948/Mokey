@@ -7,9 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.zust.component_base.base.inter.ILifeProcessor;
-import com.zust.component_base.util.ActivityManager;
-import com.zust.component_base.util.ToastUtil;
+import com.example.lib_common.R;
+import com.example.tianhuaye.monkey.base.inter.ILifeProcessor;
+import com.example.tianhuaye.monkey.util.ActivityManager;
+import com.example.tianhuaye.monkey.util.ToastUtil;
 
 /**
  * project: ModuleDemo
@@ -55,7 +56,7 @@ public abstract class BaseActivity<V extends BaseView, T extends BasePresenter<V
         ToastUtil.showShortToastMessage(message);
     }
 
-        @Override
+    @Override
     public void initIntent(Intent intent) {
 
     }

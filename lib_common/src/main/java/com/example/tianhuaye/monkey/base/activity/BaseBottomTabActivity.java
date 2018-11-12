@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import com.example.tianhuaye.monkey.base.BaseActivity;
 import com.example.tianhuaye.monkey.base.BasePresenter;
@@ -13,7 +14,7 @@ import com.example.tianhuaye.monkey.base.BaseView;
 import java.util.List;
 
 /**
- * project: ModuleDemo
+ * project: Monkey
  * author : 叶天华
  * date   : 2018/10/15
  * time   : 13:59
@@ -24,13 +25,21 @@ public abstract class BaseBottomTabActivity<V extends BaseView, T extends BasePr
         BottomNavigationView.OnNavigationItemSelectedListener,
         ViewPager.OnPageChangeListener {
 
-    private BottomNavigationView mBottomNavigationView;
-    private List<Fragment> fragmentList;
-    private ViewPager mViewPager;
+    protected BottomNavigationView mTabView;
+    protected List<Fragment> fragmentList;
+    protected ViewPager mViewPager;
+    protected MenuItem menuItem;;
+    protected PlayFragmentAdapter mAdapter;
 
     protected abstract void addFragment();
 
-    static class PlayFragmentAdapter extends FragmentPagerAdapter {
+    @Override
+    public void initData() {
+        super.initData();
+        addFragment();
+    }
+
+    protected static class PlayFragmentAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
 

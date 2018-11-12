@@ -30,4 +30,5 @@ dependencies {
     api rootProject.ext.dependencies.rxAndroid
     api rootProject.ext.dependencies.retrofit
     api rootProject.ext.dependencies.retrofit_gson
+    implementation 'com.android.support:support-v4:28.0.0'
 }

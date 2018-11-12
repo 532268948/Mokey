@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:title="首页" />
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:title="钱包" />
+    <item
+        android:id="@+id/navigation_habit"
+        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:title="作息" />
+    <item
+        android:id="@+id/navigation_person"
+        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:title="个人" />
+</menu>

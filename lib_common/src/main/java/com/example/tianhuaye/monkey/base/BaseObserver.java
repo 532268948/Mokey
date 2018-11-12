@@ -22,9 +22,9 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (e instanceof TimeoutException){
-            mView.showMessage("请求超时");
+            mView.showError("请求超时");
         }else if (e instanceof ConnectException){
-            mView.showMessage("连接异常");
+            mView.showError("连接异常");
         }else {
             e.printStackTrace();
         }
