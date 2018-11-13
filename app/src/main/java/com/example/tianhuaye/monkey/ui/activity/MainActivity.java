@@ -3,16 +3,17 @@ package com.example.tianhuaye.monkey.ui.activity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
+import com.example.lib_common.base.BasePresenter;
+import com.example.lib_common.base.activity.BaseBottomTabActivity;
+import com.example.lib_common.test.BlankFragment;
+import com.example.module_habit.ui.HabitFragment;
 import com.example.tianhuaye.monkey.R;
-import com.example.tianhuaye.monkey.base.BasePresenter;
-import com.example.tianhuaye.monkey.base.activity.BaseBottomTabActivity;
 import com.example.tianhuaye.monkey.contract.MainContract;
 import com.example.tianhuaye.monkey.presenter.MainPresenter;
-import com.example.tianhuaye.monkey.test.TestFragment;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainPresenter<MainContract.View>> {
+public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainPresenter<MainContract.View>> implements MainContract.View {
 
 
     @Override
@@ -35,11 +36,11 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
         if (fragmentList == null) {
             fragmentList = new ArrayList<>();
         }
-        fragmentList.add(new TestFragment());
-        fragmentList.add(new TestFragment());
-        fragmentList.add(new TestFragment());
-        fragmentList.add(new TestFragment());
-        mAdapter = new PlayFragmentAdapter(getSupportFragmentManager(),fragmentList);
+        fragmentList.add(new BlankFragment());
+        fragmentList.add(new BlankFragment());
+        fragmentList.add(new HabitFragment());
+        fragmentList.add(new BlankFragment());
+        mAdapter = new PlayFragmentAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(mAdapter);
 
     }

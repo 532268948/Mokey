@@ -11,7 +11,7 @@
     <item
         android:id="@+id/navigation_habit"
         android:icon="@drawable/main_tab_btn_habit_pressed"
-        android:title="作息" />
+        android:title="作息习惯" />
     <item
         android:id="@+id/navigation_person"
         android:icon="@drawable/main_tab_btn_habit_pressed"

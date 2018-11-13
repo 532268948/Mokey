@@ -1,6 +1,6 @@
 package com.example.tianhuaye.monkey.contract;
 
-import com.example.tianhuaye.monkey.base.BaseView;
+import com.example.lib_common.base.BaseView;
 
 /**
  * author: tianhuaye

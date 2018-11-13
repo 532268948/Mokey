@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Module_Habit</string>
+    <string name="habit_top_tab_habit">习惯</string>
+    <string name="habit_top_tab_alarm">闹钟</string>
+</resources>
