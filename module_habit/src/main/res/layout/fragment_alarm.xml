@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--<com.example.module_habit.view.AlarmCardView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/dp_12"-->
+        <!--app:left_top_text_hint="@string/habit_alarm_number_2"-->
+        <!--app:left_top_text_size="@dimen/dp_20"-->
+        <!--app:left_top_text_color="@color/colorAccent"-->
+        <!--app:left_top_text="@string/habit_alarm_number_1"-->
+        <!--app:left_bottom_text="@string/habit_alarm_number_3"-->
+        <!--app:left_bottom_text_size="@dimen/dp_20"-->
+        <!--app:left_bottom_text_color="@color/theme_color"-->
+        <!--app:left_bottom_image_src="@drawable/habit_alarm_card_edit"/>-->
+
+</LinearLayout>

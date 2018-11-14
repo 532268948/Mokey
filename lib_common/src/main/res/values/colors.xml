@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="theme_color">#13227a</color>
+    <color name="habit_tab_top_normal_color">#a5a8b7</color>
+    <color name="habit_tab_top_pressed_color">#141414</color>
     <color name="main_bottom_tab_pressed_color">#13227a</color>
     <color name="main_bottom_tab_normal_color">#a5a8b7</color>
+
+    <!--AlarmCardView-->
+    <color name="alarm_left_top_text">#13227a</color>
 </resources>
