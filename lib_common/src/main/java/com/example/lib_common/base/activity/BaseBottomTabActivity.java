@@ -18,7 +18,7 @@ import java.util.List;
  * date   : 2018/10/15
  * time   : 13:59
  * email  : 15869107730@163.com
- * note   :
+ * note   : 封装有BottomNavigationView的BaseActivity
  */
 public abstract class BaseBottomTabActivity<V extends BaseView, T extends BasePresenter<V>> extends BaseActivity implements
         BottomNavigationView.OnNavigationItemSelectedListener,
