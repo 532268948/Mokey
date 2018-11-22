@@ -1,4 +1,4 @@
-package com.example.module_habit.ui.alarm;
+package com.example.module_habit.ui.alarm.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;

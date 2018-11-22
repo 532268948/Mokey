@@ -13,12 +13,10 @@ import android.widget.RelativeLayout;
 import com.example.lib_common.base.fragment.BaseFragment;
 import com.example.lib_common.base.transformer.GalleryTransformer;
 import com.example.lib_common.base.view.WrapContentHeightViewPager;
-import com.example.lib_common.util.ScreenUtil;
 import com.example.module_habit.R;
 import com.example.module_habit.contract.AlarmContract;
 import com.example.module_habit.presenter.alarm.AlarmPresenter;
-
-import java.util.ArrayList;
+import com.example.module_habit.ui.alarm.adapter.AlarmPagerAdapter;
 
 /**
  * author: tianhuaye

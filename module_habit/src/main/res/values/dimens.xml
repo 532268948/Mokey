@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <!--small sleep-->
+    <dimen name="small_sleep_name_size">14dp</dimen>
+    <dimen name="small_sleep_tip_size">10dp</dimen>
+    <dimen name="small_sleep_listener_number_size">9dp</dimen>
+</resources>

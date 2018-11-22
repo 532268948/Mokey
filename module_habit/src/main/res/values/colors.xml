@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--small sleep-->
+    <color name="small_sleep_name_color">#000000</color>
+    <color name="small_sleep_tip_color">#a0a0a0</color>
+    <color name="small_sleep_listener_number_color">#a0a0a0</color>
+</resources>

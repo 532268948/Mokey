@@ -1,6 +1,7 @@
 <resources>
     <dimen name="habit_tab_top_height">56dp</dimen>
 
+    <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_4">4dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_12">12dp</dimen>
@@ -12,5 +13,5 @@
     <!--alarm view-->
     <dimen name="alarm_left_top_time_size">12dp</dimen>
     <dimen name="alarm_left_bottom_name_size">6dp</dimen>
-    <dimen name="alarm_guide_point_width">6dp</dimen>
+    <dimen name="alarm_guide_point_width">5dp</dimen>
 </resources>

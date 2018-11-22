@@ -10,6 +10,7 @@
     <color name="main_bottom_tab_normal_color">#a5a8b7</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="common_dash_line_1">#a5a8b7</color>
 
     <!--AlarmCardView-->
     <color name="alarm_left_top_text">#13227a</color>

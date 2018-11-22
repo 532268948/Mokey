@@ -2,4 +2,15 @@
     <string name="app_name">Module_Habit</string>
     <string name="habit_top_tab_habit">习惯</string>
     <string name="habit_top_tab_alarm">闹钟</string>
+    <string name="alarm_tip_1">一键小睡眠</string>
+
+    <!--small sleep-->
+    <string name="small_sleep_1">科学小盹</string>
+    <string name="small_sleep_2">高效午休</string>
+    <string name="small_sleep_3">差旅模式</string>
+    <string name="small_sleep_4">完整午休</string>
+    <string name="small_sleep_tip_1">消除疲劳</string>
+    <string name="small_sleep_tip_2">避免迷糊</string>
+    <string name="small_sleep_tip_3">调整时差</string>
+    <string name="small_sleep_tip_4">慢波睡眠</string>
 </resources>
