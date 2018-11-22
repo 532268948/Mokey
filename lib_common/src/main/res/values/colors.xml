@@ -8,7 +8,14 @@
     <color name="habit_tab_top_pressed_color">#141414</color>
     <color name="main_bottom_tab_pressed_color">#13227a</color>
     <color name="main_bottom_tab_normal_color">#a5a8b7</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
     <!--AlarmCardView-->
     <color name="alarm_left_top_text">#13227a</color>
+    <color name="alarm_bg_color_1">#fafafa</color>
+    <color name="alarm_guide_point_color">#ff0419</color>
+    <color name="alarm_guide_point_default">#d2d2d2</color>
+    <color name="alarm_left_top_time_color">#000000</color>
+    <color name="alarm_left_bottom_name">#a5a8b7</color>
 </resources>

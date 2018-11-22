@@ -1,17 +1,16 @@
 package com.example.module_habit.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.module_habit.R;
@@ -21,7 +20,7 @@ import com.example.module_habit.R;
  * date:   2018/11/14 12:37
  * description:
  */
-public class AlarmCardView extends CardView {
+public class AlarmCardView extends LinearLayout {
 
     private static final String TAG = "AlarmCardView";
 
@@ -97,6 +96,138 @@ public class AlarmCardView extends CardView {
         mLeftBottomTv.setTextColor(leftBottomTextColor);
         if (leftBottomImage != 0) {
             mLeftBottomIv.setImageResource(leftBottomImage);
+        }
+    }
+
+    public int getLeftTopText() {
+        return leftTopText;
+    }
+
+    public void setLeftTopText(int leftTopText) {
+        this.leftTopText = leftTopText;
+        if (this.leftTopText > 0) {
+            this.mLeftTopTv.setText(this.leftTopText);
+        }
+    }
+
+    public void setLeftTopText(String leftTopText) {
+        if (!TextUtils.isEmpty(leftTopText)) {
+            this.mLeftTopTv.setText(leftTopText);
+        }
+    }
+
+    public int getLeftTopTextSize() {
+        return leftTopTextSize;
+    }
+
+    public void setLeftTopTextSize(int leftTopTextSize) {
+        this.leftTopTextSize = leftTopTextSize;
+        if (this.leftTopTextSize > 0) {
+            this.mLeftTopTv.setTextSize(this.leftTopTextSize);
+        }
+    }
+
+    public int getLeftTopTextColor() {
+        return leftTopTextColor;
+    }
+
+    public void setLeftTopTextColor(int leftTopTextColor) {
+        this.leftTopTextColor = leftTopTextColor;
+        this.mLeftTopTv.setTextColor(this.leftTopTextColor);
+    }
+
+    public int getLeftTopTextHint() {
+        return leftTopTextHint;
+    }
+
+    public void setLeftTopTextHint(int leftTopTextHint) {
+        this.leftTopTextHint = leftTopTextHint;
+        if (this.leftTopTextHint > 0) {
+            this.mLeftTopHintTv.setText(this.leftTopTextHint);
+        }
+    }
+
+    public int getLeftBottomText() {
+        return leftBottomText;
+    }
+
+    public void setLeftBottomText(int leftBottomText) {
+        this.leftBottomText = leftBottomText;
+        if (this.leftBottomText > 0) {
+            this.mLeftBottomTv.setText(this.leftBottomText);
+        }
+    }
+
+    public int getLeftBottomTextSize() {
+        return leftBottomTextSize;
+    }
+
+    public void setLeftBottomTextSize(int leftBottomTextSize) {
+        this.leftBottomTextSize = leftBottomTextSize;
+        if (this.leftBottomTextSize > 0) {
+            this.mLeftBottomTv.setTextSize(this.leftBottomTextSize);
+        }
+    }
+
+    public int getLeftBottomTextColor() {
+        return leftBottomTextColor;
+    }
+
+    public void setLeftBottomTextColor(int leftBottomTextColor) {
+        this.leftBottomTextColor = leftBottomTextColor;
+        this.mLeftBottomTv.setTextColor(this.leftBottomTextColor);
+    }
+
+    public int getLeftBottomImage() {
+        return leftBottomImage;
+    }
+
+    public void setLeftBottomImage(int leftBottomImage) {
+        this.leftBottomImage = leftBottomImage;
+        if (this.leftBottomImage > 0) {
+            this.mLeftBottomIv.setImageResource(this.leftBottomImage);
+        }
+    }
+
+    public int getRightBottomText() {
+        return rightBottomText;
+    }
+
+    public void setRightBottomText(int rightBottomText) {
+        this.rightBottomText = rightBottomText;
+        if (this.rightBottomText > 0) {
+            this.mRightBottomTv.setText(this.rightBottomText);
+        }
+    }
+
+    public int getRightBottomTextSize() {
+        return rightBottomTextSize;
+    }
+
+    public void setRightBottomTextSize(int rightBottomTextSize) {
+        this.rightBottomTextSize = rightBottomTextSize;
+        if (this.rightBottomTextSize > 0) {
+            this.mRightBottomTv.setTextSize(this.rightBottomTextSize);
+        }
+    }
+
+    public int getRightBottomTextColor() {
+        return rightBottomTextColor;
+    }
+
+    public void setRightBottomTextColor(int rightBottomTextColor) {
+        this.rightBottomTextColor = rightBottomTextColor;
+        this.mRightBottomTv.setTextColor(this.rightBottomTextColor);
+    }
+
+    public int getRightBottomImage() {
+        return rightBottomImage;
+    }
+
+    public void setRightBottomImage(int rightBottomImage) {
+        this.rightBottomImage = rightBottomImage;
+        if (this.rightBottomImage > 0) {
+            this.mRightBottomIv.setImageResource(this.rightBottomImage);
         }
     }
 }

@@ -2,16 +2,12 @@ package com.example.lib_common.base.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
-import android.support.design.widget.TabLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -75,23 +71,23 @@ public class TitleBar extends RelativeLayout {
         mRightIv = view.findViewById(R.id.right_icon);
         mCenterContainer = view.findViewById(R.id.center_container);
 
-        if (this.mLeftIcon!=0){
+        if (this.mLeftIcon != 0) {
             mLeftIv.setImageResource(this.mLeftIcon);
             mLeftIv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (leftIconClickListener!=null){
+                    if (leftIconClickListener != null) {
                         leftIconClickListener.leftIconClick();
                     }
                 }
             });
         }
-        if (this.mRightIcon!=0){
+        if (this.mRightIcon != 0) {
             mRightIv.setImageResource(this.mRightIcon);
             mRightIv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (rightIconClickListener!=null){
+                    if (rightIconClickListener != null) {
                         rightIconClickListener.rightIconClick();
                     }
                 }
@@ -100,6 +96,8 @@ public class TitleBar extends RelativeLayout {
         if (mTitleMode == MODE_TITLE && mTitleText != 0) {
             setTitleText(mTitleText);
         }
+
+        setBackgroundColor(getResources().getColor(R.color.white));
     }
 
     public void setLeftDrawable(int resourcesId) {
@@ -149,4 +147,6 @@ public class TitleBar extends RelativeLayout {
     public interface RightIconClickListener {
         void rightIconClick();
     }
+
+
 }

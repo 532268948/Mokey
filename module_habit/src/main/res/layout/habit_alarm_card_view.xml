@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/common_alarm_bg_1"
     android:paddingTop="@dimen/dp_12"
     android:paddingBottom="@dimen/dp_12"
     xmlns:tools="http://schemas.android.com/tools">
@@ -29,7 +30,8 @@
         android:id="@+id/switch_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_18"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/left_top"/>
     <LinearLayout
@@ -68,8 +70,8 @@
             android:layout_height="wrap_content"
             android:text="@string/habit_alarm_card_edit"/>
         <ImageView
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
+            android:layout_width="@dimen/dp_12"
+            android:layout_height="@dimen/dp_12"
             android:layout_marginLeft="@dimen/dp_4"
             android:src="@drawable/habit_alarm_card_edit"/>
     </LinearLayout>

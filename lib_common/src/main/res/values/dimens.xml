@@ -5,6 +5,12 @@
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_12">12dp</dimen>
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
     <dimen name="dp_20">20dp</dimen>
     <dimen name="dp_30">30dp</dimen>
+
+    <!--alarm view-->
+    <dimen name="alarm_left_top_time_size">12dp</dimen>
+    <dimen name="alarm_left_bottom_name_size">6dp</dimen>
+    <dimen name="alarm_guide_point_width">6dp</dimen>
 </resources>

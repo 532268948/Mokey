@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--<com.example.module_habit.view.AlarmCardView-->
         <!--android:layout_width="wrap_content"-->
@@ -15,5 +17,28 @@
         <!--app:left_bottom_text_size="@dimen/dp_20"-->
         <!--app:left_bottom_text_color="@color/theme_color"-->
         <!--app:left_bottom_image_src="@drawable/habit_alarm_card_edit"/>-->
-
+    <com.example.lib_common.base.view.WrapContentHeightViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="14dp">
+        <LinearLayout
+            android:id="@+id/ll_point_group"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_red_point"
+            android:background="@drawable/common_shape_guide_point"
+            android:layout_width="@dimen/alarm_guide_point_width"
+            android:layout_height="@dimen/alarm_guide_point_width" />
+    </RelativeLayout>
 </LinearLayout>
