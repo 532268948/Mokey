@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -41,211 +41,246 @@
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:gravity="center_vertical">
+
         <View
             android:layout_width="0dp"
             android:layout_height="6dp"
-            android:layout_weight="1"
             android:layout_marginRight="10dp"
-            android:background="@drawable/common_shape_dash_line_gray"
-            android:layerType="software"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/common_shape_dash_line_gray"
+            android:layerType="software" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="@string/alarm_tip_1"
             android:textColor="@color/black"
-            android:textSize="15dp"/>
+            android:textSize="15dp" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="6dp"
-            android:layout_weight="1"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:background="@drawable/common_shape_dash_line_gray"
-            android:layerType="software"/>
+            android:layerType="software" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
+
                     <com.example.lib_common.base.view.SquareImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/test_img"/>
+                        android:src="@drawable/test_img" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/habit_alarm_number_3"
                         android:textColor="@color/small_sleep_name_color"
-                        android:textSize="@dimen/small_sleep_name_size"/>
+                        android:textSize="@dimen/small_sleep_name_size" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/small_sleep_tip_1"
                         android:textColor="@color/small_sleep_tip_color"
-                        android:textSize="@dimen/small_sleep_tip_size"/>
+                        android:textSize="@dimen/small_sleep_tip_size" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/headphones"/>
+                            android:src="@drawable/headphones" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/small_sleep_listener_number_color"
                             android:textSize="@dimen/small_sleep_listener_number_size"
-                            tools:text="1200.1万"/>
+                            tools:text="1200.1万" />
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
+
                     <com.example.lib_common.base.view.SquareImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/test_img"/>
+                        android:src="@drawable/test_img" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/habit_alarm_number_3"
                         android:textColor="@color/small_sleep_name_color"
-                        android:textSize="@dimen/small_sleep_name_size"/>
+                        android:textSize="@dimen/small_sleep_name_size" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/small_sleep_tip_1"
                         android:textColor="@color/small_sleep_tip_color"
-                        android:textSize="@dimen/small_sleep_tip_size"/>
+                        android:textSize="@dimen/small_sleep_tip_size" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/headphones"/>
+                            android:src="@drawable/headphones" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/small_sleep_listener_number_color"
                             android:textSize="@dimen/small_sleep_listener_number_size"
-                            tools:text="1200.1万"/>
+                            tools:text="1200.1万" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
+
                     <com.example.lib_common.base.view.SquareImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/test_img"/>
+                        android:src="@drawable/test_img" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/habit_alarm_number_3"
                         android:textColor="@color/small_sleep_name_color"
-                        android:textSize="@dimen/small_sleep_name_size"/>
+                        android:textSize="@dimen/small_sleep_name_size" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/small_sleep_tip_1"
                         android:textColor="@color/small_sleep_tip_color"
-                        android:textSize="@dimen/small_sleep_tip_size"/>
+                        android:textSize="@dimen/small_sleep_tip_size" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/headphones"/>
+                            android:src="@drawable/headphones" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/small_sleep_listener_number_color"
                             android:textSize="@dimen/small_sleep_listener_number_size"
-                            tools:text="1200.1万"/>
+                            tools:text="1200.1万" />
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
+
                     <com.example.lib_common.base.view.SquareImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/test_img"/>
+                        android:src="@drawable/test_img" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/habit_alarm_number_3"
                         android:textColor="@color/small_sleep_name_color"
-                        android:textSize="@dimen/small_sleep_name_size"/>
+                        android:textSize="@dimen/small_sleep_name_size" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/small_sleep_tip_1"
                         android:textColor="@color/small_sleep_tip_color"
-                        android:textSize="@dimen/small_sleep_tip_size"/>
+                        android:textSize="@dimen/small_sleep_tip_size" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/headphones"/>
+                            android:src="@drawable/headphones" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/small_sleep_listener_number_color"
                             android:textSize="@dimen/small_sleep_listener_number_size"
-                            tools:text="1200.1万"/>
+                            tools:text="1200.1万" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

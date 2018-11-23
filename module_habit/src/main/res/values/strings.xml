@@ -13,4 +13,11 @@
     <string name="small_sleep_tip_2">避免迷糊</string>
     <string name="small_sleep_tip_3">调整时差</string>
     <string name="small_sleep_tip_4">慢波睡眠</string>
+
+    <!--lifestyle-->
+    <string name="lifestyle_sleep_tip_1">开始记录睡眠</string>
+    <string name="lifestyle_sleep_prepare">睡前准备</string>
+    <string name="lifestyle_sleep_prepare_tip_1">提前45min进行</string>
+    <string name="lifestyle_sleep_remind">入睡提醒</string>
+    <string name="lifestyle_sleep_time">12:30</string>
 </resources>

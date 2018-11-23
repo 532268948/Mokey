@@ -104,4 +104,34 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     public void showError(String message) {
         ToastUtil.showShortToastMessage(message);
     }
+
+    @Override
+    public void showDialog(String message) {
+
+    }
+
+    @Override
+    public void dismissDialog() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showNormal() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showError(String message, String code) {
+
+    }
 }

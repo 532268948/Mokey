@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.example.module_habit.view.AlarmCardView
+        android:id="@+id/av_sleep_prepare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:left_top_text="@string/lifestyle_sleep_prepare"
+        app:left_top_text_color="@color/lifestyle_sleep_prepare"
+        app:left_top_text_hint="@string/lifestyle_sleep_prepare_tip_1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layerType="software"
+        android:background="@drawable/common_shape_dash_line_vertical_gray"/>
+    <com.example.module_habit.view.AlarmCardView
+        android:id="@+id/av_sleep_remind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:left_top_text="@string/lifestyle_sleep_remind"
+        app:left_top_text_color="@color/lifestyle_sleep_remind"
+        app:left_bottom_text="@string/lifestyle_sleep_time"
+        app:left_bottom_text_color="@color/lifestyle_sleep_time"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layerType="software"
+        android:background="@drawable/common_shape_dash_line_vertical_gray"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/lifestyle_moon"
+        app:fabSize="normal"
+        app:elevation="5dp"
+        app:backgroundTint="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/lifestyle_sleep_tip_1"
+        android:textSize="11dp"
+        android:textColor="@color/lifestyle_sleep_tip_1"/>
+</LinearLayout>

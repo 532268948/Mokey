@@ -36,6 +36,8 @@ public class AlarmCardView extends LinearLayout {
     private int leftTopTextSize;
     private int leftTopTextColor;
     private int leftTopTextHint;
+    private int leftTopTextHintSize;
+    private int leftTopTextHintColor;
 
     private int leftBottomText;
     private int leftBottomTextSize;
@@ -73,6 +75,8 @@ public class AlarmCardView extends LinearLayout {
             leftTopTextSize = typedArray.getDimensionPixelSize(R.styleable.AlarmCardView_left_top_text_size, 20);
             leftTopTextColor = typedArray.getColor(R.styleable.AlarmCardView_left_top_text_color, 0XFF13227a);
             leftTopTextHint = typedArray.getResourceId(R.styleable.AlarmCardView_left_top_text_hint, R.string.habit_alarm_text_empty);
+            leftTopTextHintSize=typedArray.getDimensionPixelSize(R.styleable.AlarmCardView_left_top_text_hint_size,10);
+            leftTopTextHintColor=typedArray.getResourceId(R.styleable.AlarmCardView_left_top_text_hint_color,0XFF13227a);
             leftBottomText = typedArray.getResourceId(R.styleable.AlarmCardView_left_bottom_text, R.string.habit_alarm_text_empty);
             leftBottomTextSize = typedArray.getDimensionPixelSize(R.styleable.AlarmCardView_left_bottom_text_size, 20);
             leftBottomTextColor = typedArray.getColor(R.styleable.AlarmCardView_left_bottom_text_color, 0XFF13227a);
@@ -86,7 +90,7 @@ public class AlarmCardView extends LinearLayout {
         mLeftBottomTv = view.findViewById(R.id.left_bottom_text);
         mLeftBottomIv = view.findViewById(R.id.left_bottom_image);
 //
-        Log.e(TAG, "" + leftTopTextSize + " " + leftTopTextColor);
+//        Log.e(TAG, "" + leftTopTextSize + " " + leftTopTextColor);
         mLeftTopTv.setText(leftTopText);
         mLeftTopTv.setTextSize(leftTopTextSize);
         mLeftTopTv.setTextColor(leftTopTextColor);

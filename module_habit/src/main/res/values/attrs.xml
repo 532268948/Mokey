@@ -5,7 +5,9 @@
         <attr name="left_top_text" format="reference" />
         <attr name="left_top_text_size" format="dimension" />
         <attr name="left_top_text_color" format="color" />
-        <attr name="left_top_text_hint" format="string" />
+        <attr name="left_top_text_hint" format="reference" />
+        <attr name="left_top_text_hint_size" format="dimension" />
+        <attr name="left_top_text_hint_color" format="color" />
         <attr name="left_bottom_text" format="string" />
         <attr name="left_bottom_text_size" format="dimension" />
         <attr name="left_bottom_text_color" format="color" />

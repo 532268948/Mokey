@@ -4,4 +4,11 @@
     <color name="small_sleep_name_color">#000000</color>
     <color name="small_sleep_tip_color">#a0a0a0</color>
     <color name="small_sleep_listener_number_color">#a0a0a0</color>
+
+    <!--lifestyle-->
+    <color name="lifestyle_sleep_tip_1">#5c5b5b</color>
+    <color name="lifestyle_sleep_prepare">#646464</color>
+    <color name="lifestyle_sleep_prepare_tip">#8c8c8c</color>
+    <color name="lifestyle_sleep_remind">#646464</color>
+    <color name="lifestyle_sleep_time">#2d2d2d</color>
 </resources>

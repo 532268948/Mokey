@@ -15,6 +15,7 @@ import com.example.module_habit.R;
 import com.example.module_habit.contract.HabitContract;
 import com.example.module_habit.presenter.HabitPresenter;
 import com.example.module_habit.ui.alarm.AlarmFragment;
+import com.example.module_habit.ui.lifestyle.LifestyleFragment;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class HabitFragment extends BaseTopTabFragment<HabitContract.View, HabitP
         if (fragmentList == null) {
             fragmentList = new ArrayList<>();
         }
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new LifestyleFragment());
         fragmentList.add(new AlarmFragment());
         if (titleList == null) {
             titleList = new ArrayList<>();
