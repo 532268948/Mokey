@@ -33,6 +33,8 @@ public class TitleBar extends RelativeLayout {
     private ImageView mRightIv;
     private FrameLayout mCenterContainer;
 
+    private TextView mTitleTv;
+
     private LeftIconClickListener leftIconClickListener;
     private RightIconClickListener rightIconClickListener;
 
@@ -62,7 +64,7 @@ public class TitleBar extends RelativeLayout {
             mRightIcon = typedArray.getResourceId(R.styleable.TitleBar_right_icon, 0);
             mTitleText = typedArray.getResourceId(R.styleable.TitleBar_title_text, 0);
             mTitleMode = typedArray.getInteger(R.styleable.TitleBar_title_mode, 0);
-            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, mContext.getResources().getDimensionPixelSize(R.dimen.dp_16));
+            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 20);
         } finally {
             typedArray.recycle();
         }
@@ -97,6 +99,7 @@ public class TitleBar extends RelativeLayout {
             setTitleText(mTitleText);
         }
 
+
         setBackgroundColor(getResources().getColor(R.color.white));
     }
 
@@ -117,11 +120,20 @@ public class TitleBar extends RelativeLayout {
     public void setTitleText(int resourcesId) {
         mTitleMode = MODE_TITLE;
         this.mTitleText = resourcesId;
-        mCenterContainer.removeAllViews();
-        TextView textView = new TextView(mContext);
-        textView.setText(this.mTitleText);
-        textView.setTextSize(mTextSize);
-        mCenterContainer.addView(textView);
+        if (mTitleTv == null) {
+            mCenterContainer.removeAllViews();
+            mTitleTv = new TextView(mContext);
+            mTitleTv.setTextSize(mTextSize);
+            mTitleTv.setTextColor(0xFF030303);
+            mCenterContainer.addView(mTitleTv);
+        }
+        mTitleTv.setText(this.mTitleText);
+    }
+
+    public void setTitleColor(int resourcesId) {
+        if (mTitleTv != null) {
+            mTitleTv.setTextColor(resourcesId);
+        }
     }
 
     public void addTabLayout(View view) {

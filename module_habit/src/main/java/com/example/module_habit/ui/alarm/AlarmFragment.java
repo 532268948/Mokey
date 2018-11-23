@@ -97,4 +97,9 @@ public class AlarmFragment extends BaseFragment<AlarmContract.View, AlarmPresent
     public void onPageScrollStateChanged(int i) {
 
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }

@@ -107,4 +107,9 @@ public class HabitFragment extends BaseTopTabFragment<HabitContract.View, HabitP
     public void leftIconClick() {
 
     }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 }

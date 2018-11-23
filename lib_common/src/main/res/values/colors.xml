@@ -12,6 +12,8 @@
     <color name="black">#000000</color>
     <color name="common_dash_line_1">#a5a8b7</color>
 
+    <color name="transport">#00ffffff</color>
+
     <!--AlarmCardView-->
     <color name="alarm_left_top_text">#13227a</color>
     <color name="alarm_bg_color_1">#acf5f5f5</color>

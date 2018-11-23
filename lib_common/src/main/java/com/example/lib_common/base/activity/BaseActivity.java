@@ -68,25 +68,12 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
 
     }
 
-    @Override
-    public int generateIdLayout() {
-        return 0;
-    }
 
     @Override
     public View generateViewLayout() {
         return null;
     }
 
-    @Override
-    public void initView() {
-
-    }
-
-    @Override
-    public void initData() {
-
-    }
 
     @Override
     public void releaseCache() {

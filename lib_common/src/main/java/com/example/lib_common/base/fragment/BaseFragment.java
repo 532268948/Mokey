@@ -17,7 +17,7 @@ import com.example.lib_common.util.ToastUtil;
  * date:   2018/11/12 16:54
  * description:
  */
-public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragment implements BaseView {
+public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragment implements View.OnClickListener, BaseView {
 
     protected View mRootView;
     public Context mContext;

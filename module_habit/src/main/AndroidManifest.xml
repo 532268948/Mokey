@@ -3,7 +3,8 @@
     package="com.example.module_habit">
 
     <application>
-        <activity android:name=".container.ContainerActivity"></activity>
+        <activity android:name=".container.ContainerActivity" />
+        <activity android:name=".ui.prepare.PrepareActivity"></activity>
     </application>
 
 </manifest>

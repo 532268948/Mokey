@@ -34,7 +34,6 @@ public abstract class BaseBottomTabActivity<V extends BaseView, T extends BasePr
 
     @Override
     public void initData() {
-        super.initData();
         addFragment();
     }
 

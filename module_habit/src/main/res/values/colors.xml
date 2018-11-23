@@ -11,4 +11,10 @@
     <color name="lifestyle_sleep_prepare_tip">#8c8c8c</color>
     <color name="lifestyle_sleep_remind">#646464</color>
     <color name="lifestyle_sleep_time">#2d2d2d</color>
+
+    <!--prepare-->
+    <color name="prepare_tip_name">#000000</color>
+    <color name="prepare_short_tip">#787878</color>
+    <color name="prepare_tip_select">#1296db</color>
+    <color name="prepare_tip_unselect">#c8c8c8</color>
 </resources>

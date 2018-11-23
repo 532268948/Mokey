@@ -1,4 +1,6 @@
 <resources>
+
+    <dimen name="common_title_bar_height">56dp</dimen>
     <dimen name="habit_tab_top_height">56dp</dimen>
 
     <dimen name="dp_2">2dp</dimen>
