@@ -15,10 +15,10 @@
         android:gravity="right">
         <ImageView
             android:id="@+id/iv_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:padding="5dp"
             android:src="@drawable/habit_prepare_dialog_delete"/>
     </LinearLayout>
@@ -33,18 +33,21 @@
         android:id="@+id/tv_prepare_tip_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textSize="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="15dp"
         android:textColor="@color/black"
-        tools:text="@string/prepare_tip_name_1"/>
+        android:text="@string/prepare_tip_name_1"/>
     <TextView
         android:id="@+id/tv_prepare_tip"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textSize="10dp"
+        android:layout_marginBottom="50dp"
+        android:textSize="11dp"
         android:textColor="@color/black"
         android:lineSpacingExtra="4dp"
-        tools:text="@string/prepare_tip_1"/>
+        android:text="@string/prepare_tip_1"/>
 </LinearLayout>

@@ -1,8 +1,8 @@
 package com.example.lib_common.base.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 
 import com.example.lib_common.base.BaseItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
@@ -20,28 +20,18 @@ import java.util.List;
 public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyclerHolder> {
 
     protected List<BaseItem> mItems;
-
+    private Context mContext;
     protected OnItemClickListener onItemClickListener;
 
-    public BaseRecyclerAdapter() {
+    public BaseRecyclerAdapter(Context context) {
+        this.mContext = context;
         mItems = getCacheData();
-    }
-
-
-    @NonNull
-    @Override
-    public BaseRecyclerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull BaseRecyclerHolder baseRecyclerHolder, int i) {
-
     }
 
     @Override
     public int getItemCount() {
-        return mItems == null ? 0 : mItems.size();
+//        return mItems == null ? 0 : mItems.size();
+        return 10;
     }
 
     @Override
@@ -70,7 +60,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
     }
 
     public void addItemClickListener(OnItemClickListener itemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+        this.onItemClickListener = itemClickListener;
     }
 
     public void setData(List<BaseItem> mItems) {
@@ -80,21 +70,21 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
         }
     }
 
-    public void notifyDataChanged(List<BaseItem> mItems){
-        if (this.mItems!=null){
+    public void notifyDataChanged(List<BaseItem> mItems) {
+        if (this.mItems != null) {
             this.mItems.clear();
             this.mItems.addAll(mItems);
             notifyDataSetChanged();
         }
     }
 
-    public void notifyItemChanged(BaseItem baseItem,int position){
-        if (this.mItems!=null) {
-            this.mItems.set(position,baseItem);
+    public void notifyItemChanged(BaseItem baseItem, int position) {
+        if (this.mItems != null) {
+            this.mItems.set(position, baseItem);
         }
     }
 
-    private List<BaseItem> getData(){
+    private List<BaseItem> getData() {
         return this.mItems;
     }
 
@@ -105,5 +95,5 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
         return null;
     }
 
-    abstract List<BaseItem> getCacheData();
+    protected abstract List<BaseItem> getCacheData();
 }

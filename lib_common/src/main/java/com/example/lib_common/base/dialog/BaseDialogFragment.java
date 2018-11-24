@@ -87,23 +87,23 @@ public abstract class BaseDialogFragment extends DialogFragment {
             if (mWidth == 0) {
                 params.width = getScreenWidth(getContext()) - 2 * dp2px(getContext(), mMargin);
             } else {
-                params.width = dp2px(getContext(), mWidth);
+                params.width = mWidth;
             }
 
             //设置dialog高度
             if (mHeight == 0) {
                 params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             } else {
-                params.height = dp2px(getContext(), mHeight);
+                params.height = mHeight;
             }
 
             //设置dialog动画
             if (mAnimStyle == 0) {
                 window.setWindowAnimations(R.style.dialogAnim);
-            }else {
+            } else {
                 window.setWindowAnimations(mAnimStyle);
             }
-
+            window.setBackgroundDrawableResource(android.R.color.transparent);
             window.setAttributes(params);
         }
         setCancelable(mOutCancel);

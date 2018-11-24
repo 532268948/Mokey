@@ -39,6 +39,11 @@ public interface ILifeProcessor {
     void initView();
 
     /**
+     * 初始化Listener
+     */
+    void initListener();
+
+    /**
      * 初始化数据
      */
     void initData();

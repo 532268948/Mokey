@@ -20,7 +20,7 @@ import com.example.lib_common.util.ToastUtil;
  * email  : 15869107730@163.com
  * note   :
  */
-public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCompatActivity implements ILifeProcessor, BaseView {
+public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCompatActivity implements View.OnClickListener, ILifeProcessor, BaseView {
 
     public T mPresenter;
 
@@ -38,6 +38,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
         mPresenter = createPresenter();
         mPresenter.attachView((V) this, this);
         initView();
+        initListener();
         initData();
     }
 
