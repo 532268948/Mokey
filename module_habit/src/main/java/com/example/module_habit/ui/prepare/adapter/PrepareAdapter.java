@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.lib_common.base.BaseItem;
 import com.example.lib_common.base.adapter.BaseRecyclerAdapter;
@@ -45,17 +43,8 @@ public class PrepareAdapter extends BaseRecyclerAdapter {
 
     private static class PrepareViewHolder extends BaseRecyclerHolder {
 
-        private ImageView mDeleteIv;
-        private ImageView mIconIv;
-        private TextView mNameTv;
-        private TextView mDetailsTv;
-
         public PrepareViewHolder(@NonNull View itemView) {
             super(itemView);
-            mDeleteIv = itemView.findViewById(R.id.iv_delete);
-            mIconIv = itemView.findViewById(R.id.iv_prepare_tip_img);
-            mNameTv = itemView.findViewById(R.id.tv_prepare_tip_name);
-            mDetailsTv = itemView.findViewById(R.id.tv_prepare_tip);
         }
     }
 }
