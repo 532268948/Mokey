@@ -12,11 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.lib_common.R;
+import com.example.lib_common.util.ViewUtil;
 
 /**
- * author: tianhuaye
- * date:   2018/11/13 15:25
- * description:自定义多功能标题栏
+ * @author: tianhuaye
+ * @date: 2018/11/13 15:25
+ * @description:自定义多功能标题栏
  */
 public class TitleBar extends RelativeLayout {
 
@@ -54,7 +55,6 @@ public class TitleBar extends RelativeLayout {
     private void init(Context context, AttributeSet attrs) {
         this.mContext = context;
         View view = LayoutInflater.from(this.mContext).inflate(R.layout.title_bar, this, true);
-//        setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
         TypedArray typedArray = mContext.obtainStyledAttributes(attrs, R.styleable.TitleBar);
         if (typedArray == null) {
             return;
@@ -83,6 +83,8 @@ public class TitleBar extends RelativeLayout {
                     }
                 }
             });
+        } else {
+            ViewUtil.setViewGone(mLeftIv);
         }
         if (this.mRightIcon != 0) {
             mRightIv.setImageResource(this.mRightIcon);
@@ -94,6 +96,8 @@ public class TitleBar extends RelativeLayout {
                     }
                 }
             });
+        } else {
+            ViewUtil.setViewVisible(mRightIv);
         }
         if (mTitleMode == MODE_TITLE && mTitleText != 0) {
             setTitleText(mTitleText);
@@ -103,6 +107,10 @@ public class TitleBar extends RelativeLayout {
         setBackgroundColor(getResources().getColor(R.color.white));
     }
 
+    /**
+     * 设置右边图标
+     * @param resourcesId
+     */
     public void setLeftDrawable(int resourcesId) {
         this.mLeftIcon = resourcesId;
         if (this.mLeftIv != null) {
@@ -110,6 +118,10 @@ public class TitleBar extends RelativeLayout {
         }
     }
 
+    /**
+     * 设置右边图标
+     * @param resourcesId
+     */
     public void setRightDrawable(int resourcesId) {
         this.mRightIcon = resourcesId;
         if (this.mRightIv != null) {
@@ -117,6 +129,10 @@ public class TitleBar extends RelativeLayout {
         }
     }
 
+    /**
+     * 设置title文字
+     * @param resourcesId
+     */
     public void setTitleText(int resourcesId) {
         mTitleMode = MODE_TITLE;
         this.mTitleText = resourcesId;
@@ -130,12 +146,20 @@ public class TitleBar extends RelativeLayout {
         mTitleTv.setText(this.mTitleText);
     }
 
+    /**
+     * 设置title颜色
+     * @param resourcesId
+     */
     public void setTitleColor(int resourcesId) {
         if (mTitleTv != null) {
             mTitleTv.setTextColor(resourcesId);
         }
     }
 
+    /**
+     * title位置添加TabLayout控件
+     * @param view
+     */
     public void addTabLayout(View view) {
         mTitleMode = MODE_TAB;
         mCenterContainer.removeAllViews();
@@ -144,19 +168,33 @@ public class TitleBar extends RelativeLayout {
         mCenterContainer.addView(view);
     }
 
+    /**
+     * 左边按钮监听事件
+     * @param leftIconClickListener
+     */
     public void setLeftIconClickListener(LeftIconClickListener leftIconClickListener) {
         this.leftIconClickListener = leftIconClickListener;
     }
 
+    /**
+     * 右边按钮监听事件
+     * @param rightIconClickListener
+     */
     public void setRightIconClickListener(RightIconClickListener rightIconClickListener) {
         this.rightIconClickListener = rightIconClickListener;
     }
 
     public interface LeftIconClickListener {
+        /**
+         * 左边按钮被点击
+         */
         void leftIconClick();
     }
 
     public interface RightIconClickListener {
+        /**
+         * 右边按钮被点击
+         */
         void rightIconClick();
     }
 

@@ -1,7 +1,5 @@
 package com.example.lib_common.base.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,9 +11,9 @@ import com.example.lib_common.base.adapter.BaseFragmentPagerAdapter;
 import java.util.List;
 
 /**
- * author: tianhuaye
- * date:   2018/11/12 16:53
- * description:
+ * @author: tianhuaye
+ * @date:   2018/11/12 16:53
+ * @description:
  */
 public abstract class BaseTopTabFragment<V,T extends BasePresenter<V>> extends BaseFragment {
 
@@ -26,11 +24,9 @@ public abstract class BaseTopTabFragment<V,T extends BasePresenter<V>> extends B
     protected TabLayout mTabLayout;
     protected ViewPager mViewPager;
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
+    /**
+     * fragment和title集合添加
+     */
     public abstract void addFragmentAndTitle();
 
     protected static class TopTabFragmentPagerAdapter extends BaseFragmentPagerAdapter{
@@ -39,4 +35,6 @@ public abstract class BaseTopTabFragment<V,T extends BasePresenter<V>> extends B
             super(fm);
         }
     }
+
+
 }

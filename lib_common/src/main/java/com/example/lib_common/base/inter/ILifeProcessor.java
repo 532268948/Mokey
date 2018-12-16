@@ -53,4 +53,13 @@ public interface ILifeProcessor {
      */
     void releaseCache();
 
+    /**
+     * 注册监听器
+     */
+    void onRegisterMessageReceiver();
+
+    /**
+     * 注销监听器
+     */
+    void onUnregisterMessageReceiver();
 }

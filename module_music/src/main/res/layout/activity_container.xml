@@ -5,5 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zust.module_music.container.ContainerActivity">
-
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.zust.module_music.ui.MusicFragment" />
 </LinearLayout>

@@ -8,7 +8,6 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/habit_tab_top_height"
-        app:left_icon="@drawable/habit_title_bar_left_menu"
         app:text_size="@dimen/dp_30"/>
     <!--<android.support.design.widget.TabLayout-->
         <!--android:id="@+id/tab_layout"-->

@@ -1,16 +1,12 @@
 package com.example.module_habit.ui;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.adapter.BaseFragmentPagerAdapter;
 import com.example.lib_common.base.fragment.BaseTopTabFragment;
 import com.example.lib_common.base.view.TitleBar;
-import com.example.lib_common.test.BlankFragment;
 import com.example.module_habit.R;
 import com.example.module_habit.contract.HabitContract;
 import com.example.module_habit.presenter.HabitPresenter;
@@ -20,11 +16,11 @@ import com.example.module_habit.ui.lifestyle.LifestyleFragment;
 import java.util.ArrayList;
 
 /**
- * author: tianhuaye
- * date:   2018/11/13 12:51
- * description:
+ * @author: tianhuaye
+ * @date:   2018/11/13 12:51
+ * @description:
  */
-public class HabitFragment extends BaseTopTabFragment<HabitContract.View, HabitPresenter<HabitContract.View>> implements TitleBar.LeftIconClickListener {
+public class HabitFragment extends BaseTopTabFragment<HabitContract.View, HabitPresenter<HabitContract.View>>{
 
     private TitleBar mTitleBar;
 
@@ -69,6 +65,11 @@ public class HabitFragment extends BaseTopTabFragment<HabitContract.View, HabitP
     }
 
     @Override
+    public void initListener() {
+
+    }
+
+    @Override
     public void initData() {
 
     }
@@ -100,11 +101,6 @@ public class HabitFragment extends BaseTopTabFragment<HabitContract.View, HabitP
 
     @Override
     public void showError(String message, String code) {
-
-    }
-
-    @Override
-    public void leftIconClick() {
 
     }
 

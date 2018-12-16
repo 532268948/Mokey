@@ -10,6 +10,8 @@ import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
 import com.example.lib_common.base.inter.ILifeProcessor;
 import com.example.lib_common.util.ActivityManager;
+import com.example.lib_common.util.MessageLooper;
+import com.example.lib_common.util.MessageLooperMgr;
 import com.example.lib_common.util.ToastUtil;
 
 /**
@@ -45,6 +47,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        onUnregisterMessageReceiver();
         releaseCache();
         if (mPresenter != null) {
             mPresenter.detachView();
@@ -110,4 +113,24 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
     public void showError(String message, String code) {
 
     }
+
+    @Override
+    public void onRegisterMessageReceiver() {
+
+    }
+
+    @Override
+    public void onUnregisterMessageReceiver() {
+        MessageLooperMgr.onUnregisterMessageReceiver(this);
+    }
+
+    /**
+     * 注册监听器用此方法
+     * @param cmd
+     * @param l
+     */
+    public final void registerMessageReceiver(String cmd, MessageLooper.OnMessageListener l) {
+        MessageLooperMgr.registerMessageReceiver(this, cmd, l);
+    }
+
 }

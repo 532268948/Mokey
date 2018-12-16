@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.util.MessageLooper;
+import com.example.lib_common.util.MessageLooperMgr;
 import com.example.lib_common.util.ToastUtil;
 
 /**
@@ -57,6 +59,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
         if (mRootView == null) {
             mRootView = initView(inflater, container);
         }
+        initListener();
         return mRootView;
     }
 
@@ -85,14 +88,29 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
 
     }
 
+    /**
+     * 布局导入及控件初始化
+     * @param inflater
+     * @param container
+     * @return
+     */
     public abstract View initView(LayoutInflater inflater, ViewGroup container);
 
+    /**
+     * 初始化控件监听事件
+     */
+    public abstract void initListener();
+
+    /**
+     * 初始化数据
+     */
     public abstract void initData();
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+        onUnregisterMessageReceiver();
         releaseCache();
     }
 
@@ -133,5 +151,23 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     @Override
     public void showError(String message, String code) {
 
+    }
+
+    public void onRegisterMessageReceiver() {
+
+    }
+
+    public void onUnregisterMessageReceiver() {
+        MessageLooperMgr.onUnregisterMessageReceiver(this);
+    }
+
+    /**
+     * 注册监听器用此方法
+     *
+     * @param cmd
+     * @param l
+     */
+    public final void registerMessageReceiver(String cmd, MessageLooper.OnMessageListener l) {
+        MessageLooperMgr.registerMessageReceiver(this, cmd, l);
     }
 }
