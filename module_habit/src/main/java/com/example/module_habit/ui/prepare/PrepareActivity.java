@@ -15,6 +15,9 @@ import com.example.lib_common.base.view.TitleBar;
 import com.example.module_habit.R;
 import com.example.module_habit.ui.prepare.adapter.PrepareAdapter;
 
+/**
+ * @author 53226
+ */
 public class PrepareActivity extends BaseActivity<PrepareContract.View, PreparePresenter<PrepareContract.View>> implements OnItemClickListener, BaseView {
 
     private TitleBar mTitleBar;

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.fragment.BaseFragment;
 import com.example.module_habit.R;
 import com.example.module_habit.ui.prepare.PrepareActivity;
@@ -32,13 +31,17 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
         mPrepareAv = view.findViewById(R.id.av_sleep_prepare);
         mRemindAv = view.findViewById(R.id.av_sleep_remind);
 
+        return view;
+    }
+
+    @Override
+    public void initListener() {
         mPrepareAv.addEditClickListener(new AlarmCardView.OnEditClickListener() {
             @Override
             public void onEditClick() {
                 startActivity(new Intent(getContext(), PrepareActivity.class));
             }
         });
-        return view;
     }
 
     @Override

@@ -19,9 +19,9 @@ import com.example.module_habit.presenter.alarm.AlarmPresenter;
 import com.example.module_habit.ui.alarm.adapter.AlarmPagerAdapter;
 
 /**
- * author: tianhuaye
- * date:   2018/11/14 13:01
- * description:
+ * @author: tianhuaye
+ * @date: 2018/11/14 13:01
+ * @description:
  */
 public class AlarmFragment extends BaseFragment<AlarmContract.View, AlarmPresenter<AlarmContract.View>> implements ViewPager.OnPageChangeListener,
         ViewTreeObserver.OnGlobalLayoutListener {
@@ -53,7 +53,7 @@ public class AlarmFragment extends BaseFragment<AlarmContract.View, AlarmPresent
             point.setBackgroundResource(R.drawable.common_shape_guide_point_bg);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(widthDpi, widthDpi);
             if (i != 0) {
-                params.leftMargin = widthDpi*2;
+                params.leftMargin = widthDpi * 2;
             }
             point.setLayoutParams(params);
             llPointGroup.addView(point);
@@ -62,8 +62,12 @@ public class AlarmFragment extends BaseFragment<AlarmContract.View, AlarmPresent
         mViewPager.setPageTransformer(true, new GalleryTransformer());
         mAlarmPagerAdapter = new AlarmPagerAdapter();
         mViewPager.setAdapter(mAlarmPagerAdapter);
-        mViewPager.addOnPageChangeListener(this);
         return view;
+    }
+
+    @Override
+    public void initListener() {
+        mViewPager.addOnPageChangeListener(this);
     }
 
     @Override

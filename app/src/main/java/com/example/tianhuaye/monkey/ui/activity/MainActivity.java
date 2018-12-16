@@ -2,6 +2,7 @@ package com.example.tianhuaye.monkey.ui.activity;
 
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.activity.BaseBottomTabActivity;
@@ -23,12 +24,16 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
 
     @Override
     public void initView() {
-        super.initView();
         mViewPager = findViewById(R.id.view_pager);
         mTabView = findViewById(R.id.bottom_navigation_view);
 
         mViewPager.addOnPageChangeListener(this);
         mTabView.setOnNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void initListener() {
+
     }
 
     @Override
@@ -90,5 +95,10 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
     @Override
     protected BasePresenter createPresenter() {
         return new MainPresenter();
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
