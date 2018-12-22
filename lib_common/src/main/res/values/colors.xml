@@ -26,7 +26,10 @@
     <color name="title_bar_top_tab_divider_line">#acf5f5f5</color>
 
     <!--Music-->
-    <color name="music_tab_normal_color">#acf5f5f5</color>
+    <color name="music_tab_normal_color">#646464</color>
     <color name="music_tab_select_color">#000000</color>
+
+    <!--FloatingMusicView-->
+    <color name="music_floating_bg">#eeeeee</color>
 
 </resources>

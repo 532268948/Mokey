@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AbsListView;
 
-import com.example.lib_common.base.BaseItem;
+import com.example.lib_common.base.bean.BaseItem;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
 import com.example.lib_common.base.States;

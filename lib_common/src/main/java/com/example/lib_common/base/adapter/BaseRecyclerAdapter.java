@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.lib_common.base.BaseItem;
+import com.example.lib_common.base.bean.BaseItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
 
 import java.util.List;
