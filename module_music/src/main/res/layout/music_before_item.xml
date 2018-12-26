@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+              android:paddingTop="10dp"
+              android:paddingBottom="10dp"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/music_before_item_bg">
+
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_music_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/music_before_item_number_normal_color"
+            android:textSize="16dp"
+            tools:text="1"/>
+        <ImageView
+            android:id="@+id/iv_listening"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            android:src="@drawable/music_play_status_anim_list"
+            tools:visibility="visible"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_music_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/music_before_item_name_normal_color"
+            android:textSize="16dp"
+            tools:text="减少痛苦，天然的麻醉剂"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="bottom">
+            <TextView
+                android:id="@+id/tv_music_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textColor="@color/music_before_item_length_normal_color"
+                android:textSize="13dp"
+                tools:text="11:23"/>
+            <TextView
+                android:id="@+id/tv_listen_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="bottom"
+                android:drawableLeft="@drawable/music_headphone"
+                android:textSize="13dp"
+                android:textColor="@color/music_before_item_listen_normal_number_color"
+                tools:text="123456"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_pay"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/music_pay"/>
+
+</LinearLayout>

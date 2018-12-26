@@ -3,17 +3,17 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/main_tab_btn_habit_pressed"
-        android:title="首页" />
+        android:title="@string/main_bottom_tab_1" />
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/main_tab_btn_habit_pressed"
-        android:title="钱包" />
+        android:title="@string/main_bottom_tab_2" />
     <item
         android:id="@+id/navigation_habit"
         android:icon="@drawable/main_tab_btn_habit_pressed"
-        android:title="作息习惯" />
+        android:title="@string/main_bottom_tab_3" />
     <item
         android:id="@+id/navigation_person"
         android:icon="@drawable/main_tab_btn_habit_pressed"
-        android:title="个人" />
+        android:title="@string/main_bottom_tab_4" />
 </menu>

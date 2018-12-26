@@ -7,13 +7,18 @@ import android.view.View;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.activity.BaseBottomTabActivity;
 import com.example.lib_common.test.BlankFragment;
+import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_habit.ui.HabitFragment;
 import com.example.tianhuaye.monkey.R;
 import com.example.tianhuaye.monkey.contract.MainContract;
 import com.example.tianhuaye.monkey.presenter.MainPresenter;
+import com.zust.module_music.ui.MusicFragment;
 
 import java.util.ArrayList;
 
+/**
+ * @author 53226
+ */
 public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainPresenter<MainContract.View>> implements MainContract.View {
 
 
@@ -24,6 +29,7 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
 
     @Override
     public void initView() {
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.main_status_bar_color),0);
         mViewPager = findViewById(R.id.view_pager);
         mTabView = findViewById(R.id.bottom_navigation_view);
 
@@ -42,7 +48,7 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
             fragmentList = new ArrayList<>();
         }
         fragmentList.add(new BlankFragment());
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new MusicFragment());
         fragmentList.add(new HabitFragment());
         fragmentList.add(new BlankFragment());
         mAdapter = new PlayFragmentAdapter(getSupportFragmentManager(), fragmentList);

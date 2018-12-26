@@ -6,17 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.bean.BaseItem;
 import com.example.lib_common.base.adapter.BaseRecyclerAdapter;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
 import com.example.module_habit.R;
 
-import java.util.List;
-
 /**
- * author: tianhuaye
- * date:   2018/11/23 14:46
- * description:
+ * @author: tianhuaye
+ * @date:   2018/11/23 14:46
+ * @description:
  */
 public class PrepareAdapter extends BaseRecyclerAdapter {
 
@@ -25,16 +22,11 @@ public class PrepareAdapter extends BaseRecyclerAdapter {
         super(context);
     }
 
-    @Override
-    protected List<BaseItem> getCacheData() {
-        return null;
-    }
-
     @NonNull
     @Override
     public BaseRecyclerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.habit_prepare_tip_item, viewGroup, false);
-        return new PrepareViewHolder(view);
+        return new PrepareViewHolder(view, mContext);
     }
 
     @Override
@@ -43,8 +35,8 @@ public class PrepareAdapter extends BaseRecyclerAdapter {
 
     private static class PrepareViewHolder extends BaseRecyclerHolder {
 
-        public PrepareViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public PrepareViewHolder(@NonNull View itemView, Context context) {
+            super(itemView, context);
         }
     }
 }

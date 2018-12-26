@@ -3,6 +3,7 @@ package com.example.lib_common.base.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,7 @@ public class TitleBar extends RelativeLayout {
             mRightIcon = typedArray.getResourceId(R.styleable.TitleBar_right_icon, 0);
             mTitleText = typedArray.getResourceId(R.styleable.TitleBar_title_text, 0);
             mTitleMode = typedArray.getInteger(R.styleable.TitleBar_title_mode, 0);
-            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 20);
+            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 18);
         } finally {
             typedArray.recycle();
         }
@@ -109,6 +110,7 @@ public class TitleBar extends RelativeLayout {
 
     /**
      * 设置右边图标
+     *
      * @param resourcesId
      */
     public void setLeftDrawable(int resourcesId) {
@@ -120,6 +122,7 @@ public class TitleBar extends RelativeLayout {
 
     /**
      * 设置右边图标
+     *
      * @param resourcesId
      */
     public void setRightDrawable(int resourcesId) {
@@ -131,6 +134,7 @@ public class TitleBar extends RelativeLayout {
 
     /**
      * 设置title文字
+     *
      * @param resourcesId
      */
     public void setTitleText(int resourcesId) {
@@ -139,15 +143,16 @@ public class TitleBar extends RelativeLayout {
         if (mTitleTv == null) {
             mCenterContainer.removeAllViews();
             mTitleTv = new TextView(mContext);
-            mTitleTv.setTextSize(mTextSize);
+            mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,mTextSize);
             mTitleTv.setTextColor(0xFF030303);
             mCenterContainer.addView(mTitleTv);
         }
-        mTitleTv.setText(this.mTitleText);
+        mTitleTv.setText(getResources().getString(this.mTitleText));
     }
 
     /**
      * 设置title颜色
+     *
      * @param resourcesId
      */
     public void setTitleColor(int resourcesId) {
@@ -158,6 +163,7 @@ public class TitleBar extends RelativeLayout {
 
     /**
      * title位置添加TabLayout控件
+     *
      * @param view
      */
     public void addTabLayout(View view) {
@@ -170,6 +176,7 @@ public class TitleBar extends RelativeLayout {
 
     /**
      * 左边按钮监听事件
+     *
      * @param leftIconClickListener
      */
     public void setLeftIconClickListener(LeftIconClickListener leftIconClickListener) {
@@ -178,6 +185,7 @@ public class TitleBar extends RelativeLayout {
 
     /**
      * 右边按钮监听事件
+     *
      * @param rightIconClickListener
      */
     public void setRightIconClickListener(RightIconClickListener rightIconClickListener) {

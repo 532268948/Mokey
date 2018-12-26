@@ -11,7 +11,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
     }
@@ -32,6 +32,7 @@ dependencies {
     implementation project(":lib_common")
     if (!isModule.toBoolean()) {
         implementation project(':module_habit')
+        implementation project(':module_music')
     }
     implementation 'com.alibaba:arouter-api:1.2.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2'

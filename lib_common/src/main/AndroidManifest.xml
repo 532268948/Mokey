@@ -4,6 +4,18 @@
 
     <application>
         <activity android:name=".test.TestActivity"></activity>
+        <service
+            android:name=".music.MusicService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.dw.btime.musicplayer.action.TOGGLE_PLAYBACK"/>
+                <action android:name="com.dw.btime.musicplayer.action.PLAY"/>
+                <action android:name="com.dw.btime.musicplayer.action.PAUSE"/>
+                <action android:name="com.dw.btime.musicplayer.action.NEXT"/>
+                <action android:name="com.dw.btime.musicplayer.action.PREV"/>
+                <action android:name="com.dw.btime.musicplayer.action.STOP"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

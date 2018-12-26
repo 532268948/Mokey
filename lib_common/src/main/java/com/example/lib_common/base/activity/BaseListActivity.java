@@ -14,12 +14,12 @@ import com.example.lib_common.util.ViewUtil;
 import java.util.List;
 
 /**
- * project: Monkey
- * author : 叶天华
- * date   : 2018/11/17
- * time   : 13:09
- * email  : 15869107730@163.com
- * note   : 封装有RecyclerView的BaseActivity
+ * @project: Monkey
+ * @author : 叶天华
+ * @date   : 2018/11/17
+ * @time   : 13:09
+ * @email  : 15869107730@163.com
+ * @note   : 封装有RecyclerView的BaseActivity
  */
 public abstract class BaseListActivity<V extends BaseView, T extends BasePresenter<V>> extends BaseActivity implements AbsListView.OnScrollListener {
 
@@ -31,6 +31,12 @@ public abstract class BaseListActivity<V extends BaseView, T extends BasePresent
 
     private int mState;
 
+    /**
+     * 没有数据时展示
+     * @param visible 是否可见
+     * @param netWorkException 是否为网络原因
+     * @param text 提示内容
+     */
     public void setEmptyViewVisible(boolean visible, boolean netWorkException, String text) {
         ViewUtil.setEmptyViewVisible(mEmpty, this, visible, netWorkException, text);
     }

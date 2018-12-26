@@ -1,6 +1,7 @@
 package com.example.lib_common.base.view;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,11 +41,11 @@ public class FloatingMusicView extends FrameLayout {
         this(context, null);
     }
 
-    public FloatingMusicView( Context context,  AttributeSet attrs) {
+    public FloatingMusicView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public FloatingMusicView( Context context,  AttributeSet attrs, int defStyleAttr) {
+    public FloatingMusicView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.music_play, this, true);
         int padding = ScreenUtil.dp2px(context, 12);
@@ -100,6 +101,65 @@ public class FloatingMusicView extends FrameLayout {
             }
         }
     }, 500);
+
+//    public void setFMAudio(PgntFmItem item) {
+//        if (item != null && item.mLibFM != null) {
+//            mFMItem = item;
+//            item.isPlaying = false;
+//            BBMusicItem bbMusicItem = BBMusicHelper.getBBCurMusicItem();
+//            String title = null;
+//            if (bbMusicItem != null) {
+//                title = bbMusicItem.musicName;
+//                boolean isPlayFm = bbMusicItem.bbSource == BBSource.FM;
+//                if (isPlayFm) {
+//                    if (item.mLibFM.getId() != null && bbMusicItem.setId == item.mLibFM.getId() && BBMusicHelper
+//                            .getBBState() ==
+//                            BBState.Playing) {
+//                        item.isPlaying = true;
+//                    }
+//                }
+//            }
+//            if (!item.isPlaying) {
+//                List<LibAudio> audioList = item.mLibFM.getAudioList();
+//                if (audioList != null && !audioList.isEmpty()) {
+//                    if (audioList.get(0) != null) {
+//                        title = audioList.get(0).getTitle();
+//                    }
+//                }
+//            }
+//            if (!TextUtils.isEmpty(item.name)) {
+//                albumTv.setText(item.name);
+//            } else {
+//                albumTv.setText(R.string.antenatal_training_daily);
+//            }
+//            setAudio(title);
+//            if (item.isPlaying) {
+//                if (!isAnimation) {
+//                    tagImg.postDelayed(runnable, 250);
+//                    isAnimation = true;
+//                }
+//                playImg.setImageResource(R.drawable.icon_music_pause);
+//            } else {
+//                tagImg.removeCallbacks(runnable);
+//                isAnimation = false;
+//                playImg.setImageResource(R.drawable.icon_music_play);
+//            }
+//        }
+//    }
+
+    /**
+     * 设置标题
+     *
+     * @param title 音乐名字
+     */
+    public void setAudio(String title) {
+        if (!TextUtils.isEmpty(title)) {
+            ViewUtil.setViewVisible(titleTv);
+            titleTv.setText(getResources().getString(R.string.music_floating_title, title));
+        } else {
+            ViewUtil.setViewGone(titleTv);
+        }
+    }
 
     /**
      * 音乐播放监听器

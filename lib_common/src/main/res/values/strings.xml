@@ -3,6 +3,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--main_tab-->
+    <string name="main_bottom_tab_1">社区</string>
+    <string name="main_bottom_tab_2">睡眠小曲</string>
+    <string name="main_bottom_tab_3">作息习惯</string>
+    <string name="main_bottom_tab_4">报告</string>
 
     <!--AlarmCardView-->
     <string name="habit_alarm_text_empty"></string>
@@ -10,6 +15,9 @@
     <string name="habit_alarm_number_1">闹钟1</string>
     <string name="habit_alarm_number_2">闹钟2</string>
     <string name="habit_alarm_number_3">闹钟3</string>
+
+    <!--music-->
+    <string name="music_floating_title">《%s》</string>
 
     <!--empty-->
     <string name="common_empty_tip_1">网络不给力</string>

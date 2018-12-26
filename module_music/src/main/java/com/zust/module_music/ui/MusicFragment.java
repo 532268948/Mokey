@@ -10,6 +10,7 @@ import com.example.lib_common.test.BlankFragment;
 import com.zust.module_music.R;
 import com.zust.module_music.contract.MusicContract;
 import com.zust.module_music.presenter.MusicPresenter;
+import com.zust.module_music.ui.before.MusicBeforeFragment;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
         if (fragmentList == null) {
             fragmentList = new ArrayList<>();
         }
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new MusicBeforeFragment());
         fragmentList.add(new BlankFragment());
         fragmentList.add(new BlankFragment());
         if (titleList == null) {

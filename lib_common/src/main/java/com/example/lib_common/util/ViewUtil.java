@@ -43,6 +43,7 @@ public class ViewUtil {
         return (View.OnClickListener) Proxy.newProxyInstance(listener.getClass().getClassLoader(), listener.getClass
                 ().getInterfaces(), invocationHandler);
     }
+
     /**
      * 控制EmptyView的显示
      */
@@ -60,21 +61,19 @@ public class ViewUtil {
     /**
      * 控制EmptyView的显示
      */
-    public static void setEmptyViewVisible(View view, Context context, boolean visible, boolean networkException,String text) {
-        if (null == view || null == context)
+    public static void setEmptyViewVisible(View view, Context context, boolean visible, boolean networkException, String text) {
+        if (null == view || null == context) {
             return;
-
+        }
         if (!visible) {
             view.setVisibility(View.GONE);
             return;
         }
-
         TextView promptView = (TextView) view.findViewById(R.id.tv_empty_prompt);
         if (null == promptView) {
             view.setVisibility(View.VISIBLE);
             return;
         }
-
         String prompt;
         if (networkException) {
             prompt = context.getString(R.string.common_empty_tip_1);
@@ -89,6 +88,7 @@ public class ViewUtil {
         promptView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_empty_no_data, 0, 0);
         view.setVisibility(View.VISIBLE);
     }
+
     /**
      * 设置view可见
      */

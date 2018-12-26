@@ -18,17 +18,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * project: Monkey
- * author : 叶天华
- * date   : 2018/12/8
- * time   : 16:20
- * email  : 15869107730@163.com
- * note   :
+ * @project: Monkey
+ * @author : 叶天华
+ * @date   : 2018/12/8
+ * @time   : 16:20
+ * @email  : 15869107730@163.com
+ * @note   :
  */
 public class StatusBarUtil {
     public final static int TYPE_MIUI = 0;
     public final static int TYPE_FLYME = 1;
-    public final static int TYPE_M = 3;//6.0
+    /**
+     * 6.0
+     */
+    public final static int TYPE_M = 3;
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
     private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view;
 

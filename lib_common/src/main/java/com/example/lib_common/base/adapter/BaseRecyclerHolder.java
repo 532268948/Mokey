@@ -1,5 +1,6 @@
 package com.example.lib_common.base.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,17 +8,20 @@ import android.view.View;
 import com.example.lib_common.base.inter.OnItemClickListener;
 
 /**
- * project: Monkey
- * author : 叶天华
- * date   : 2018/11/17
- * time   : 19:26
- * email  : 15869107730@163.com
- * note   :
+ * @author : 叶天华
+ * @project: Monkey
+ * @date : 2018/11/17
+ * @time : 19:26
+ * @email : 15869107730@163.com
+ * @note :
  */
-public class BaseRecyclerHolder extends RecyclerView.ViewHolder {
+public abstract class BaseRecyclerHolder extends RecyclerView.ViewHolder {
 
-    public BaseRecyclerHolder(@NonNull View itemView) {
+    protected Context mContext;
+
+    public BaseRecyclerHolder(@NonNull View itemView, Context context) {
         super(itemView);
+        this.mContext = context;
     }
 
     public void setOnItemClickListener(final OnItemClickListener l) {

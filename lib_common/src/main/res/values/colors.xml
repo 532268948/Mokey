@@ -26,10 +26,22 @@
     <color name="title_bar_top_tab_divider_line">#acf5f5f5</color>
 
     <!--Music-->
-    <color name="music_tab_normal_color">#646464</color>
-    <color name="music_tab_select_color">#000000</color>
+    <color name="music_tab_normal_color">#a5a8b7</color>
+    <color name="music_tab_select_color">#141414</color>
+    <color name="music_before_item_bg">#ffffff</color>
+    <color name="music_before_item_number_select_color">#141414</color>
+    <color name="music_before_item_number_normal_color">#a5a8b7</color>
+    <color name="music_before_item_name_select_color">#141414</color>
+    <color name="music_before_item_name_normal_color">#a5a8b7</color>
+    <color name="music_before_item_length_select_color">#141414</color>
+    <color name="music_before_item_length_normal_color">#a5a8b7</color>
+    <color name="music_before_item_listen_select_number_color">#141414</color>
+    <color name="music_before_item_listen_normal_number_color">#a5a8b7</color>
 
     <!--FloatingMusicView-->
     <color name="music_floating_bg">#eeeeee</color>
+
+    <!--StatusBar-->
+    <color name="main_status_bar_color">#ffffff</color>
 
 </resources>

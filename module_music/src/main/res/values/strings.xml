@@ -5,6 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="music_tab_1">睡前小曲</string>
-    <string name="music_tab_2">专业睡眠</string>
-    <string name="music_tab_3">睡前呼吸</string>
+    <string name="music_tab_2">自然音</string>
+    <string name="music_tab_3">睡前故事</string>
+    <string name="music_before_item_number">%d</string>
 </resources>

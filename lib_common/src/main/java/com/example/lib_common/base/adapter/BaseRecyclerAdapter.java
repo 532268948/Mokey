@@ -3,6 +3,7 @@ package com.example.lib_common.base.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.example.lib_common.base.bean.BaseItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
@@ -10,28 +11,38 @@ import com.example.lib_common.base.inter.OnItemClickListener;
 import java.util.List;
 
 /**
- * project: Monkey
- * author : 叶天华
- * date   : 2018/11/17
- * time   : 19:34
- * email  : 15869107730@163.com
- * note   :
+ * @author : 叶天华
+ * @project: Monkey
+ * @date : 2018/11/17
+ * @time : 19:34
+ * @email : 15869107730@163.com
+ * @note :
  */
 public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyclerHolder> {
 
     protected List<BaseItem> mItems;
-    private Context mContext;
+    protected Context mContext;
     protected OnItemClickListener onItemClickListener;
 
     public BaseRecyclerAdapter(Context context) {
         this.mContext = context;
-        mItems = getCacheData();
+    }
+
+    @NonNull
+    @Override
+    public BaseRecyclerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull BaseRecyclerHolder holder, int position) {
+
     }
 
     @Override
     public int getItemCount() {
-//        return mItems == null ? 0 : mItems.size();
-        return 10;
+        return mItems == null ? 0 : mItems.size();
+//        return 10;
     }
 
     @Override
@@ -64,24 +75,23 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
     }
 
     public void setData(List<BaseItem> mItems) {
-        if (this.mItems != null) {
-            this.mItems.clear();
-            this.mItems.addAll(mItems);
-        }
+        this.mItems = mItems;
+        notifyDataSetChanged();
     }
 
-    public void notifyDataChanged(List<BaseItem> mItems) {
-        if (this.mItems != null) {
-            this.mItems.clear();
-            this.mItems.addAll(mItems);
-            notifyDataSetChanged();
-        }
-    }
+//    public void notifyDataChanged(List<BaseItem> mItems) {
+//        if (this.mItems != null) {
+//            this.mItems.clear();
+//            this.mItems.addAll(mItems);
+//            notifyDataSetChanged();
+//        }
+//    }
 
     public void notifyItemChanged(BaseItem baseItem, int position) {
         if (this.mItems != null) {
             this.mItems.set(position, baseItem);
         }
+        notifyItemChanged(position);
     }
 
     private List<BaseItem> getData() {
@@ -94,6 +104,4 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
         }
         return null;
     }
-
-    protected abstract List<BaseItem> getCacheData();
 }
