@@ -26,7 +26,6 @@ public abstract class BaseListFragment<V extends BaseView, T extends BasePresent
     protected RecyclerView mRecyclerView;
     protected List<BaseItem> mItems;
     protected View mEmpty;
-    protected View mProgress;
     protected SwipeRefreshLayout mRefreshLayout;
 
     private int mState;

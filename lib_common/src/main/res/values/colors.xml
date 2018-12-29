@@ -39,10 +39,22 @@
     <color name="music_before_item_listen_normal_number_color">#a5a8b7</color>
     <color name="music_floating_view_title_color">#333333</color>
     <color name="music_floating_small_bg_color">#a5a8b7</color>
+    <color name="music_story_item_bg_color">#30edd660</color>
+    <color name="music_story_item_title_color">#141414</color>
+    <color name="music_story_item_time_color">#a5a8b7</color>
+    <color name="music_story_play_bg_color">#17f2df7d</color>
+    <color name="music_story_play_top_bar_bg_color">#ffffff</color>
+    <color name="music_story_play_content_title">#000000</color>
+    <color name="music_story_play_content_time_and_times">#a5a8b7</color>
+    <color name="music_story_play_content_message">#646464</color>
+    <color name="music_story_play_content_divider">#000000</color>
+    <color name="music_story_play_content_lyric">#646464</color>
+
     <!--FloatingMusicView-->
     <color name="music_floating_bg">#eeeeee</color>
 
     <!--StatusBar-->
     <color name="main_status_bar_color">#ffffff</color>
+    <color name="music_story_play_status_bar_color">#ffffff</color>
 
 </resources>

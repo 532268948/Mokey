@@ -1,10 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/music_story_play_bg_color"
+    android:orientation="vertical"
     tools:context=".ui.play.StoryPlayActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <com.example.lib_common.base.view.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:left_icon="@drawable/common_title_bar_back"
+        app:text_size="17dp"
+        app:title_text="@string/music_story_play_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/music_story_play_top_bar_bg_color"
+        android:padding="10dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <ImageView
+            android:id="@+id/iv_story_cover"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/empty_bitmap"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_story_cover"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv_story_cover"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_music_play_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01:34"
+                android:textColor="@color/music_story_item_time_color"
+                android:textSize="13dp"/>
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_music_total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="06:34"
+                android:textColor="@color/music_story_item_time_color"
+                android:textSize="13dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_story_cover"
+            android:layout_toRightOf="@+id/iv_story_cover">
+
+            <ImageView
+                android:id="@+id/iv_music_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/music_mode_single"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/music_story_play_pre"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/music_story_play_play"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/music_story_play_next"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_story_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/music_story_play_content_title"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:text="为宝宝，心甘情愿"/>
+
+            <TextView
+                android:id="@+id/tv_story_time_and_times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/music_story_play_content_time_and_times"
+                android:textSize="12dp"
+                tools:text="2018-12-28 | 1.5万播放"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/music_story_play_content_message"
+                android:textSize="13dp"
+                tools:text="文字 | 小睡眠"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/music_story_play_content_message"
+                android:textSize="13dp"
+                tools:text="声音 | 雨凇"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/music_story_play_content_message"
+                android:textSize="13dp"
+                tools:text="背景音乐 | 小睡眠原创"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/music_story_play_content_divider"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/music_story_play_content_lyric"
+                tools:text="你曾以为一辈子的朋友，你曾以为会永远解绑走下去的人，一不留神，就走散了。今天，带来小睡眠用户诚然的故事。\n\n被孤立的滋味，你有没有体会过？曾经，我被周围的人排挤了。他们延误的....."/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

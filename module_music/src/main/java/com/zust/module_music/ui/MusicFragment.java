@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.fragment.BaseTopTabFragment;
+import com.zust.module_music.ui.story.MusicStoryFragment;
 import com.zust.module_music.view.FloatingMusicView;
 import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.test.BlankFragment;
@@ -62,7 +63,7 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
         }
         fragmentList.add(new MusicBeforeFragment());
         fragmentList.add(new BlankFragment());
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new MusicStoryFragment());
         if (titleList == null) {
             titleList = new ArrayList<>();
         }

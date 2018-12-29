@@ -8,4 +8,6 @@
     <string name="music_tab_2">自然音</string>
     <string name="music_tab_3">睡前故事</string>
     <string name="music_before_item_number">%d</string>
+    <string name="music_story_play_title">晚安电台</string>
+    <string name="music_story_play_content_time_and_times">%s | %.2f万播放</string>
 </resources>
