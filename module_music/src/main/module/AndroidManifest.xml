@@ -25,7 +25,8 @@
             android:name=".ui.play.MusicPlayActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.play.StoryPlayActivity">
+        <activity android:name=".ui.play.StoryPlayActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
