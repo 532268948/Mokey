@@ -14,9 +14,11 @@ import com.example.lib_common.base.inter.OnItemClickListener;
 import com.zust.module_music.R;
 import com.zust.module_music.contract.before.MusicBeforeContract;
 import com.zust.module_music.presenter.before.MusicBeforePresenter;
+import com.zust.module_music.ui.MusicFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : 叶天华
@@ -94,8 +96,14 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
                 }
                 mAdapter.notifyDataSetChanged();
             }
+            MusicFragment fragment=(MusicFragment)getParentFragment();
+            fragment.showBigMusicView();
         }
     }
 
 
+    @Override
+    public void updateMusic(List<MusicItem> musicItemList, int position) {
+
+    }
 }

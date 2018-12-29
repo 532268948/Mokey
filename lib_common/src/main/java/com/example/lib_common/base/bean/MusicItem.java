@@ -26,7 +26,20 @@ public class MusicItem extends BaseItem{
      */
     private long musicId;
     private String music;
+    /**
+     * 音频名字
+     */
     private String name;
+    /**
+     * 作者
+     */
+    private String author;
+
+    /**
+     * 封面图片
+     */
+    private String cover;
+
     /**
      * 播放音频的url
      */
@@ -89,6 +102,22 @@ public class MusicItem extends BaseItem{
 
     public String getMusic() {
         return music;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public void setMusic(String music) {

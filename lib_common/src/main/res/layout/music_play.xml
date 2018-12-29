@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
-    xmlns:tools="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="3.5dp"
-    android:layout_marginTop="3.5dp"
-    android:background="@drawable/music_play_bg"
-    android:paddingLeft="20dp"
-    android:paddingRight="10dp">
+    android:layout_height="66dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_small_play_tag"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/music_play_status_anim_list"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/iv_music_narrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="8dp"
+        android:src="@drawable/music_floating_view_narrow"/>
 
     <ImageView
         android:id="@+id/iv_music_next"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_music_narrow"
         android:padding="8dp"
         android:src="@drawable/icon_music_next"/>
 
     <ImageView
         android:id="@+id/iv_music_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@+id/iv_music_next"
+        android:scaleType="fitXY"
         android:src="@drawable/icon_music_play"/>
 
     <ImageView
@@ -39,30 +55,40 @@
         android:padding="8dp"
         android:src="@drawable/icon_music_pre"/>
 
+    <ImageView
+        android:id="@+id/iv_music_cover"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/empty_bitmap"/>
+
     <Space
         android:id="@+id/vertical_space"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"/>
 
-    <TextView
+    <TextSwitcher
         android:id="@+id/tv_music_album"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/vertical_space"
-        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/iv_music_cover"
         android:layout_toLeftOf="@+id/iv_music_pre"
         android:ellipsize="end"
-        android:singleLine="true"
-        tool:text="标签"
-        android:textColor="#333333"
-        android:textSize="18sp"/>
+        android:singleLine="true"/>
 
     <LinearLayout
+        android:id="@+id/ll_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/vertical_space"
+        android:layout_toRightOf="@+id/iv_music_cover"
         android:layout_marginTop="5dp"
         android:layout_toLeftOf="@+id/iv_music_pre"
         android:gravity="center_vertical"
@@ -72,7 +98,7 @@
             android:id="@+id/iv_music_play_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/music_play_status_level_list"/>
+            android:src="@drawable/music_play_status_anim_list"/>
 
         <TextView
             android:id="@+id/tv_music_title"
@@ -81,8 +107,8 @@
             android:ellipsize="middle"
             android:gravity="center_vertical"
             android:singleLine="true"
+            android:text="《宁静大自然》"
             android:textColor="#7f8795"
-            android:textSize="12sp"
-            tool:text="《宁静大自然》"/>
+            android:textSize="12sp"/>
     </LinearLayout>
 </RelativeLayout>

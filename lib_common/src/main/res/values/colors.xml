@@ -37,7 +37,8 @@
     <color name="music_before_item_length_normal_color">#a5a8b7</color>
     <color name="music_before_item_listen_select_number_color">#141414</color>
     <color name="music_before_item_listen_normal_number_color">#a5a8b7</color>
-
+    <color name="music_floating_view_title_color">#333333</color>
+    <color name="music_floating_small_bg_color">#a5a8b7</color>
     <!--FloatingMusicView-->
     <color name="music_floating_bg">#eeeeee</color>
 

@@ -5,15 +5,15 @@ if (rootProject.ext.isModule.toBoolean()) {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
 
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -49,7 +49,6 @@ configurations.all {
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     annotationProcessor rootProject.ext.dependencies.arouter_compiler
     implementation project(':lib_common')

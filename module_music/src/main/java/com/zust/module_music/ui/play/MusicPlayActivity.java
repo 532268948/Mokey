@@ -25,7 +25,7 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.View,Music
 
     @Override
     public int generateIdLayout() {
-        return R.layout.activity_music_paly;
+        return R.layout.activity_music_play;
     }
 
     @Override

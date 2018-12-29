@@ -12,14 +12,20 @@
         android:roundIcon="@drawable/main_tab_btn_habit_pressed"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".container.ContainerActivity">
+        <activity
+            android:name=".container.ContainerActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.play.MusicPalyActivity">
+        <activity
+            android:name=".ui.play.MusicPlayActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.play.StoryPlayActivity">
         </activity>
     </application>
 

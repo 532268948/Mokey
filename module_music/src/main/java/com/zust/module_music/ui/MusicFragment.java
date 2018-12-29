@@ -5,8 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.fragment.BaseTopTabFragment;
+import com.zust.module_music.view.FloatingMusicView;
 import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.test.BlankFragment;
+import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
 import com.zust.module_music.contract.MusicContract;
 import com.zust.module_music.presenter.MusicPresenter;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicPresenter<MusicContract.View>> implements MusicContract.View {
 
     private TitleBar mTitleBar;
+    private FloatingMusicView mFloatingMusicView;
 
     @Override
     protected MusicPresenter<MusicContract.View> createPresenter() {
@@ -31,7 +34,8 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
         View view = inflater.inflate(R.layout.fragment_music, container, false);
         mViewPager = view.findViewById(R.id.view_pager);
         mTitleBar = view.findViewById(R.id.title_bar);
-        mTabLayout =view.findViewById(R.id.tab_layout);
+        mTabLayout = view.findViewById(R.id.tab_layout);
+        mFloatingMusicView = view.findViewById(R.id.floating_music_view);
         addFragmentAndTitle();
         return view;
     }
@@ -72,4 +76,26 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
+    @Override
+    public void showBigMusicView() {
+        ViewUtil.setViewVisible(mFloatingMusicView);
+    }
+
+    @Override
+    public void changeSmallMusicView() {
+
+    }
+
+    @Override
+    public void changeBigMusicView() {
+
+    }
+
+    @Override
+    public void hideMusicView() {
+
+    }
+
+
 }

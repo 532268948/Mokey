@@ -13,6 +13,25 @@ import com.example.lib_common.base.BaseView;
 public interface MusicContract {
 
     interface View extends BaseView {
+        /**
+         * 显示音乐播放浮窗
+         */
+        void showBigMusicView();
+
+        /**
+         * 音乐浮窗缩至右下角
+         */
+        void changeSmallMusicView();
+
+        /**
+         * 音乐浮窗变大
+         */
+        void changeBigMusicView();
+
+        /**
+         * 隐藏音乐浮窗
+         */
+        void hideMusicView();
     }
 
     interface Presenter {
