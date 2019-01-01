@@ -39,4 +39,9 @@ public class PrepareAdapter extends BaseRecyclerAdapter {
             super(itemView, context);
         }
     }
+
+    @Override
+    public int getItemCount() {
+        return 10;
+    }
 }

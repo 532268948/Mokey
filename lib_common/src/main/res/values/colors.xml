@@ -57,4 +57,7 @@
     <color name="main_status_bar_color">#ffffff</color>
     <color name="music_story_play_status_bar_color">#ffffff</color>
 
+    <!--SleepPrepareView-->
+    <color name="sleep_prepare_dash_line_color">#646464</color>
+
 </resources>

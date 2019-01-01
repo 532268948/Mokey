@@ -65,7 +65,7 @@ public class TitleBar extends RelativeLayout {
             mRightIcon = typedArray.getResourceId(R.styleable.TitleBar_right_icon, 0);
             mTitleText = typedArray.getResourceId(R.styleable.TitleBar_title_text, 0);
             mTitleMode = typedArray.getInteger(R.styleable.TitleBar_title_mode, 0);
-            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 18);
+            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 16);
         } finally {
             typedArray.recycle();
         }
@@ -102,7 +102,11 @@ public class TitleBar extends RelativeLayout {
         }
         if (mTitleMode == MODE_TITLE && mTitleText != 0) {
             setTitleText(mTitleText);
+            if (mTextSize!=0){
+                mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,mTextSize);
+            }
         }
+
 
 
         setBackgroundColor(getResources().getColor(R.color.white));
