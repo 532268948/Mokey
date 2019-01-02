@@ -12,6 +12,7 @@ import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.view.TitleBar;
+import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_habit.R;
 import com.example.module_habit.ui.prepare.adapter.PrepareAdapter;
 
@@ -37,6 +38,7 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
 
     @Override
     public void initView() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.main_status_bar_color), 0);
         mTitleBar = findViewById(R.id.title_bar);
         mRecyclerView = findViewById(R.id.recycler_view);
         mAdapter = new PrepareAdapter(this);

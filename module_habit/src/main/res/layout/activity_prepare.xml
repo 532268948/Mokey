@@ -12,11 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
         app:title_text="@string/prepare_title"
+        app:text_size="@dimen/dp_16"
         app:left_icon="@drawable/common_title_bar_back"/>
     
     <com.example.module_habit.view.SleepPrepareView
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp"
+        android:layout_margin="20dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
