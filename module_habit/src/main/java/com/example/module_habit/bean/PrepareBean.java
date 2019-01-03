@@ -9,6 +9,7 @@ import android.graphics.Rect;
  */
 public class PrepareBean {
     private float time;
+    private int icon;
 
     public float getTime() {
         return time;
@@ -16,5 +17,13 @@ public class PrepareBean {
 
     public void setTime(float time) {
         this.time = time;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }

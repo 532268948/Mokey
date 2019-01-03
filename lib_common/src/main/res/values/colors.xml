@@ -61,5 +61,6 @@
     <color name="sleep_prepare_dash_line_color">#969696</color>
     <color name="sleep_prepare_line_color">#969696</color>
     <color name="sleep_prepare_circle_color">#000000</color>
+    <color name="sleep_prepare_time_color">#000000</color>
 
 </resources>

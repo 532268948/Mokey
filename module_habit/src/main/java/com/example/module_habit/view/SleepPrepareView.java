@@ -57,14 +57,17 @@ public class SleepPrepareView extends View {
     private Paint mBitmapPaint;
 
     /**
+     * 时间文字画笔
+     */
+    private Paint mTextPaint;
+
+    private Paint mIconPaint;
+
+    /**
      * 虚线指示图
      */
     private Bitmap mTagBitmap;
 
-    /**
-     * 时间文字画笔
-     */
-    private Paint mTextPaint;
 
     private List<PrepareBean> mPrepareList;
 
@@ -83,6 +86,7 @@ public class SleepPrepareView extends View {
         for (int i = 0; i < 3; i++) {
             PrepareBean prepareBean = new PrepareBean();
             prepareBean.setTime((i + 1) * 10);
+            prepareBean.setIcon(R.drawable.habit_prepare_tip_1);
             mPrepareList.add(prepareBean);
         }
         init();
@@ -116,6 +120,15 @@ public class SleepPrepareView extends View {
                 drawDashLine(canvas, mPrepareList.get(i));
                 drawTagBitmap(canvas, mPrepareList.get(i));
             }
+            for (int i = 0; i < mPrepareList.size(); i++) {
+                if (i == 0) {
+                    drawTimeText(canvas, 0f, mPrepareList.get(i).getTime());
+                    drawIcon(canvas, 0f, mPrepareList.get(i).getTime(), mPrepareList.get(i).getIcon());
+                } else if (i > 0) {
+                    drawTimeText(canvas, mPrepareList.get(i - 1).getTime(), mPrepareList.get(i).getTime());
+                    drawIcon(canvas, mPrepareList.get(i - 1).getTime(), mPrepareList.get(i).getTime(), mPrepareList.get(i).getIcon());
+                }
+            }
         }
     }
 
@@ -135,7 +148,9 @@ public class SleepPrepareView extends View {
         mCirclePaint.setStyle(Paint.Style.FILL);
         mBitmapPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setColor(getResources().getColor(R.color.sleep_prepare_circle_color));
+        mTextPaint.setColor(getResources().getColor(R.color.sleep_prepare_time_color));
+        mTextPaint.setTextSize(50);
+        mIconPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
     /**
@@ -162,8 +177,42 @@ public class SleepPrepareView extends View {
         canvas.drawCircle(prepareBean.getTime() / PREPARE_TOTAL_TIME * getWidth(), getHeight() / 3, 10, mCirclePaint);
     }
 
+    /**
+     * 画虚线指示器
+     *
+     * @param canvas
+     * @param prepareBean
+     */
     private void drawTagBitmap(Canvas canvas, PrepareBean prepareBean) {
         canvas.drawBitmap(mTagBitmap, prepareBean.getTime() / PREPARE_TOTAL_TIME * getWidth() - mTagBitmap.getWidth() / 2, DASH_LINE_HEIGHT, mBitmapPaint);
+    }
+
+    /**
+     * 画时间文字
+     *
+     * @param canvas
+     * @param startTime
+     * @param endTime
+     */
+    private void drawTimeText(Canvas canvas, float startTime, float endTime) {
+        String text = String.format(getResources().getString(R.string.sleep_prepare_time), endTime - startTime);
+        float textWidth = mTextPaint.measureText(text);
+        canvas.drawText(text, startTime / PREPARE_TOTAL_TIME * getWidth() + ((endTime - startTime) / PREPARE_TOTAL_TIME * getWidth() - textWidth) / 2f, (float) DASH_LINE_HEIGHT, mTextPaint);
+    }
+
+    /**
+     * 提示图片
+     *
+     * @param canvas
+     * @param startTime
+     * @param endTime
+     * @param resourceId
+     */
+    private void drawIcon(Canvas canvas, float startTime, float endTime, int resourceId) {
+        if (resourceId != 0) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
+            canvas.drawBitmap(bitmap, startTime / PREPARE_TOTAL_TIME * getWidth() + ((endTime - startTime) / PREPARE_TOTAL_TIME * getWidth() - bitmap.getWidth()) / 2f, ((float) DASH_LINE_HEIGHT / 2f - bitmap.getHeight()) / 2f, mIconPaint);
+        }
     }
 
 
