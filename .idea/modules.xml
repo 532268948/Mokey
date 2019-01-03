@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/lib_common/lib_common.iml" filepath="$PROJECT_DIR$/lib_common/lib_common.iml" />
       <module fileurl="file://$PROJECT_DIR$/module_habit/module_habit.iml" filepath="$PROJECT_DIR$/module_habit/module_habit.iml" />
       <module fileurl="file://$PROJECT_DIR$/module_music/module_music.iml" filepath="$PROJECT_DIR$/module_music/module_music.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_report/module_report.iml" filepath="$PROJECT_DIR$/module_report/module_report.iml" />
     </modules>
   </component>
 </project>

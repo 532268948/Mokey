@@ -1,10 +1,10 @@
-package com.example.module_habit.app;
+package com.example.module_report.app;
 
 import com.example.lib_common.base.BaseApplication;
 
 /**
  * @author: tianhuaye
- * @date:   2018/11/13 13:57
+ * @date: 2019/1/3 13:18
  * @description:
  */
 public class MyApplication extends BaseApplication {

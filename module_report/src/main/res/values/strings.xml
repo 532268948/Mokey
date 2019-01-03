@@ -1,0 +1,12 @@
+<resources>
+    <!--<string name="app_name">Module_Report</string>-->
+
+    <!--ReportView-->
+    <string name="report_view_english_name">monkey sleep</string>
+    <string name="report_view_sleep_quality_grade_str">睡眠评分</string>
+    <string name="report_view_sleep_quality_analysis_str">日睡眠分析简报</string>
+    <string name="report_view_sleep_start_time">入睡时间 %s</string>
+    <string name="report_view_sleep_end_time">起床时间 %s</string>
+    <string name="report_view_sleep_total_time">睡眠时长 %s</string>
+    <string name="report_view_sleep_dream_num">梦话条数 %d条</string>
+</resources>

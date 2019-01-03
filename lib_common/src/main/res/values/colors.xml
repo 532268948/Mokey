@@ -63,4 +63,10 @@
     <color name="sleep_prepare_circle_color">#000000</color>
     <color name="sleep_prepare_time_color">#000000</color>
 
+    <!--ReportView-->
+    <color name="report_view_app_name_color">#a5a8b7</color>
+    <color name="report_view_sleep_quality_grade">#969696</color>
+    <color name="report_view_shape_circle_point">#1296db</color>
+    <color name="report_view_bottom_text_color">#1296db</color>
+
 </resources>
