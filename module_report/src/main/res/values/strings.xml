@@ -9,4 +9,19 @@
     <string name="report_view_sleep_end_time">起床时间 %s</string>
     <string name="report_view_sleep_total_time">睡眠时长 %s</string>
     <string name="report_view_sleep_dream_num">梦话条数 %d条</string>
+
+    <!--SleepQualityView-->
+    <string name="sleep_quality_deep">深睡</string>
+    <string name="sleep_quality_shallow">浅睡</string>
+    <string name="sleep_quality_dream">醒/梦</string>
+    <string name="sleep_quality_error">未检测到</string>
+
+    <!--ReportDetail-->
+    <string name="report_detail_sleep_in_time_str">入睡时间</string>
+    <string name="report_detail_sleep_out_time_str">起床时间</string>
+    <string name="report_detail_sleep_time_str">睡眠时长</string>
+    <string name="report_detail_sleep_quality_grade_str">睡眠质量</string>
+    <string name="report_detail_time_minute_tr">分钟</string>
+    <string name="report_detail_part_title_1">梦话</string>
+    <string name="report_detail_title_tip">%d段梦话</string>
 </resources>

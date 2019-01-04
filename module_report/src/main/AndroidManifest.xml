@@ -3,7 +3,7 @@
     package="com.example.module_report">
 
     <application>
-
+        <activity android:name=".ui.ReportDetailActivity"></activity>
     </application>
 
 </manifest>
