@@ -10,7 +10,7 @@ import com.example.lib_common.music.MusicSource;
  * @email : 15869107730@163.com
  * @note :
  */
-public class MusicItem extends BaseItem{
+public class MusicItem extends BaseItem {
 
 
     /**
@@ -25,7 +25,6 @@ public class MusicItem extends BaseItem{
      * 播放音频的id
      */
     private long musicId;
-    private String music;
     /**
      * 音频名字
      */
@@ -69,12 +68,12 @@ public class MusicItem extends BaseItem{
     /**
      * 是否需要付款播放
      */
-    private boolean isNeedPay=true;
+    private boolean isNeedPay = true;
 
     /**
      * 是否已经付款
      */
-    private boolean isHasPay=false;
+    private boolean isHasPay = false;
 
     public long getDuration() {
         return duration;
@@ -100,10 +99,6 @@ public class MusicItem extends BaseItem{
         this.musicId = musicId;
     }
 
-    public String getMusic() {
-        return music;
-    }
-
     public String getAuthor() {
         return author;
     }
@@ -120,9 +115,6 @@ public class MusicItem extends BaseItem{
         this.cover = cover;
     }
 
-    public void setMusic(String music) {
-        this.music = music;
-    }
 
     public String getName() {
         return name;

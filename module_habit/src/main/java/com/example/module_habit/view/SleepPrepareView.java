@@ -61,6 +61,9 @@ public class SleepPrepareView extends View {
      */
     private Paint mTextPaint;
 
+    /**
+     * 图标画笔
+     */
     private Paint mIconPaint;
 
     /**
@@ -82,7 +85,7 @@ public class SleepPrepareView extends View {
 
     public SleepPrepareView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mPrepareList = new ArrayList<PrepareBean>();
+        this.mPrepareList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             PrepareBean prepareBean = new PrepareBean();
             prepareBean.setTime((i + 1) * 10);
