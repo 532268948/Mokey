@@ -1,8 +1,12 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.greenrobot.greendao'
-
+if (rootProject.ext.isModule.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+
 
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -10,12 +14,12 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
-        //Arouter路由配置
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
             }
         }
+
     }
 
     buildTypes {
@@ -25,23 +29,26 @@ android {
         }
     }
 
-}
+    sourceSets {
+        main {
+            if (rootProject.ext.isModule.toBoolean()) {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+//                    排除java/container文件夹下的所有文件
+                    exclude 'container/**'
+                }
+            }
+        }
+    }
 
+}
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-v4:28.0.0'
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api rootProject.ext.support.appcompatv7
-    api rootProject.ext.support.design
-    api rootProject.ext.support.v4
-
-    //dependencies
-    api rootProject.ext.dependencies.skin_support
-    api rootProject.ext.dependencies.rxJava
-    api rootProject.ext.dependencies.rxAndroid
-    api rootProject.ext.dependencies.retrofit
-    api rootProject.ext.dependencies.retrofit_gson
     annotationProcessor rootProject.ext.dependencies.arouter_compiler
-    api rootProject.ext.dependencies.arouter_api
-    api rootProject.ext.dependencies.arouter_annotation
-    api rootProject.ext.dependencies.greenDao
-    api rootProject.ext.dependencies.circleImageView
+    implementation project(':lib_common')
 }

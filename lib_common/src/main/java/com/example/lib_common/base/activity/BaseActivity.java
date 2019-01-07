@@ -30,6 +30,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityManager.getInstance().addActivity(this);
+        initUIParams();
         initIntent(getIntent());
         initSaveInstanceState(savedInstanceState);
         if (generateIdLayout() > 0) {
@@ -60,6 +61,11 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
     @Override
     public void showError(String message) {
         ToastUtil.showShortToastMessage(message);
+    }
+
+    @Override
+    public void initUIParams() {
+
     }
 
     @Override

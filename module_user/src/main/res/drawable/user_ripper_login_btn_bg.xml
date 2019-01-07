@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/user_login_ripper_color">
+    <item>
+        <shape>
+            <corners
+                android:radius="20dp"/>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+            <gradient
+                android:startColor="@color/colorAccent"
+                android:endColor="@color/user_login_ripper_btn_end_color"
+                android:angle="-90"/>
+        </shape>
+    </item>
+</ripple>

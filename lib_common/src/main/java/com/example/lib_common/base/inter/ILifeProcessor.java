@@ -13,6 +13,8 @@ import android.view.View;
  * note   : activity生命周期定制化流程，规定该方法在何时调用
  */
 public interface ILifeProcessor {
+
+    void initUIParams();
     /**
      * 初始化获取Intent中的数据
      */

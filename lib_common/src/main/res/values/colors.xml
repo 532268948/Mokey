@@ -85,4 +85,9 @@
     <color name="report_detail_item_time_color">#1296db</color>
     <color name="report_detail_item_during_color">#1296db</color>
 
+    <!--LoginActivity-->
+    <color name="user_login_ripper_color">#7affffff</color>
+    <color name="user_login_ripper_btn_end_color">#fe0909</color>
+    <color name="user_login_title">#FFFFFF</color>
+
 </resources>
