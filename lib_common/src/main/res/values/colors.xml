@@ -82,5 +82,7 @@
     <color name="report_detail_quality_text_str_color">#969696</color>
     <color name="report_detail_part_title_color">#282828</color>
     <color name="report_detail_fold_color">#1296db</color>
+    <color name="report_detail_item_time_color">#1296db</color>
+    <color name="report_detail_item_during_color">#1296db</color>
 
 </resources>

@@ -4,7 +4,7 @@
 
     <item
         android:drawable="@drawable/fm_play_status_drawable_1"
-        android:duration="200" />
+        android:duration="250" />
     <item
         android:drawable="@drawable/fm_play_status_drawable_2"
         android:duration="250" />
