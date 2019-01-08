@@ -21,7 +21,7 @@ import java.util.List;
  * @email : 15869107730@163.com
  * @note :
  */
-public abstract class BaseListFragment<V extends BaseView, T extends BasePresenter<V>> extends BaseFragment implements AbsListView.OnScrollListener {
+public abstract class BaseListFragment<V extends BaseView, T extends BasePresenter<V>> extends BaseFragment<V,T> implements AbsListView.OnScrollListener {
 
     protected RecyclerView mRecyclerView;
     protected List<BaseItem> mItems;

@@ -32,9 +32,10 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
 
     private MusicBeforeAdapter mAdapter;
 
+
     @Override
-    protected BasePresenter createPresenter() {
-        return new MusicBeforePresenter();
+    protected MusicBeforePresenter<MusicBeforeContract.View> createPresenter() {
+        return new MusicBeforePresenter<>();
     }
 
     @Override
