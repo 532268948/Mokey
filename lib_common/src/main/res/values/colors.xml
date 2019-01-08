@@ -90,4 +90,8 @@
     <color name="user_login_ripper_btn_end_color">#fe0909</color>
     <color name="user_login_title">#FFFFFF</color>
 
+    <!--RegisterActivity-->
+    <color name="user_register_input_bg_color">#7affffff</color>
+    <color name="user_register_input_hint_color">#bef0f0f0</color>
+
 </resources>

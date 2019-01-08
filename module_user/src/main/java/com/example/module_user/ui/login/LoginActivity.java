@@ -1,17 +1,21 @@
 package com.example.module_user.ui.login;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.util.SoftKeyboardUtil;
 import com.example.lib_common.util.StatusBarUtil;
+import com.example.lib_common.util.ViewUtil;
 import com.example.module_user.Presenter.LoginPresenter;
 import com.example.module_user.R;
 import com.example.module_user.contract.LoginContract;
+import com.example.module_user.ui.register.RegisterActivity;
 
 /**
  * @author tianhuaye
@@ -21,6 +25,7 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
     private ScrollView mScrollView;
     private FrameLayout mHeadContainerFl;
     private LinearLayout mInputContainerLl;
+    private TextView mRegisterTv;
 
     @Override
     protected LoginPresenter<LoginContract.View> createPresenter() {
@@ -29,7 +34,9 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.tv_register) {
+            startActivity(new Intent(this, RegisterActivity.class));
+        }
     }
 
     @Override
@@ -47,6 +54,7 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
         mScrollView = findViewById(R.id.scroll_view);
         mHeadContainerFl = findViewById(R.id.fl_head_container);
         mInputContainerLl = findViewById(R.id.ll_input_container);
+        mRegisterTv = findViewById(R.id.tv_register);
     }
 
     @Override
@@ -59,14 +67,15 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
                     public void run() {
                         //判断现在软键盘的开关状态
                         if (SoftKeyboardUtil.isSoftShowing(LoginActivity.this)) {
-                            mHeadContainerFl.setVisibility(View.GONE);
+                            ViewUtil.setViewGone(mHeadContainerFl);
                         } else {
-                            mHeadContainerFl.setVisibility(View.VISIBLE);
+                            ViewUtil.setViewVisible(mHeadContainerFl);
                         }
                     }
                 }, 100L);
             }
         });
+        mRegisterTv.setOnClickListener(this);
     }
 
     @Override
