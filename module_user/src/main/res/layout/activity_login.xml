@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/user_login_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/person_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/user_login_default_head" />
-
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/fl_head_container"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/user_shape_login_head_circle_bg"></LinearLayout>
-        </RelativeLayout>
+                android:layout_marginTop="50dp"
+                android:background="@drawable/user_shape_login_head_circle_bg">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="Monkey"
-            android:textColor="@color/user_login_title"
-            android:textSize="40dp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/person_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/user_login_default_head" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fl_head_container"
+                android:gravity="center"
+                android:text="Monkey"
+                android:textColor="@color/user_login_title"
+                android:textSize="40dp" />
+
 
         <LinearLayout
+            android:id="@+id/ll_input_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="5"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_30">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,5 +211,5 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>
 
