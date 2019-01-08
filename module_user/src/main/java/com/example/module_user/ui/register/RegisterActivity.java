@@ -1,11 +1,8 @@
 package com.example.module_user.ui.register;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.util.SoftKeyboardUtil;
@@ -13,8 +10,7 @@ import com.example.lib_common.util.StatusBarUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_user.Presenter.RegisterPresenter;
 import com.example.module_user.R;
-import com.example.module_user.container.RegisterContract;
-import com.example.module_user.ui.login.LoginActivity;
+import com.example.module_user.contract.RegisterContract;
 
 /**
  * @author tianhuaye
