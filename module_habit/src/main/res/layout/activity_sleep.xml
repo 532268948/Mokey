@@ -21,8 +21,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -39,8 +38,8 @@
             android:layout_marginTop="80dp"
             android:gravity="center"
             android:text="@string/sleep_morning_alarm_str"
-            android:textSize="14sp"
-            android:textColor="@color/sleep_alarm_str_color" />
+            android:textColor="@color/sleep_alarm_str_color"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_alarm_setting"
@@ -72,7 +71,8 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -89,8 +89,8 @@
             android:layout_marginTop="80dp"
             android:gravity="center"
             android:text="@string/sleep_tip_1"
-            android:textSize="14sp"
-            android:textColor="@color/sleep_alarm_str_color" />
+            android:textColor="@color/sleep_alarm_str_color"
+            android:textSize="14sp" />
 
 
         <TextView
@@ -99,6 +99,24 @@
             android:layout_marginTop="30dp"
             android:text="@string/sleep_tip_2"
             android:textColor="@color/sleep_tip_2_color"
+            android:textSize="14dp" />
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_alarm_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sleep_alarm_bg"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="5dp"
+            android:text="07:38"
+            android:textColor="@color/sleep_alarm_time_color"
             android:textSize="14dp" />
     </LinearLayout>
 </LinearLayout>

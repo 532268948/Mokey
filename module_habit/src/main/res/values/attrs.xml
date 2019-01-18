@@ -14,4 +14,11 @@
         <attr name="left_bottom_image_src" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="ProgressView">
+        <attr name="circleWidth" format="dimension" />
+        <attr name="betaAngle" format="integer" />
+        <attr name="firstColor" format="color" />
+        <attr name="secondColor" format="color" />
+    </declare-styleable>
+
 </resources>
