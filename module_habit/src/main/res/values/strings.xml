@@ -40,4 +40,22 @@
 
     <!--SleepPrepareView-->
     <string name="sleep_prepare_time">%.0f min</string>
+
+    <!--SleepActivity-->
+    <string name="sleep_title_str_1">记录睡眠</string>
+    <string name="sleep_title_str_2">记录暂停</string>
+    <string name="sleep_morning_alarm_str">晨起闹铃</string>
+    <string name="sleep_tip_1">将于%s唤醒你</string>
+    <string name="sleep_tip_2">屏幕朝下放置，开始记录</string>
+    <string name="sleep_tip_3">屏幕朝下放置，继续记录</string>
+    <string name="sleep_tip_4">前往设置</string>
+    <string name="sleep_btn_str">长按结束</string>
+
+    <!--AlarmActivity-->
+    <string name="alarm_setting_title">闹钟设置</string>
+    <string name="alarm_setting_title_bar_right_text">确定</string>
+    <string name="alarm_setting_mode_repeat">重复</string>
+    <string name="alarm_setting_music_str">唤醒音乐</string>
+    <string name="alarm_setting_name">闹钟名称</string>
+    <string name="alarm_setting_name_hint_text">点击编辑名称</string>
 </resources>

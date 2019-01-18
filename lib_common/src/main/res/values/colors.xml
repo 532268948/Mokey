@@ -94,4 +94,18 @@
     <color name="user_register_input_bg_color">#7affffff</color>
     <color name="user_register_input_hint_color">#bef0f0f0</color>
 
+    <!--SleepActivity-->
+    <color name="sleep_title_color">#bef0f0f0</color>
+    <color name="sleep_alarm_str_color">#93f0f0f0</color>
+    <color name="sleep_alarm_time_color">#bef0f0f0</color>
+    <color name="sleep_alarm_bg_stroke_color">#93f0f0f0</color>
+    <color name="sleep_tip_2_color">#bef0f0f0</color>
+
+    <!--AlarmActivity-->
+    <color name="alarm_setting_right_text_color">#646464</color>
+    <color name="alarm_setting_mode_repeat_color">#141414</color>
+    <color name="alarm_setting_mode_music_color">#969696</color>
+    <color name="alarm_setting_divider_line_color">#c8c8c8</color>
+    <color name="alarm_setting_hint_text_color">#969696</color>
+
 </resources>

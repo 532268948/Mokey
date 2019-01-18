@@ -31,14 +31,21 @@ public class TitleBar extends RelativeLayout {
     private int mTitleText;
     private int mTextSize;
     private int mTitleMode;
+    private int mRightText;
+    /**
+     * 背景色
+     */
+    private int mBackgroundColor;
     private ImageView mLeftIv;
     private ImageView mRightIv;
+    private TextView mRightTv;
     private FrameLayout mCenterContainer;
 
     private TextView mTitleTv;
 
     private LeftIconClickListener leftIconClickListener;
     private RightIconClickListener rightIconClickListener;
+    private RightTextClickListener rightTextClickListener;
 
     public TitleBar(Context context) {
         this(context, null);
@@ -65,13 +72,16 @@ public class TitleBar extends RelativeLayout {
             mRightIcon = typedArray.getResourceId(R.styleable.TitleBar_right_icon, 0);
             mTitleText = typedArray.getResourceId(R.styleable.TitleBar_title_text, 0);
             mTitleMode = typedArray.getInteger(R.styleable.TitleBar_title_mode, 0);
-            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 30);
+            mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 50);
+            mBackgroundColor = typedArray.getColor(R.styleable.TitleBar_backgroundColor, getResources().getColor(R.color.white));
+            mRightText = typedArray.getResourceId(R.styleable.TitleBar_right_text, 0);
         } finally {
             typedArray.recycle();
         }
 
         mLeftIv = view.findViewById(R.id.left_icon);
         mRightIv = view.findViewById(R.id.right_icon);
+        mRightTv = view.findViewById(R.id.right_text);
         mCenterContainer = view.findViewById(R.id.center_container);
 
         if (this.mLeftIcon != 0) {
@@ -100,16 +110,28 @@ public class TitleBar extends RelativeLayout {
         } else {
             ViewUtil.setViewVisible(mRightIv);
         }
+        if (this.mRightText != 0) {
+            mRightTv.setText(mRightText);
+            mRightTv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (rightTextClickListener != null) {
+                        rightTextClickListener.rightTextClick();
+                    }
+                }
+            });
+        } else {
+            ViewUtil.setViewGone(mRightTv);
+        }
         if (mTitleMode == MODE_TITLE && mTitleText != 0) {
             setTitleText(mTitleText);
-            if (mTextSize!=0){
-                mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,mTextSize);
+            if (mTextSize != 0) {
+                mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
             }
         }
 
 
-
-        setBackgroundColor(getResources().getColor(R.color.white));
+        setBackgroundColor(mBackgroundColor);
     }
 
     /**
@@ -147,7 +169,7 @@ public class TitleBar extends RelativeLayout {
         if (mTitleTv == null) {
             mCenterContainer.removeAllViews();
             mTitleTv = new TextView(mContext);
-            mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,mTextSize);
+            mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
             mTitleTv.setTextColor(0xFF030303);
             mCenterContainer.addView(mTitleTv);
         }
@@ -185,6 +207,14 @@ public class TitleBar extends RelativeLayout {
      */
     public void setLeftIconClickListener(LeftIconClickListener leftIconClickListener) {
         this.leftIconClickListener = leftIconClickListener;
+        if (mLeftIv != null && this.leftIconClickListener != null) {
+            mLeftIv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TitleBar.this.leftIconClickListener.leftIconClick();
+                }
+            });
+        }
     }
 
     /**
@@ -194,6 +224,26 @@ public class TitleBar extends RelativeLayout {
      */
     public void setRightIconClickListener(RightIconClickListener rightIconClickListener) {
         this.rightIconClickListener = rightIconClickListener;
+        if (mRightIv != null && this.rightIconClickListener != null) {
+            mRightIv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TitleBar.this.rightIconClickListener.rightIconClick();
+                }
+            });
+        }
+    }
+
+    public void setRightTextClickListener(RightTextClickListener rightTextClickListener) {
+        this.rightTextClickListener = rightTextClickListener;
+        if (mRightTv != null && this.rightTextClickListener != null) {
+            mRightTv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TitleBar.this.rightTextClickListener.rightTextClick();
+                }
+            });
+        }
     }
 
     public interface LeftIconClickListener {
@@ -210,5 +260,11 @@ public class TitleBar extends RelativeLayout {
         void rightIconClick();
     }
 
+    public interface RightTextClickListener {
+        /**
+         * 右边文字被点击
+         */
+        void rightTextClick();
+    }
 
 }
