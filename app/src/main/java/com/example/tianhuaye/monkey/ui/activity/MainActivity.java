@@ -8,7 +8,9 @@ import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.activity.BaseBottomTabActivity;
 import com.example.lib_common.test.BlankFragment;
 import com.example.lib_common.util.StatusBarUtil;
+import com.example.module_community.ui.CommunityFragment;
 import com.example.module_habit.ui.HabitFragment;
+import com.example.module_report.ui.ReportFragment;
 import com.example.tianhuaye.monkey.R;
 import com.example.tianhuaye.monkey.contract.MainContract;
 import com.example.tianhuaye.monkey.presenter.MainPresenter;
@@ -47,10 +49,10 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
         if (fragmentList == null) {
             fragmentList = new ArrayList<>();
         }
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new CommunityFragment());
         fragmentList.add(new MusicFragment());
         fragmentList.add(new HabitFragment());
-        fragmentList.add(new BlankFragment());
+        fragmentList.add(new ReportFragment());
         mAdapter = new PlayFragmentAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(mAdapter);
 

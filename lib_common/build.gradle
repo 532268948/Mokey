@@ -44,4 +44,6 @@ dependencies {
     api rootProject.ext.dependencies.arouter_annotation
     api rootProject.ext.dependencies.greenDao
     api rootProject.ext.dependencies.circleImageView
+    api rootProject.ext.dependencies.luban
+    api rootProject.ext.dependencies.matisse
 }

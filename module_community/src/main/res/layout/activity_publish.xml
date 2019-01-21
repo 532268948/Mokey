@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.publish.PublishActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.example.lib_common.base.view.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_title_bar_height"
+            android:background="@color/community_publish_title_bar_bg"
+            app:bottom_line_visible="VISIBLE"
+            app:left_icon="@drawable/common_title_bar_back"
+            app:right_text="@string/publish_title_bar_commit" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="@string/publish_edit_hint_text"
+                android:minHeight="100dp"
+                android:padding="12dp"
+                android:textColorHint="@color/community_publish_edit_hint_text_color"
+                android:textSize="18sp" />
+
+            <com.example.lib_common.base.view.ImageSelectView
+                android:id="@+id/image_select_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

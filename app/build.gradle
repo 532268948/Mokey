@@ -33,6 +33,8 @@ dependencies {
     if (!isModule.toBoolean()) {
         implementation project(':module_habit')
         implementation project(':module_music')
+        implementation project(':module_report')
+        implementation project(':module_community')
     }
     implementation 'com.alibaba:arouter-api:1.2.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2'

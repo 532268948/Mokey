@@ -32,13 +32,12 @@ public class TitleBar extends RelativeLayout {
     private int mTextSize;
     private int mTitleMode;
     private int mRightText;
-    /**
-     * 背景色
-     */
-    private int mBackgroundColor;
+    private int mBottomMode;
+
     private ImageView mLeftIv;
     private ImageView mRightIv;
     private TextView mRightTv;
+    private View mBottomView;
     private FrameLayout mCenterContainer;
 
     private TextView mTitleTv;
@@ -72,8 +71,8 @@ public class TitleBar extends RelativeLayout {
             mRightIcon = typedArray.getResourceId(R.styleable.TitleBar_right_icon, 0);
             mTitleText = typedArray.getResourceId(R.styleable.TitleBar_title_text, 0);
             mTitleMode = typedArray.getInteger(R.styleable.TitleBar_title_mode, 0);
+            mBottomMode = typedArray.getInteger(R.styleable.TitleBar_bottom_line_visible, 0);
             mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 50);
-            mBackgroundColor = typedArray.getColor(R.styleable.TitleBar_backgroundColor, getResources().getColor(R.color.white));
             mRightText = typedArray.getResourceId(R.styleable.TitleBar_right_text, 0);
         } finally {
             typedArray.recycle();
@@ -83,6 +82,7 @@ public class TitleBar extends RelativeLayout {
         mRightIv = view.findViewById(R.id.right_icon);
         mRightTv = view.findViewById(R.id.right_text);
         mCenterContainer = view.findViewById(R.id.center_container);
+        mBottomView = view.findViewById(R.id.bt_line);
 
         if (this.mLeftIcon != 0) {
             mLeftIv.setImageResource(this.mLeftIcon);
@@ -130,8 +130,11 @@ public class TitleBar extends RelativeLayout {
             }
         }
 
-
-        setBackgroundColor(mBackgroundColor);
+        if (mBottomMode == 0) {
+            ViewUtil.setViewGone(mBottomView);
+        } else if (mBottomMode == 1) {
+            ViewUtil.setViewVisible(mBottomView);
+        }
     }
 
     /**

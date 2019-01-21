@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.module_report.R;
+import com.example.module_report.bean.QualityBean;
 import com.example.module_report.ui.ReportDetailActivity;
+
+import java.util.List;
 
 /**
  * @author: tianhuaye
@@ -18,6 +21,10 @@ import com.example.module_report.ui.ReportDetailActivity;
  * @description:
  */
 public class ReportView extends CardView {
+
+    private List<QualityBean> qualityBeans;
+
+    private SleepQualityView mSleepQualityView;
 
     public ReportView(@NonNull Context context) {
         this(context, null);
@@ -29,7 +36,7 @@ public class ReportView extends CardView {
 
     public ReportView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.view_report, this, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_report, this, true);
         setRadius(20);
         setCardElevation(10);
         setOnClickListener(new OnClickListener() {
@@ -38,5 +45,14 @@ public class ReportView extends CardView {
                 getContext().startActivity(new Intent(getContext(), ReportDetailActivity.class));
             }
         });
+
+        mSleepQualityView = findViewById(R.id.sleep_quality_view);
+    }
+
+    public void setData(List<QualityBean> qualityBeans) {
+        this.qualityBeans = qualityBeans;
+        if (mSleepQualityView != null) {
+            mSleepQualityView.setData(this.qualityBeans);
+        }
     }
 }

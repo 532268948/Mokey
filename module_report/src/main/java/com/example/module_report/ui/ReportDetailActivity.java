@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.bean.BaseItem;
+import com.example.lib_common.util.StatusBarUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_report.R;
 import com.example.module_report.bean.DreamBean;
@@ -37,6 +38,12 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void initUIParams() {
+        super.initUIParams();
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);
     }
 
     @Override

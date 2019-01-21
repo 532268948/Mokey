@@ -1,3 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Module_Community</string>
+
+    <!--PublishActivity-->
+    <string name="publish_title_bar_commit">发表</string>
+    <string name="publish_title_bar_cancel">取消</string>
+    <string name="publish_edit_hint_text">说点什么吧...</string>
 </resources>
