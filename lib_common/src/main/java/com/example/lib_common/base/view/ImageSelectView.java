@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 
 import com.example.lib_common.R;
 import com.example.lib_common.base.adapter.SelectedImageAdapter;
+import com.example.lib_common.util.UriUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ import top.zibin.luban.Luban;
  * @date: 2019/1/21 17:29
  * @description: 图片选择控件
  */
-public class ImageSelectView extends RecyclerView {
+public class ImageSelectView extends RecyclerView implements SelectedImageAdapter.AddButtonClick {
 
     private int SPAN_COUNT = 3;
 
@@ -37,6 +38,7 @@ public class ImageSelectView extends RecyclerView {
 
     private List<File> mSelected;
 
+    private AddImageClick addImageClick;
     private Context mContext;
     private SelectedImageAdapter mAdapter;
 
@@ -73,7 +75,7 @@ public class ImageSelectView extends RecyclerView {
             mSelected = new ArrayList<>();
         }
         mAdapter = new SelectedImageAdapter(mContext, mSelected, mItemHelper);
-
+        mAdapter.setAddButtonClickListener(this);
         setAdapter(mAdapter);
 
     }
@@ -86,18 +88,42 @@ public class ImageSelectView extends RecyclerView {
      */
     public void notifyDataChanged(Intent data, String code) {
         List<Uri> uriList = data.getParcelableArrayListExtra(code);
+        List<String> strings = new ArrayList<>();
+        for (Uri uri : uriList) {
+            strings.add(UriUtil.getRealPathFromUri(mContext, uri));
+        }
         try {
             if (mSelected == null) {
                 mSelected = new ArrayList<>();
                 mAdapter = new SelectedImageAdapter(mContext, mSelected, mItemHelper);
+                mAdapter.setAddButtonClickListener(this);
                 setAdapter(mAdapter);
             }
-            mSelected.addAll(Luban.with(mContext).load(uriList).get());
+            mSelected.addAll(Luban.with(mContext).load(strings).setTargetDir(mContext.getExternalCacheDir().getAbsolutePath()).get());
             mAdapter.notifyDataSetChanged();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * 设置添加图片按钮的监听
+     * @param addImageClick
+     */
+    public void setImageClickListener(AddImageClick addImageClick) {
+        this.addImageClick = addImageClick;
+    }
+
+    @Override
+    public void onAddButtonClick(int size) {
+        if (addImageClick != null) {
+            addImageClick.onAddImageClick(size);
+        }
+    }
+
+    public interface AddImageClick {
+        void onAddImageClick(int size);
     }
 
     ItemTouchHelper mItemHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {

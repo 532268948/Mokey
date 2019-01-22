@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center"
-            android:textColor="@color/alarm_setting_right_text_color"
+            android:textColor="@color/title_bar_right_text_color"
             android:textSize="14dp" />
 
     </LinearLayout>

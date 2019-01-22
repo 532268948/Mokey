@@ -17,6 +17,8 @@ ext {
             circleImageView        : 'de.hdodenhof:circleimageview:3.0.0',
             luban                  : 'top.zibin:Luban:1.1.8',
             matisse                : 'com.zhihu.android:matisse:0.5.2-beta4',
+            glide                  : 'com.github.bumptech.glide:glide:3.8.0',
+            andPermission          : 'com.yanzhenjie:permission:2.0.0-rc12',
             rxJava                 : "io.reactivex.rxjava2:rxjava:2.2.3",
             rxAndroid              : "io.reactivex.rxjava2:rxandroid:2.1.0",
             retrofit               : "com.squareup.retrofit2:retrofit:2.4.0",

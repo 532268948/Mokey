@@ -8,7 +8,8 @@
         android:id="@+id/iv_add"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:src="@drawable/publish_photo_add"/>
 
     <ImageView
         android:id="@+id/iv_photo"

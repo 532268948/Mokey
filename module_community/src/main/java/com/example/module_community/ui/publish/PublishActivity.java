@@ -1,20 +1,20 @@
 package com.example.module_community.ui.publish;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.view.ImageSelectView;
 import com.example.lib_common.util.StatusBarUtil;
+import com.example.lib_common.util.ToastUtil;
 import com.example.module_community.R;
 import com.example.module_community.contract.PublishContract;
 import com.example.module_community.presenter.PublishPresenter;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -23,9 +23,10 @@ import com.zhihu.matisse.ui.MatisseActivity;
 /**
  * @author tianhuaye
  */
-public class PublishActivity extends BaseActivity<PublishContract.View, PublishPresenter<PublishContract.View>> implements PublishContract.View {
+public class PublishActivity extends BaseActivity<PublishContract.View, PublishPresenter<PublishContract.View>> implements PublishContract.View, ImageSelectView.AddImageClick {
 
     private final int REQUEST_CODE_CHOOSE = 1;
+    private final int REQUEST_PERMISSION_STORAGE_READ_AND_WRITE = 2;
 
     private ImageSelectView mImageSelectView;
 
@@ -44,14 +45,6 @@ public class PublishActivity extends BaseActivity<PublishContract.View, PublishP
         super.initUIParams();
         StatusBarUtil.setColor(this, getResources().getColor(R.color.community_publish_title_bar_bg), 0);
         StatusBarUtil.setStatusBarDarkMode(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{"Manifest.permission.READ_EXTERNAL_STORAGE"}, 2);
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{"Manifest.permission.WRITE_EXTERNAL_STORAGE"}, 3);
-        }
     }
 
     @Override
@@ -62,11 +55,13 @@ public class PublishActivity extends BaseActivity<PublishContract.View, PublishP
     @Override
     public void initView() {
         mImageSelectView = findViewById(R.id.image_select_view);
+
+
     }
 
     @Override
     public void initListener() {
-
+        mImageSelectView.setImageClickListener(this);
     }
 
     @Override
@@ -82,14 +77,40 @@ public class PublishActivity extends BaseActivity<PublishContract.View, PublishP
         }
     }
 
-    private void selectImage(int size){
+    private void selectImage(int size) {
         Matisse.from(this)
-                .choose(MimeType.ofAll(), false)
+                .choose(MimeType.ofImage(), true)
                 .countable(true)
+                .showSingleMediaType(true)
                 .maxSelectable(size)
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .thumbnailScale(0.85f)
                 .imageEngine(new GlideEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
+    }
+
+    @Override
+    public void onAddImageClick(int size) {
+        checkPermission(size);
+//        selectImage(size);
+    }
+
+    private void checkPermission(final int size) {
+
+        AndPermission.with(this)
+                .runtime()
+                .permission(new String[]{Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE})
+                .onGranted(data -> selectImage(size))
+                .onDenied(data -> refusePermission())
+                .start();
+    }
+
+    private void refusePermission() {
+
+        // 打开权限设置页
+        Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        startActivity(intent);
+        ToastUtil.showShortToastMessage("前往权限设置界面");
+
     }
 }
