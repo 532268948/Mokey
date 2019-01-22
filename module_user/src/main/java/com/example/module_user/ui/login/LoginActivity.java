@@ -8,7 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.base.activity.BaseActivity;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.SoftKeyboardUtil;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.lib_common.util.ViewUtil;
@@ -20,11 +22,13 @@ import com.example.module_user.ui.register.RegisterActivity;
 /**
  * @author tianhuaye
  */
+@Route(path = Constant.Activity.ACTIVITY_LOGIN)
 public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresenter<LoginContract.View>> implements LoginContract.View {
 
     private ScrollView mScrollView;
     private FrameLayout mHeadContainerFl;
     private LinearLayout mInputContainerLl;
+    private TextView mLoginTv;
     private TextView mRegisterTv;
 
     @Override
@@ -34,7 +38,9 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tv_register) {
+        if (v.getId() == R.id.tv_login) {
+            mPresenter.login("15869107730", "123456");
+        } else if (v.getId() == R.id.tv_register) {
             startActivity(new Intent(this, RegisterActivity.class));
         }
     }
@@ -54,6 +60,7 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
         mScrollView = findViewById(R.id.scroll_view);
         mHeadContainerFl = findViewById(R.id.fl_head_container);
         mInputContainerLl = findViewById(R.id.ll_input_container);
+        mLoginTv = findViewById(R.id.tv_login);
         mRegisterTv = findViewById(R.id.tv_register);
     }
 
@@ -75,6 +82,7 @@ public class LoginActivity extends BaseActivity<LoginContract.View, LoginPresent
                 }, 100L);
             }
         });
+        mLoginTv.setOnClickListener(this);
         mRegisterTv.setOnClickListener(this);
     }
 

@@ -1,9 +1,13 @@
 package com.example.lib_common.base;
 
-import java.net.ConnectException;
-import java.util.concurrent.TimeoutException;
+import org.json.JSONException;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.text.ParseException;
 
 import io.reactivex.observers.ResourceObserver;
+import retrofit2.HttpException;
 
 /**
  * project: ModuleDemo
@@ -15,22 +19,37 @@ import io.reactivex.observers.ResourceObserver;
  */
 public abstract class BaseObserver<T> extends ResourceObserver<T> {
     private BaseView mView;
-    public BaseObserver(BaseView view){
-        this.mView=view;
+
+    public BaseObserver(BaseView view) {
+        this.mView = view;
     }
 
     @Override
     public void onError(Throwable e) {
-        if (e instanceof TimeoutException){
-            mView.showError("请求超时");
-        }else if (e instanceof ConnectException){
-            mView.showError("连接异常");
-        }else {
-            e.printStackTrace();
+        String errorMsg = "未知错误";
+        if (e instanceof UnknownHostException) {
+            errorMsg = "网络不可用";
+        } else if (e instanceof SocketTimeoutException) {
+            errorMsg = "请求网络超时";
+        } else if (e instanceof HttpException) {
+            HttpException httpException = (HttpException) e;
+            if (httpException.code() >= 500 && httpException.code() < 600) {
+                errorMsg = "服务器处理请求出错";
+            } else if (httpException.code() >= 400 && httpException.code() < 500) {
+                errorMsg = "服务器无法处理请求";
+            } else if (httpException.code() >= 300 && httpException.code() < 400) {
+                errorMsg = "请求被重定向到其他页面";
+            }
+        } else if (e instanceof ParseException || e instanceof JSONException
+                || e instanceof JSONException) {
+            errorMsg = "数据解析错误";
+            mView.showError(errorMsg);
         }
     }
+
     @Override
     public void onComplete() {
 
     }
 }
+

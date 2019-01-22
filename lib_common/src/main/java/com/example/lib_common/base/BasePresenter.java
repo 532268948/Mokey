@@ -28,8 +28,8 @@ public class BasePresenter<V> {
      *
      * @param disposable
      */
-    protected void addDiaposable(Disposable disposable) {
-        if (compositeDisposable != null) {
+    protected void addDisposable(Disposable disposable) {
+        if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
         }
         compositeDisposable.add(disposable);

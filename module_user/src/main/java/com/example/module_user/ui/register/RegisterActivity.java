@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.util.SoftKeyboardUtil;
 import com.example.lib_common.util.StatusBarUtil;
@@ -15,6 +16,7 @@ import com.example.module_user.contract.RegisterContract;
 /**
  * @author tianhuaye
  */
+@Route(path = "user/register")
 public class RegisterActivity extends BaseActivity<RegisterContract.View,RegisterPresenter<RegisterContract.View>> implements RegisterContract.View {
 
     private LinearLayout mParentLl;

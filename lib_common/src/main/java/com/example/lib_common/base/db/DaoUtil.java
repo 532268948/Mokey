@@ -1,9 +1,5 @@
 package com.example.lib_common.base.db;
 
-import android.content.Context;
-
-import com.example.lib_common.base.db.DBManager;
-import com.example.lib_common.base.db.DbOperate;
 import com.example.lib_common.base.db.entity.DaoSession;
 
 import org.greenrobot.greendao.async.AsyncOperation;
@@ -23,7 +19,7 @@ public class DaoUtil<T> extends DbOperate {
     private DBManager daoManager;
     public DaoSession daoSession;
 
-    public DaoUtil(Context context) {
+    public DaoUtil() {
         daoManager = DBManager.getInstance();
         daoSession = daoManager.getDaoSession();
     }

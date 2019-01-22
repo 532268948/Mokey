@@ -1,7 +1,5 @@
 package com.example.lib_common.base.db.dao;
 
-import android.content.Context;
-
 import com.example.lib_common.base.db.DaoUtil;
 import com.example.lib_common.base.db.entity.User;
 import com.example.lib_common.base.db.entity.UserDao;
@@ -10,14 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author: tianhuaye
- * date:   2018/11/15 15:54
+ * @author: tianhuaye
+ * @date:   2018/11/15 15:54
  * description:
  */
 public class UserDaoUtil extends DaoUtil<User> {
-    public UserDaoUtil(Context context) {
-        super(context);
-    }
 
     /**
      * 单个插入

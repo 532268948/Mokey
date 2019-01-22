@@ -3,6 +3,8 @@ package com.example.lib_common.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.lib_common.base.db.DBManager;
+
 /**
  * @project: ModuleDemo
  * @author : 叶天华
@@ -19,5 +21,12 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext=this;
+        DBManager.getInstance();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        DBManager.getInstance().closeConnection();
     }
 }

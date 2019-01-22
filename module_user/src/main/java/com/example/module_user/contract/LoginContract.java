@@ -13,5 +13,12 @@ public interface LoginContract {
     }
 
     interface Presenter {
+        /**
+         * 登录
+         *
+         * @param name
+         * @param password
+         */
+        void login(String name, String password);
     }
 }

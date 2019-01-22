@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
 import com.example.lib_common.base.inter.ILifeProcessor;
@@ -38,6 +39,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
         } else if (generateViewLayout() != null) {
             setContentView(generateViewLayout());
         }
+        ARouter.getInstance().inject(this);
         mPresenter = createPresenter();
         mPresenter.attachView((V) this, this);
         initView();

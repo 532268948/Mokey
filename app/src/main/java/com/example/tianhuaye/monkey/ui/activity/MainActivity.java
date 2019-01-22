@@ -1,11 +1,14 @@
 package com.example.tianhuaye.monkey.ui.activity;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.activity.BaseBottomTabActivity;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.test.BlankFragment;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_habit.ui.HabitFragment;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
  */
 public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainPresenter<MainContract.View>> implements MainContract.View {
 
+    private FloatingActionButton mFloatingHeadView;
 
     @Override
     public int generateIdLayout() {
@@ -29,10 +33,12 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
 
     @Override
     public void initView() {
-        StatusBarUtil.setColor(this,getResources().getColor(R.color.main_status_bar_color),0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.main_status_bar_color), 0);
         mViewPager = findViewById(R.id.view_pager);
         mTabView = findViewById(R.id.bottom_navigation_view);
+        mFloatingHeadView = findViewById(R.id.floating_head_view);
 
+        mFloatingHeadView.setOnClickListener(this);
         mViewPager.addOnPageChangeListener(this);
         mTabView.setOnNavigationItemSelectedListener(this);
     }
@@ -105,6 +111,8 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.floating_head_view) {
+            ARouter.getInstance().build(Constant.Activity.ACTIVITY_LOGIN).navigation();
+        }
     }
 }
