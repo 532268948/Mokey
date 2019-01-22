@@ -24,7 +24,7 @@ public class CommunityFragment extends BaseListFragment<CommunityContract.View, 
 
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container) {
-        View view = inflater.inflate(R.layout.fragment_community, container, true);
+        View view = inflater.inflate(R.layout.fragment_community, container, false);
 
         return view;
     }

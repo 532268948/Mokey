@@ -5,9 +5,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.example.module_habit.R;
 import com.example.module_habit.contract.SleepContract;
 import com.example.module_habit.presenter.SleepPresenter;
 import com.example.module_habit.ui.alarm.AlarmActivity;
+import com.example.module_habit.view.ProgressView;
 
 /**
  * @author tianhuaye
@@ -28,18 +31,35 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
 
     private final int BOTTOM_SHRESHOLD_VALUE = -7;
     private final int TOP_SHRESHOLD_VALUE = 0;
+    /**
+     * 长按结束进度值
+     */
+    private float percent = 0f;
     private boolean isVibrate = false;
     private boolean isFirst = true;
+//    /**
+//     * 长按结束按钮是否可点击
+//     */
+//    private boolean pressEnd = true;
+
+    /**
+     * 睡眠情况是否已记录
+     */
+    private boolean sleepRecord = false;
 
     private LinearLayout mScreenTopLl;
     private LinearLayout mScreenBottomLl;
     private TextView mAlarmSettingTv;
+    private TextView mPressEndTv;
+    private ProgressView mProgressView;
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
 
     private Vibrator vibrator;
     private Handler handler = new Handler();
+    private TimeCount mTimer;
+    private TimeEnd mEndTimer;
 
     /**
      * 0 下 1过渡 2上
@@ -59,6 +79,11 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
     }
 
     @Override
+    public void initUIParams() {
+        super.initUIParams();
+    }
+
+    @Override
     public int generateIdLayout() {
         return R.layout.activity_sleep;
     }
@@ -68,9 +93,11 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         mScreenTopLl = findViewById(R.id.ll_screen_top);
         mScreenBottomLl = findViewById(R.id.ll_screen_bottom);
         mAlarmSettingTv = findViewById(R.id.tv_alarm_setting);
+        mPressEndTv = findViewById(R.id.tv_press_end);
+        mProgressView = findViewById(R.id.process_view);
 
-        ViewUtil.setViewVisible(mScreenTopLl);
-        ViewUtil.setViewGone(mScreenBottomLl);
+        ViewUtil.setViewGone(mScreenTopLl);
+        ViewUtil.setViewVisible(mScreenBottomLl);
 
     }
 
@@ -83,6 +110,49 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         mAlarmSettingTv.setOnClickListener(this);
+        mPressEndTv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+//                if (!pressEnd) {
+//                    return false;
+//                }
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (!sleepRecord) {
+                            if (mTimer == null) {
+                                mTimer = new TimeCount(4000, 40);
+                            }
+//                        pressEnd = false;
+                            mTimer.start();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (!sleepRecord) {
+                            if (mTimer != null) {
+                                mTimer.cancel();
+                            }
+                            mEndTimer = new TimeEnd(((long) percent) * 20, 40);
+//                        pressEnd = false;
+                            mEndTimer.start();
+                        }
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        if (!sleepRecord) {
+                            if (mTimer != null) {
+                                mTimer.cancel();
+                            }
+                            mEndTimer = new TimeEnd(((long) percent) * 20, 40);
+//                        pressEnd = false;
+                            mEndTimer.start();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -152,7 +222,80 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        vibrator.cancel();
-        mSensorManager.unregisterListener(this);
+        if (mTimer != null) {
+            mTimer.cancel();
+        }
+        if (mEndTimer != null) {
+            mEndTimer.cancel();
+        }
+        if (vibrator != null) {
+            vibrator.cancel();
+        }
+        if (mSensorManager != null) {
+            mSensorManager.unregisterListener(this);
+        }
+    }
+
+    /**
+     * 自定义定时器
+     */
+    private class TimeCount extends CountDownTimer {
+
+        private long totalTime;
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            totalTime = millisInFuture;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            percent = 100f - (((float) millisUntilFinished) / ((float) totalTime)) * 100f;
+            Log.e(TAG, "onTick: " + percent);
+            if (mProgressView != null) {
+                mProgressView.setProgress((int) percent);
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            percent = 100f;
+            if (mProgressView != null) {
+                mProgressView.setProgress(100);
+            }
+//            pressEnd = true;
+            sleepRecord = true;
+        }
+    }
+
+    /**
+     * 自定义定时器
+     */
+    private class TimeEnd extends CountDownTimer {
+
+        private long totalTime;
+
+        public TimeEnd(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+            totalTime = millisInFuture;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            int percent = (int) ((((float) millisUntilFinished) / ((float) totalTime)) * SleepActivity.this.percent);
+            Log.e(TAG, "onTick: " + percent);
+            if (mProgressView != null) {
+                mProgressView.setProgress(percent);
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            percent = 0f;
+            if (mProgressView != null) {
+                mProgressView.setProgress(0);
+            }
+//            pressEnd = true;
+        }
     }
 }

@@ -5,9 +5,14 @@
         <attr name="right_icon" format="reference" />
         <attr name="title_text" format="reference" />
         <attr name="title_text_color" format="color" />
+        <attr name="right_text_color" format="color" />
         <attr name="text_size" format="dimension" />
+        <attr name="right_text_size" format="dimension" />
         <attr name="right_text" format="reference" />
-        <attr name="backgroundColor" format="color" />
+        <attr name="bottom_line_visible">
+            <enum name="VISIBLE" value="1" />
+            <enum name="GONE" value="0" />
+        </attr>
         <attr name="title_mode">
             <enum name="text" value="0" />
             <enum name="tab" value="1" />
@@ -29,6 +34,12 @@
         <attr name="big_bg_color" format="color" />
         <attr name="small_bg_color" format="color" />
         <attr name="big_radius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ImageSelectView">
+        <attr name="delete_icon" format="reference" />
+        <attr name="add_icon" format="reference" />
+        <attr name="span_count" format="integer" />
     </declare-styleable>
 
 </resources>

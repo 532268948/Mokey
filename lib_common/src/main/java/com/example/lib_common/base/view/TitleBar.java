@@ -32,13 +32,14 @@ public class TitleBar extends RelativeLayout {
     private int mTextSize;
     private int mTitleMode;
     private int mRightText;
-    /**
-     * 背景色
-     */
-    private int mBackgroundColor;
+    private int mRightTextColor;
+    private int mRightTextSize;
+    private int mBottomMode;
+
     private ImageView mLeftIv;
     private ImageView mRightIv;
     private TextView mRightTv;
+    private View mBottomView;
     private FrameLayout mCenterContainer;
 
     private TextView mTitleTv;
@@ -72,18 +73,19 @@ public class TitleBar extends RelativeLayout {
             mRightIcon = typedArray.getResourceId(R.styleable.TitleBar_right_icon, 0);
             mTitleText = typedArray.getResourceId(R.styleable.TitleBar_title_text, 0);
             mTitleMode = typedArray.getInteger(R.styleable.TitleBar_title_mode, 0);
+            mBottomMode = typedArray.getInteger(R.styleable.TitleBar_bottom_line_visible, 0);
             mTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_text_size, 50);
-            mBackgroundColor = typedArray.getColor(R.styleable.TitleBar_backgroundColor, getResources().getColor(R.color.white));
             mRightText = typedArray.getResourceId(R.styleable.TitleBar_right_text, 0);
+            mRightTextColor = typedArray.getColor(R.styleable.TitleBar_right_text_color, getResources().getColor(R.color.title_bar_right_text_color));
+            mRightTextSize = typedArray.getDimensionPixelSize(R.styleable.TitleBar_right_text_size, 46);
         } finally {
             typedArray.recycle();
         }
-
         mLeftIv = view.findViewById(R.id.left_icon);
         mRightIv = view.findViewById(R.id.right_icon);
         mRightTv = view.findViewById(R.id.right_text);
         mCenterContainer = view.findViewById(R.id.center_container);
-
+        mBottomView = view.findViewById(R.id.bt_line);
         if (this.mLeftIcon != 0) {
             mLeftIv.setImageResource(this.mLeftIcon);
             mLeftIv.setOnClickListener(new OnClickListener() {
@@ -112,6 +114,8 @@ public class TitleBar extends RelativeLayout {
         }
         if (this.mRightText != 0) {
             mRightTv.setText(mRightText);
+            mRightTv.setTextColor(mRightTextColor);
+            mRightTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
             mRightTv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -129,9 +133,11 @@ public class TitleBar extends RelativeLayout {
                 mTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
             }
         }
-
-
-        setBackgroundColor(mBackgroundColor);
+        if (mBottomMode == 0) {
+            ViewUtil.setViewGone(mBottomView);
+        } else if (mBottomMode == 1) {
+            ViewUtil.setViewVisible(mBottomView);
+        }
     }
 
     /**

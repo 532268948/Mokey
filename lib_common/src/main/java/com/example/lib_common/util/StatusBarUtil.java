@@ -18,20 +18,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * @project: Monkey
  * @author : 叶天华
- * @date   : 2018/12/8
- * @time   : 16:20
- * @email  : 15869107730@163.com
- * @note   :
+ * @project: Monkey
+ * @date : 2018/12/8
+ * @time : 16:20
+ * @email : 15869107730@163.com
+ * @note :
  */
 public class StatusBarUtil {
     public final static int TYPE_MIUI = 0;
     public final static int TYPE_FLYME = 1;
+    private static final int TYPE_ANDROID_M = 3;
     /**
      * 6.0
      */
-    public final static int TYPE_M = 3;
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
     private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view;
 
@@ -74,43 +74,148 @@ public class StatusBarUtil {
     }
 
     /**
+     * 设置状态栏文字为白色
+     *
+     * @param activity
+     * @return 1:MIUUI 2:Flyme 3:android6.0
+     */
+    public static int setStatusBarLightMode(Activity activity) {
+        int result = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (setMIUIStatusBarDarkIcon(activity, false)) {
+                result = TYPE_MIUI;
+            } else if (setMeizuStatusBarDarkIcon(activity, false)) {
+                result = TYPE_FLYME;
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                result = TYPE_ANDROID_M;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 设置状态栏文字为深色
+     *
+     * @param activity
+     * @return 1:MIUUI 2:Flyme 3:android6.0
+     */
+    public static int setStatusBarDarkMode(Activity activity) {
+        int result = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (setMIUIStatusBarDarkIcon(activity, true)) {
+                result = TYPE_MIUI;
+            } else if (setMeizuStatusBarDarkIcon(activity, true)) {
+                result = TYPE_FLYME;
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                result = TYPE_ANDROID_M;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 设置状态栏文字为白色
+     *
+     * @param activity
+     * @param type     1:MIUUI 2:Flyme 3:android6.0
+     */
+    public static void setStatusBarLightMode(Activity activity, int type) {
+        if (type == TYPE_MIUI) {
+            setMIUIStatusBarDarkIcon(activity, false);
+        } else if (type == TYPE_FLYME) {
+            setMeizuStatusBarDarkIcon(activity, false);
+        } else if (type == TYPE_ANDROID_M) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+    }
+
+    /**
+     * 设置状态栏文字为深色
+     *
+     * @param activity
+     * @param type     1:MIUUI 2:Flyme 3:android6.0
+     */
+    public static void setStatusBarDarkMode(Activity activity, int type) {
+        if (type == TYPE_MIUI) {
+            setMIUIStatusBarDarkIcon(activity, true);
+        } else if (type == TYPE_FLYME) {
+            setMeizuStatusBarDarkIcon(activity, true);
+        } else if (type == TYPE_ANDROID_M) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+        }
+    }
+
+
+    /**
      * 修改 MIUI V6  以上状态栏颜色
      */
-    private static void setMIUIStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
-        Class<? extends Window> clazz = activity.getWindow().getClass();
-        try {
-            Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-            Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-            int darkModeFlag = field.getInt(layoutParams);
-            Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-            extraFlagField.invoke(activity.getWindow(), darkIcon ? darkModeFlag : 0, darkModeFlag);
-        } catch (Exception e) {
-            //e.printStackTrace();
+    private static boolean setMIUIStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
+        boolean result = false;
+        Window window = activity.getWindow();
+        if (window != null) {
+            Class clazz = window.getClass();
+            try {
+                int darkModeFlag = 0;
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                if (darkIcon) {
+                    //Status bar transparent and black font
+                    extraFlagField.invoke(window, darkModeFlag, darkModeFlag);
+                } else {
+                    //Clear black font
+                    extraFlagField.invoke(window, 0, darkModeFlag);
+                }
+                result = true;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // The development version 7.7.13 and later uses the system API. The old method is invalid but does not give an error, so both methods must be added
+                    if (darkIcon) {
+                        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    } else {
+                        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return result;
     }
 
     /**
      * 修改魅族状态栏字体颜色 Flyme 4.0
      */
-    private static void setMeizuStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
-        try {
-            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
-            Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
-            Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");
-            darkFlag.setAccessible(true);
-            meizuFlags.setAccessible(true);
-            int bit = darkFlag.getInt(null);
-            int value = meizuFlags.getInt(lp);
-            if (darkIcon) {
-                value |= bit;
-            } else {
-                value &= ~bit;
+    private static boolean setMeizuStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
+        boolean result = false;
+        Window window = activity.getWindow();
+        if (window != null) {
+            try {
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class
+                        .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class
+                        .getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (darkIcon) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+                result = true;
+            } catch (Exception e) {
+
             }
-            meizuFlags.setInt(lp, value);
-            activity.getWindow().setAttributes(lp);
-        } catch (Exception e) {
-            //e.printStackTrace();
         }
+        return result;
     }
 
     /**

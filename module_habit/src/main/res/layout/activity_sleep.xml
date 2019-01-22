@@ -12,7 +12,7 @@
     <com.example.lib_common.base.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
-        app:backgroundColor="@color/transport"
+        android:background="@color/transport"
         app:left_icon="@drawable/common_title_bar_back" />
 
     <LinearLayout
@@ -100,22 +100,30 @@
             android:text="@string/sleep_tip_2"
             android:textColor="@color/sleep_tip_2_color"
             android:textSize="14dp" />
-        <ProgressBar
-            android:layout_width="match_parent"
+
+        <com.example.module_habit.view.ProgressView
+            android:id="@+id/process_view"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/tv_alarm_setting"
+            android:layout_weight="1"
+            android:layout_margin="50dp"
+            app:circleWidth="16dp"
+            app:firstColor="#d3d3d3"
+            app:secondColor="#3B95C8" />
+
+
+        <Button
+            android:id="@+id/tv_press_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/sleep_alarm_bg"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingTop="5dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="5dp"
-            android:text="07:38"
+            android:clickable="true"
+            android:paddingLeft="26dp"
+            android:paddingTop="10dp"
+            android:paddingRight="26dp"
+            android:paddingBottom="10dp"
+            android:text="@string/sleep_press_end_str"
             android:textColor="@color/sleep_alarm_time_color"
             android:textSize="14dp" />
     </LinearLayout>

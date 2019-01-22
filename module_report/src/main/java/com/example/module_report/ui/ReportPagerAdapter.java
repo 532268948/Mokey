@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.bean.BaseItem;
+import com.example.module_report.bean.QualityBean;
 import com.example.module_report.view.ReportView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +51,14 @@ public class ReportPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         if (reportBeanList != null && reportBeanList.size() != 0) {
             ReportView view = new ReportView(mContext);
+            List<QualityBean> qualityBeans = new ArrayList<>();
+            for (int i = 0; i < 20; i++) {
+                QualityBean qualityBean = new QualityBean();
+                qualityBean.setType(i % 4);
+                qualityBean.setGrade(10 + (i % 5) * 20);
+                qualityBeans.add(qualityBean);
+            }
+            view.setData(qualityBeans);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             container.addView(view);
             return view;

@@ -86,23 +86,21 @@ public class ProgressView extends View {
 
         for (int i = 0; i < n; i++) {
             int attr = ta.getIndex(i);
-            switch (attr) {
-                case R.styleable.ProgressView_firstColor:
-                    // 默认底色为亮灰色
-                    firstColor = ta.getColor(attr, Color.LTGRAY);
-                    break;
-                case R.styleable.ProgressView_secondColor:
-                    // 默认进度条颜色为蓝色
+            // 默认底色为亮灰色
+            if (attr == R.styleable.ProgressView_firstColor) {
+                firstColor = ta.getColor(attr, Color.LTGRAY);
+
+            } else // 默认进度条颜色为蓝色
+                if (attr == R.styleable.ProgressView_secondColor) {
                     secondColor = ta.getColor(attr, Color.BLUE);
-                    break;
-                case R.styleable.ProgressView_circleWidth:
-                    // 默认圆弧宽度为6dp
-                    circleWidth = ta.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics()));
-                    break;
-                default:
-                    break;
-            }
+
+                } else // 默认圆弧宽度为6dp
+                    if (attr == R.styleable.ProgressView_circleWidth) {
+                        circleWidth = ta.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics()));
+
+                    } else {
+                    }
         }
         ta.recycle();
 
@@ -182,25 +180,27 @@ public class ProgressView extends View {
     private void drawText(Canvas canvas, int center, int radius) {
         // 计算进度
         float result = (currentValue * 100.0f / maxValue * 1.0f);
-        String percent = String.format("%.1f", result) + "%";
-        // 设置文字居中，文字的x坐标要注意
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        // 设置文字颜色
-        textPaint.setColor(Color.BLACK);
-        // 设置要绘制的文字大小
-        textPaint.setTextSize(40);
-        // 注意此处一定要重新设置宽度为0,否则绘制的文字会重叠
-        textPaint.setStrokeWidth(0);
-        // 文字边框
-        Rect bounds = new Rect();
-        // 获得绘制文字的边界矩形
-        textPaint.getTextBounds(percent, 0, percent.length(), bounds);
-        // 获取绘制Text时的四条线
-        Paint.FontMetricsInt fontMetrics = textPaint.getFontMetricsInt();
-        // 计算文字的基线
-        int baseline = center + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
-        // 绘制表示进度的文字
-        canvas.drawText(percent, center, baseline, textPaint);
+        if (result >= maxValue) {
+            String percent = "睡眠结束";
+            // 设置文字居中，文字的x坐标要注意
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            // 设置文字颜色
+            textPaint.setColor(Color.BLACK);
+            // 设置要绘制的文字大小
+            textPaint.setTextSize(60);
+            // 注意此处一定要重新设置宽度为0,否则绘制的文字会重叠
+            textPaint.setStrokeWidth(0);
+            // 文字边框
+            Rect bounds = new Rect();
+            // 获得绘制文字的边界矩形
+            textPaint.getTextBounds(percent, 0, percent.length(), bounds);
+            // 获取绘制Text时的四条线
+            Paint.FontMetricsInt fontMetrics = textPaint.getFontMetricsInt();
+            // 计算文字的基线
+            int baseline = center + (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
+            // 绘制表示进度的文字
+            canvas.drawText(percent, center, baseline, textPaint);
+        }
     }
 
     /**

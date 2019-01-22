@@ -81,6 +81,11 @@
             android:text="@string/report_view_sleep_quality_analysis_str"
             android:textSize="12dp" />
 
+        <com.example.module_report.view.SleepQualityView
+            android:id="@+id/sleep_quality_view"
+            android:layout_width="match_parent"
+            android:layout_height="160dp" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,9 +120,8 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/report_shape_blue_circle"
                 android:text="入睡时间 23:40"
                 android:textColor="@color/report_view_bottom_text_color"
@@ -139,9 +143,8 @@
                 android:textSize="10dp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/report_shape_blue_circle"
                 android:text="入睡时间 23:40"
                 android:textColor="@color/report_view_bottom_text_color"
