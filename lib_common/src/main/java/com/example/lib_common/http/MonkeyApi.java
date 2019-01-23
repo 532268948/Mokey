@@ -27,4 +27,7 @@ public interface MonkeyApi {
      */
     @POST(Constant.Url.USER_LOGIN)
     Observable<ResponseWrapper<LoginItem>> login(@Query("name") String name, @Query("password") String password);
+
+    @POST(Constant.Url.USER_INFORMATION)
+    Observable<ResponseWrapper<LoginItem>> getUserInformation(@Query("token") String token);
 }

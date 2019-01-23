@@ -1,9 +1,9 @@
 package com.example.lib_common.base.db.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * author: tianhuaye
@@ -27,10 +27,12 @@ public class User {
     private String head;
     @Property
     private Long loginTime;
+    @Property
+    private int gender;
 
-    @Generated(hash = 55234269)
+    @Generated(hash = 479324520)
     public User(Long id, String name, String password, String nickname,
-            String phone, String head, Long loginTime) {
+                String phone, String head, Long loginTime, int gender) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -38,6 +40,7 @@ public class User {
         this.phone = phone;
         this.head = head;
         this.loginTime = loginTime;
+        this.gender = gender;
     }
 
     @Generated(hash = 586692638)
@@ -98,5 +101,13 @@ public class User {
 
     public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

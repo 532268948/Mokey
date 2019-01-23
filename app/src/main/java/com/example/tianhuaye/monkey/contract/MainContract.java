@@ -9,7 +9,7 @@ import com.example.lib_common.base.BaseView;
  */
 public interface MainContract {
     interface View extends BaseView{
-
+        void gotoLoginActivity();
     }
 
     interface Presenter{

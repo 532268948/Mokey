@@ -1,6 +1,9 @@
 package com.example.lib_common.base.db.dao;
 
+import com.example.lib_common.base.db.DBManager;
 import com.example.lib_common.base.db.DaoUtil;
+import com.example.lib_common.base.db.DbOperateListener;
+import com.example.lib_common.base.db.entity.DaoSession;
 import com.example.lib_common.base.db.entity.User;
 import com.example.lib_common.base.db.entity.UserDao;
 
@@ -9,10 +12,14 @@ import java.util.List;
 
 /**
  * @author: tianhuaye
- * @date:   2018/11/15 15:54
+ * @date: 2018/11/15 15:54
  * description:
  */
 public class UserDaoUtil extends DaoUtil<User> {
+
+    public UserDaoUtil(DBManager dbManager, DaoSession daoSession) {
+        super(dbManager, daoSession);
+    }
 
     /**
      * 单个插入
@@ -34,13 +41,25 @@ public class UserDaoUtil extends DaoUtil<User> {
      * 条件查询
      */
     public void queryWhereUser(long memberId) {
+        setOnQuerySingleListener(null);
+        query(User.class, UserDao.Properties.Id.eq(memberId));
+    }
+
+    /**
+     * 条件查询
+     * @param memberId 用户id
+     * @param querySingleListener 查询结果监听回调
+     */
+    public void queryWhereUser(long memberId, DbOperateListener.OnQuerySingleListener querySingleListener) {
+        setOnQuerySingleListener(querySingleListener);
         query(User.class, UserDao.Properties.Id.eq(memberId));
     }
 
     /**
      * 查询全部
      */
-    public void queryAllUser() {
+    public void queryAllUser(DbOperateListener.OnQueryAllListener onQueryAllListener) {
+        setOnQueryAllListener(onQueryAllListener);
         queryAll(User.class, null);
 //        return users;
     }
@@ -71,6 +90,17 @@ public class UserDaoUtil extends DaoUtil<User> {
      * 单个更新
      */
     public void updateSingleUser(User user) {
+        setOnUpdateListener(null);
+        updateSingle(User.class, user);
+    }
+
+    /**
+     * 单个更新
+     * @param user
+     * @param updateListener 更新结果监听回调
+     */
+    public void updateSingleUser(User user, DbOperateListener.OnUpdateListener updateListener) {
+        setOnUpdateListener(updateListener);
         updateSingle(User.class, user);
     }
 

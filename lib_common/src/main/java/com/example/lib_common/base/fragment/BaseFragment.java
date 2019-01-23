@@ -90,6 +90,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
 
     /**
      * 布局导入及控件初始化
+     *
      * @param inflater
      * @param container
      * @return
@@ -120,7 +121,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
 
     @Override
     public void showError(String message) {
-        ToastUtil.showShortToastMessage(message);
+        ToastUtil.showShortToastMessage(getContext(), message);
     }
 
     @Override

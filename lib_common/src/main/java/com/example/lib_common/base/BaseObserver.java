@@ -43,8 +43,8 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
         } else if (e instanceof ParseException || e instanceof JSONException
                 || e instanceof JSONException) {
             errorMsg = "数据解析错误";
-            mView.showError(errorMsg);
         }
+        mView.showError(errorMsg);
     }
 
     @Override

@@ -10,7 +10,11 @@ package com.example.lib_common.common;
  */
 public final class Constant {
 
-    public static final String BASE_URL = "http://192.168.1.107:8080/";
+    public static final int SPLASH_DURING = 3000;
+
+    public static final String BASE_URL = "http://192.168.2.119:8080/";
+    public static String TOKEN = "";
+    public static Long USER_ID = 0L;
 
     public static class Activity {
         /**
@@ -25,10 +29,16 @@ public final class Constant {
 
     public static class Url {
         public static final String USER_LOGIN = "user/login";
+        public static final String USER_INFORMATION = "user/information";
     }
 
     public static class httpCode {
-        public static final String SUCCESS = "200";
-        public static final String WITHOUT_LOGIN = "401";
+        public static final int SUCCESS = 200;
+        public static final int WITHOUT_LOGIN = 401;
+    }
+
+    public static class RequestAndResultCode {
+        public static final int MAIN_REQUEST = 1;
+        public static final int LOGIN_RESULT_OK = 2;
     }
 }

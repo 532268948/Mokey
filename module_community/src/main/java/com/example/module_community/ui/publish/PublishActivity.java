@@ -110,7 +110,7 @@ public class PublishActivity extends BaseActivity<PublishContract.View, PublishP
         // 打开权限设置页
         Intent intent = new Intent(Settings.ACTION_SETTINGS);
         startActivity(intent);
-        ToastUtil.showShortToastMessage("前往权限设置界面");
+        ToastUtil.showShortToastMessage(this,"前往权限设置界面");
 
     }
 }

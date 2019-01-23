@@ -11,17 +11,17 @@ import org.greenrobot.greendao.query.WhereCondition;
 import java.util.List;
 
 /**
- * author: tianhuaye
+ * @author: tianhuaye
  * date:   2018/11/15 15:39
- * description:
+ * description: 异步操作数据库
  */
 public class DaoUtil<T> extends DbOperate {
     private DBManager daoManager;
     public DaoSession daoSession;
 
-    public DaoUtil() {
-        daoManager = DBManager.getInstance();
-        daoSession = daoManager.getDaoSession();
+    public DaoUtil(DBManager dbManager, DaoSession daoSession) {
+        this.daoManager = dbManager;
+        this.daoSession = daoSession;
     }
 
     /**

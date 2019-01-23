@@ -2,6 +2,8 @@ package com.example.lib_common.base.bean.response;
 
 import com.example.lib_common.base.bean.BaseItem;
 
+import java.io.Serializable;
+
 /**
  * @author : 叶天华
  * @project: Monkey
@@ -10,7 +12,7 @@ import com.example.lib_common.base.bean.BaseItem;
  * @email : 15869107730@163.com
  * @note :
  */
-public class LoginItem extends BaseItem {
+public class LoginItem extends BaseItem implements Serializable {
 
     /**
      * head :
@@ -26,6 +28,7 @@ public class LoginItem extends BaseItem {
     private String nickname;
     private String name;
     private Long id;
+    private String token;
 
     public String getHead() {
         return head;
@@ -73,5 +76,13 @@ public class LoginItem extends BaseItem {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

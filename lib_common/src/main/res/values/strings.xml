@@ -25,4 +25,7 @@
 
     <string name="common_fold">收起</string>
     <string name="common_un_fold">展开</string>
+
+    <!--WaittingDialog-->
+    <string name="common_dialog_waiting">请等待...</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.module_user.contract;
 
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.base.bean.response.LoginItem;
 
 /**
  * @author: tianhuaye
@@ -10,6 +11,12 @@ import com.example.lib_common.base.BaseView;
 public interface LoginContract {
 
     interface View extends BaseView {
+        /**
+         * 登录成功后的回调方法
+         *
+         * @param loginInfo
+         */
+        void loginSuccess(LoginItem loginInfo);
     }
 
     interface Presenter {

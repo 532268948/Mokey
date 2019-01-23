@@ -9,6 +9,7 @@ import android.view.View;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.base.dialog.WaittingDialog;
 import com.example.lib_common.base.inter.ILifeProcessor;
 import com.example.lib_common.util.ActivityManager;
 import com.example.lib_common.util.MessageLooper;
@@ -26,6 +27,7 @@ import com.example.lib_common.util.ToastUtil;
 public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCompatActivity implements View.OnClickListener, ILifeProcessor, BaseView {
 
     public T mPresenter;
+    public WaittingDialog mWaittingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +64,8 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
 
     @Override
     public void showError(String message) {
-        ToastUtil.showShortToastMessage(message);
+        dismissDialog();
+        ToastUtil.showShortToastMessage(this, message);
     }
 
     @Override
@@ -94,12 +97,19 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
 
     @Override
     public void showDialog(String message) {
-
+        if (mWaittingDialog == null) {
+            mWaittingDialog = new WaittingDialog(this);
+        }
+        if (!mWaittingDialog.isShowing()) {
+            mWaittingDialog.showWaitingDialog();
+        }
     }
 
     @Override
     public void dismissDialog() {
-
+        if (mWaittingDialog != null && mWaittingDialog.isShowing()) {
+            mWaittingDialog.hideWaitingDialog();
+        }
     }
 
     @Override
@@ -134,6 +144,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
 
     /**
      * 注册监听器用此方法
+     *
      * @param cmd
      * @param l
      */

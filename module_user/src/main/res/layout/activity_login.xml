@@ -63,7 +63,7 @@
                     android:src="@drawable/user_login_account" />
 
                 <EditText
-                    android:id="@+id/account"
+                    android:id="@+id/et_account"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -108,7 +108,7 @@
                     android:src="@drawable/user_login_password" />
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/et_password"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
