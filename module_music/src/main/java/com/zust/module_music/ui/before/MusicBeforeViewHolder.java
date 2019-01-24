@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
 import com.example.lib_common.base.bean.MusicItem;
-import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
 
@@ -47,7 +46,7 @@ class MusicBeforeViewHolder extends BaseRecyclerHolder {
                 mNameTv.setText(musicItem.getName());
             }
             if (mLengthTv != null) {
-                mLengthTv.setText(DateUtil.timeStampToStr1(musicItem.getDuration()));
+                mLengthTv.setText(musicItem.getDuration());
             }
             if (mListenNumberTv != null) {
                 mListenNumberTv.setText(String.format(mContext.getResources().getString(R.string.music_before_item_number), musicItem.getPlayTimes()));

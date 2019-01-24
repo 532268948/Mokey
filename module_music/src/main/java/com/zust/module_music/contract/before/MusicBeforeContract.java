@@ -16,11 +16,35 @@ import java.util.List;
 public interface MusicBeforeContract {
 
     interface View extends BaseView {
-        void updateMusic(List<MusicItem> musicItemList,int position);
+        void updateMusic(List<MusicItem> musicItemList, int position);
+
+        void addMoreData(List<MusicItem> musicItemList);
+
+        void refreshData(List<MusicItem> musicItemList);
+
+        void updateCurrentPage(int page);
+
+        void noMoreData();
     }
 
     interface Presenter {
-    }
+        /**
+         * 从数据库获取数据
+         *
+         * @param currentPage
+         */
+        void getDataFromDB(int currentPage);
 
-    ;
+        /**
+         * 获取网络数据
+         *
+         * @param currentPage
+         */
+        void getSleepBeforeMusicList(int currentPage);
+
+        /**
+         * 刷新数据
+         */
+        void refreshSleepBeforeMusicList();
+    }
 }

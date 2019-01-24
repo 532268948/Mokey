@@ -1,5 +1,8 @@
 package com.example.lib_common.base;
 
+import com.example.lib_common.base.bean.ResponseWrapper;
+import com.example.lib_common.common.Constant;
+
 import org.json.JSONException;
 
 import java.net.SocketTimeoutException;
@@ -17,7 +20,7 @@ import retrofit2.HttpException;
  * email  : 15869107730@163.com
  * note   :
  */
-public abstract class BaseObserver<T> extends ResourceObserver<T> {
+public class BaseObserver<T> extends ResourceObserver<T> {
     private BaseView mView;
 
     public BaseObserver(BaseView view) {
@@ -44,7 +47,26 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
                 || e instanceof JSONException) {
             errorMsg = "数据解析错误";
         }
+        mView.dismissDialog();
         mView.showError(errorMsg);
+    }
+
+
+    @Override
+    public void onNext(T t) {
+        ResponseWrapper responseWrapper = (ResponseWrapper) t;
+        if (responseWrapper == null) {
+            mView.showError(Constant.MESSAGE_GET_DATA_FALSE);
+            return;
+        }
+        if (responseWrapper.getCode()==null){
+            mView.showError(Constant.MESSAGE_GET_DATA_FALSE);
+            return;
+        }
+        if (responseWrapper.getCode() == Constant.HttpCode.WITHOUT_LOGIN || responseWrapper.getCode() == Constant.HttpCode.WITHOUT_REGISTER) {
+            mView.clearLoginInformation();
+            return;
+        }
     }
 
     @Override

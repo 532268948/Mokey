@@ -8,7 +8,7 @@ package com.example.lib_common.base.bean;
  * @email : 15869107730@163.com
  * @note : 接口返回数据统一格式
  */
-public class ResponseWrapper<T extends BaseItem> {
+public class ResponseWrapper<T> {
     /**
      * 状态码
      */

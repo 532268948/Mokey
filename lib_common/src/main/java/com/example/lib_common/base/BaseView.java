@@ -11,6 +11,7 @@ package com.example.lib_common.base;
 public interface BaseView {
     /**
      * 显示dialog
+     *
      * @param message 消息内容
      */
     void showDialog(String message);
@@ -37,6 +38,7 @@ public interface BaseView {
 
     /**
      * 错误信息dialog提示
+     *
      * @param message
      * @param code
      */
@@ -44,7 +46,13 @@ public interface BaseView {
 
     /**
      * 信息toast提示
+     *
      * @param message
      */
     void showError(String message);
+
+    /**
+     * 清除登录信息
+     */
+    void clearLoginInformation();
 }

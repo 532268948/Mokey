@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.bean.BaseItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
+import com.example.lib_common.base.inter.OnLoadMoreListener;
+import com.example.lib_common.base.view.MoreViewHolder;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
     protected List<BaseItem> mItems;
     protected Context mContext;
     protected OnItemClickListener onItemClickListener;
+    protected OnLoadMoreListener onLoadMoreListener;
 
     public BaseRecyclerAdapter(Context context) {
         this.mContext = context;
@@ -48,7 +51,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
     public int getItemViewType(int position) {
         BaseItem item = (BaseItem) getItem(position);
         if (item != null) {
-            return item.itemType;
+            return item.getItemType();
         }
         return 0;
     }
@@ -56,6 +59,14 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
     @Override
     public void onViewAttachedToWindow(@NonNull BaseRecyclerHolder holder) {
         super.onViewAttachedToWindow(holder);
+        if (holder instanceof MoreViewHolder) {
+            MoreViewHolder moreHolder = (MoreViewHolder) holder;
+            if (moreHolder.isUploadMore) {
+                if (onLoadMoreListener != null) {
+                    onLoadMoreListener.onLoadMore();
+                }
+            }
+        }
         if (onItemClickListener != null) {
             holder.setOnItemClickListener(onItemClickListener);
         }
@@ -67,6 +78,10 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
         if (onItemClickListener != null) {
             holder.removeItemClickListener();
         }
+    }
+
+    public void addLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
     }
 
     public void addItemClickListener(OnItemClickListener itemClickListener) {

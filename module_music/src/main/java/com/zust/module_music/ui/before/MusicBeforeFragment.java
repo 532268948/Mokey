@@ -6,18 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
+import com.example.lib_common.base.bean.HasMoreItem;
 import com.example.lib_common.base.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseListFragment;
 import com.example.lib_common.base.inter.OnItemClickListener;
+import com.example.lib_common.base.inter.OnLoadMoreListener;
+import com.example.lib_common.common.Constant;
+import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
 import com.zust.module_music.contract.before.MusicBeforeContract;
 import com.zust.module_music.presenter.before.MusicBeforePresenter;
 import com.zust.module_music.ui.MusicFragment;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,8 +30,10 @@ import java.util.List;
  * @email : 15869107730@163.com
  * @note :
  */
-public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.View, MusicBeforePresenter<MusicBeforeContract.View>> implements MusicBeforeContract.View, OnItemClickListener {
+public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.View, MusicBeforePresenter<MusicBeforeContract.View>> implements MusicBeforeContract.View, OnItemClickListener, OnLoadMoreListener {
 
+
+    private int currentPage = 0;
     private MusicBeforeAdapter mAdapter;
 
 
@@ -52,7 +56,7 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRefreshLayout.setRefreshing(false);
+                refreshData();
             }
         });
     }
@@ -61,20 +65,15 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
     public void initData() {
         if (mItems == null) {
             mItems = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                MusicItem musicItem = new MusicItem();
-                musicItem.setName("夜空中最亮的星" + i);
-                Date date = new Date();
-                musicItem.setDuration(date.getTime() - i * 1000);
-                musicItem.setPlayTimes(i * 10000);
-                mItems.add(musicItem);
-            }
         }
+//        mPresenter.getDataFromDB(0);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new MusicBeforeAdapter(getContext());
         mAdapter.addItemClickListener(this);
+        mAdapter.addLoadMoreListener(this);
         mAdapter.setData(mItems);
         mRecyclerView.setAdapter(mAdapter);
+        mPresenter.getSleepBeforeMusicList(currentPage);
     }
 
     @Override
@@ -86,25 +85,132 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
     public void onItemClick(BaseRecyclerHolder holder, int position) {
         if (holder instanceof MusicBeforeViewHolder) {
             MusicItem musicItem;
-            if (mItems!=null){
-                for (int i = 0; i < mItems.size(); i++) {
-                    musicItem=(MusicItem)mItems.get(i);
-                    if (i==position){
+            if (mItems != null) {
+                for (int i = 0; i < mItems.size() - 1; i++) {
+                    musicItem = (MusicItem) mItems.get(i);
+                    if (i == position) {
                         musicItem.setPlaying(true);
-                    }else {
+                    } else {
                         musicItem.setPlaying(false);
                     }
                 }
                 mAdapter.notifyDataSetChanged();
             }
-            MusicFragment fragment=(MusicFragment)getParentFragment();
+            MusicFragment fragment = (MusicFragment) getParentFragment();
             fragment.showBigMusicView();
         }
     }
 
-
     @Override
     public void updateMusic(List<MusicItem> musicItemList, int position) {
 
+    }
+
+    @Override
+    public void addMoreData(List<MusicItem> musicItemList) {
+        if (mItems == null) {
+            mItems = new ArrayList<>();
+            if (mAdapter != null) {
+                mAdapter.setData(mItems);
+            }
+        }
+        if (mItems.size() == 0) {
+            if (musicItemList != null && musicItemList.size() != 0) {
+                showNormal();
+                mItems.addAll(musicItemList);
+                mItems.add(new HasMoreItem(true, Constant.ItemType.LOAD_MORE_DATA));
+                if (mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
+            } else {
+                showEmpty();
+            }
+        } else {
+            if (musicItemList != null && musicItemList.size() != 0) {
+                if (mItems.get(mItems.size() - 1).getItemType() == Constant.ItemType.LOAD_MORE_DATA) {
+                    mItems.addAll(mItems.size() - 2, musicItemList);
+                }
+                if (mAdapter != null) {
+                    mAdapter.notifyItemRangeChanged(mItems.size() - musicItemList.size() - 1, musicItemList.size() + 1);
+                }
+            } else {
+                if (mItems.get(mItems.size() - 1).getItemType() == Constant.ItemType.LOAD_MORE_DATA) {
+                    ((HasMoreItem) mItems.get(mItems.size() - 1)).setHasMore(false);
+                }
+                mAdapter.notifyItemChanged(mItems.size() - 1);
+            }
+        }
+    }
+
+    @Override
+    public void refreshData(List<MusicItem> musicItemList) {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.setRefreshing(false);
+        }
+        if (mItems == null) {
+            mItems = new ArrayList<>();
+            if (mAdapter != null) {
+                mAdapter.setData(mItems);
+            }
+        }
+        mItems.clear();
+        if (musicItemList != null && musicItemList.size() != 0) {
+            showNormal();
+            mItems.addAll(musicItemList);
+            mItems.add(new HasMoreItem(true, Constant.ItemType.LOAD_MORE_DATA));
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+        } else {
+            showEmpty();
+        }
+    }
+
+    @Override
+    public void updateCurrentPage(int page) {
+        currentPage = page;
+    }
+
+    @Override
+    public void noMoreData() {
+        if (mItems != null) {
+            if (mItems.get(mItems.size() - 1).getItemType() == Constant.ItemType.LOAD_MORE_DATA) {
+                HasMoreItem item = (HasMoreItem) mItems.get(mItems.size() - 1);
+                if (item.getHasMore()) {
+                    item.setHasMore(false);
+                    if (mAdapter != null) {
+                        mAdapter.notifyItemChanged(mItems.size() - 1);
+                    }
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void showNormal() {
+        super.showNormal();
+        ViewUtil.setViewVisible(mRecyclerView);
+        ViewUtil.setEmptyViewVisible(mEmpty, getContext(), false, false);
+    }
+
+    @Override
+    public void showEmpty() {
+        super.showEmpty();
+        ViewUtil.setEmptyViewVisible(mEmpty, getContext(), true, false);
+        ViewUtil.setViewGone(mRecyclerView);
+    }
+
+    @Override
+    public void onLoadMore() {
+        mPresenter.getSleepBeforeMusicList(currentPage);
+    }
+
+    private void refreshData() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.setRefreshing(true);
+        }
+        currentPage = 0;
+        mPresenter.refreshSleepBeforeMusicList();
     }
 }

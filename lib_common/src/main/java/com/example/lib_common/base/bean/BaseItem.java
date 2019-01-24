@@ -10,5 +10,13 @@ package com.example.lib_common.base.bean;
  * note   :
  */
 public class BaseItem {
-    public int itemType;
+    protected int itemType;
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
 }

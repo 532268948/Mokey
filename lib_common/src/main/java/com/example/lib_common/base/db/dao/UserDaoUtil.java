@@ -41,13 +41,13 @@ public class UserDaoUtil extends DaoUtil<User> {
      * 条件查询
      */
     public void queryWhereUser(long memberId) {
-        setOnQuerySingleListener(null);
-        query(User.class, UserDao.Properties.Id.eq(memberId));
+        queryWhereUser(memberId, null);
     }
 
     /**
      * 条件查询
-     * @param memberId 用户id
+     *
+     * @param memberId            用户id
      * @param querySingleListener 查询结果监听回调
      */
     public void queryWhereUser(long memberId, DbOperateListener.OnQuerySingleListener querySingleListener) {
@@ -61,7 +61,6 @@ public class UserDaoUtil extends DaoUtil<User> {
     public void queryAllUser(DbOperateListener.OnQueryAllListener onQueryAllListener) {
         setOnQueryAllListener(onQueryAllListener);
         queryAll(User.class, null);
-//        return users;
     }
 
     /**
@@ -96,6 +95,7 @@ public class UserDaoUtil extends DaoUtil<User> {
 
     /**
      * 单个更新
+     *
      * @param user
      * @param updateListener 更新结果监听回调
      */

@@ -28,4 +28,8 @@
 
     <!--WaittingDialog-->
     <string name="common_dialog_waiting">请等待...</string>
+
+    <!--RecyclerView-->
+    <string name="common_recycler_view_no_more_data">—— 我是有底线的 ——</string>
+    <string name="common_recycler_view_loading">加载中...</string>
 </resources>

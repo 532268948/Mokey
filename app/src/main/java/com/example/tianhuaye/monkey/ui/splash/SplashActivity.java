@@ -20,8 +20,6 @@ import com.example.tianhuaye.monkey.ui.activity.MainActivity;
  */
 public class SplashActivity extends BaseActivity<SplashContract.View, SplashPresenter<SplashContract.View>> implements SplashContract.View {
 
-    private SharedPreferencesUtil sharedPreferencesUtil;
-
     @Override
     protected SplashPresenter<SplashContract.View> createPresenter() {
         return new SplashPresenter<>();
@@ -80,13 +78,5 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    public void clearUserInformation() {
-        sharedPreferencesUtil.put("user_id", "");
-        sharedPreferencesUtil.put("token", "");
-        Constant.USER_ID = 0L;
-        Constant.TOKEN = "";
     }
 }

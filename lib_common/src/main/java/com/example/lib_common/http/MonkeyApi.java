@@ -3,7 +3,10 @@ package com.example.lib_common.http;
 
 import com.example.lib_common.base.bean.ResponseWrapper;
 import com.example.lib_common.base.bean.response.LoginItem;
+import com.example.lib_common.base.bean.response.MusicBean;
 import com.example.lib_common.common.Constant;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.POST;
@@ -28,6 +31,22 @@ public interface MonkeyApi {
     @POST(Constant.Url.USER_LOGIN)
     Observable<ResponseWrapper<LoginItem>> login(@Query("name") String name, @Query("password") String password);
 
+    /**
+     * 获取用户信息
+     *
+     * @param token
+     * @return
+     */
     @POST(Constant.Url.USER_INFORMATION)
     Observable<ResponseWrapper<LoginItem>> getUserInformation(@Query("token") String token);
+
+    /**
+     * 获取睡前小曲
+     *
+     * @param token
+     * @param currentPage
+     * @return
+     */
+    @POST(Constant.Url.MUSIC_BEFORE)
+    Observable<ResponseWrapper<List<MusicBean>>> getMusicSleepBefore(@Query("token") String token, @Query("currentPage") int currentPage);
 }

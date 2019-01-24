@@ -46,6 +46,28 @@ public class DaoUtil<T> extends DbOperate {
         asyncSession.queryUnique(query);
     }
 
+    public <T> void query(Class cls, int currentPage, int pageSize, WhereCondition whereCondition) {
+        AsyncSession asyncSession = daoSession.startAsyncSession();
+        asyncSession.setListenerMainThread(new AsyncOperationListener() {
+            @Override
+            public void onAsyncOperationCompleted(AsyncOperation operation) {
+                if (operation.isCompletedSucessfully() && onQueryAllListener != null) {
+                    List<T> result = (List<T>) operation.getResult();
+                    onQueryAllListener.onQueryAllBatchListener(result);
+                } else if (onQueryAllListener != null) {
+                    onQueryAllListener.onQueryAllBatchListener(null);
+                }
+            }
+        });
+        Query query = null;
+        if (whereCondition == null) {
+            query = daoSession.queryBuilder(cls).offset(currentPage * pageSize).limit(pageSize).build();
+        } else {
+            query = daoSession.queryBuilder(cls).where(whereCondition).offset(currentPage * pageSize).limit(pageSize).build();
+        }
+        asyncSession.queryList(query);
+    }
+
     public T query(Class cls, String whereString, String[] params) {
         return (T) daoSession.getDao(cls).queryRaw(whereString, params);
     }

@@ -2,6 +2,7 @@ package com.example.lib_common.base.db;
 
 import android.content.Context;
 
+import com.example.lib_common.base.db.dao.MusicBeforeDao;
 import com.example.lib_common.base.db.dao.UserDaoUtil;
 import com.example.lib_common.base.db.entity.DaoMaster;
 import com.example.lib_common.base.db.entity.DaoSession;
@@ -16,6 +17,8 @@ public class DBManager {
     private DaoMaster daoMaster;
     private DaoSession daoSession = null;
     private DaoMaster.DevOpenHelper devOpenHelper;
+    private UserDaoUtil userDao;
+    private MusicBeforeDao musicBeforeDao;
 
     private DBManager(Context context) {
         if (daoMaster == null) {
@@ -35,12 +38,6 @@ public class DBManager {
         return instance;
     }
 
-    public DaoSession getDaoSession() {
-        if (daoSession == null) {
-            daoSession = daoMaster.newSession();
-        }
-        return daoSession;
-    }
 
     /**
      * 得到用户信息数据表
@@ -48,7 +45,29 @@ public class DBManager {
      * @return
      */
     public UserDaoUtil getUserDB() {
-        return new UserDaoUtil(instance, getDaoSession());
+        if (userDao == null) {
+            userDao = new UserDaoUtil(instance, getDaoSession());
+        }
+        return userDao;
+    }
+
+    /**
+     * 得到睡前小曲数据表
+     *
+     * @return
+     */
+    public MusicBeforeDao getMusicBeforeDB() {
+        if (musicBeforeDao == null) {
+            musicBeforeDao = new MusicBeforeDao(instance, getDaoSession());
+        }
+        return musicBeforeDao;
+    }
+
+    public DaoSession getDaoSession() {
+        if (daoSession == null) {
+            daoSession = daoMaster.newSession();
+        }
+        return daoSession;
     }
 
     /**
@@ -60,6 +79,7 @@ public class DBManager {
             daoSession = null;
         }
     }
+
 
     /**
      * 关闭Helper

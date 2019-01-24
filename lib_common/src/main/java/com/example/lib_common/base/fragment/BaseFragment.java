@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.MessageLooper;
 import com.example.lib_common.util.MessageLooperMgr;
+import com.example.lib_common.util.SharedPreferencesUtil;
 import com.example.lib_common.util.ToastUtil;
 
 /**
@@ -26,7 +28,8 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     protected boolean isVisible;
     protected boolean isPrepared;
     protected boolean isLoad = false;
-    public T presenter;
+    public T mPresenter;
+    public SharedPreferencesUtil sharedPreferencesUtil;
 
 
     @Override
@@ -46,8 +49,8 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-        presenter = createPresenter();
-        presenter.attachView((V) this, mContext);
+        mPresenter = createPresenter();
+        mPresenter.attachView((V) this, mContext);
         setHasOptionsMenu(true);
     }
 
@@ -110,7 +113,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.detachView();
+        mPresenter.detachView();
         onUnregisterMessageReceiver();
         releaseCache();
     }
@@ -151,6 +154,18 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
 
     @Override
     public void showError(String message, String code) {
+
+    }
+
+    @Override
+    public void clearLoginInformation() {
+        if (sharedPreferencesUtil == null) {
+            sharedPreferencesUtil = new SharedPreferencesUtil(getContext(), "monkey");
+        }
+        sharedPreferencesUtil.put("user_id", "");
+        sharedPreferencesUtil.put("token", "");
+        Constant.USER_ID = 0L;
+        Constant.TOKEN = "";
 
     }
 

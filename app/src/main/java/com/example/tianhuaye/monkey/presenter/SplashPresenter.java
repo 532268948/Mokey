@@ -28,7 +28,8 @@ public class SplashPresenter<V extends BaseView> extends BasePresenter<V> implem
                 .subscribeWith(new BaseObserver<ResponseWrapper<LoginItem>>(view.get()) {
                     @Override
                     public void onNext(ResponseWrapper<LoginItem> loginItemResponseWrapper) {
-                        if (loginItemResponseWrapper.getCode() != null && loginItemResponseWrapper.getCode() == Constant.httpCode.SUCCESS) {
+                        super.onNext(loginItemResponseWrapper);
+                        if (loginItemResponseWrapper.getCode() != null && loginItemResponseWrapper.getCode() == Constant.HttpCode.SUCCESS) {
                             if (loginItemResponseWrapper.getData() != null && loginItemResponseWrapper.getData().getId() != null) {
                                 final User user = new User();
                                 user.setId(loginItemResponseWrapper.getData().getId());
@@ -48,8 +49,6 @@ public class SplashPresenter<V extends BaseView> extends BasePresenter<V> implem
                                         }
                                     }
                                 });
-                            } else {
-
                             }
                         }
                     }

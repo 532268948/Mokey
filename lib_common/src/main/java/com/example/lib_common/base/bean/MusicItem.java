@@ -1,5 +1,7 @@
 package com.example.lib_common.base.bean;
 
+import com.example.lib_common.base.bean.response.MusicBean;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.music.MusicSource;
 
 /**
@@ -20,7 +22,7 @@ public class MusicItem extends BaseItem {
     /**
      * 音频时长
      */
-    private long duration;
+    private String duration;
     /**
      * 播放音频的id
      */
@@ -54,7 +56,7 @@ public class MusicItem extends BaseItem {
     /**
      * music来源
      */
-    private MusicSource source;
+    private MusicSource source = MusicSource.NetWork;
     /**
      * 是否正在播放
      */
@@ -75,11 +77,50 @@ public class MusicItem extends BaseItem {
      */
     private boolean isHasPay = false;
 
-    public long getDuration() {
+    /**
+     * 价格
+     */
+    private String price;
+
+    /**
+     * 歌曲状态 0展示 1不展示
+     */
+    private int status = 0;
+
+    public MusicItem() {
+    }
+
+    public MusicItem(MusicBean musicBean) {
+        if (musicBean != null) {
+            if (musicBean.getType() != null && musicBean.getType() == Constant.ServerItemType.MUSIC_BEFORE) {
+                itemType = Constant.ItemType.MUSIC_BEFORE;
+                musicId = musicBean.getId() == null ? -1 : musicBean.getId();
+                name = musicBean.getName() == null ? "" : musicBean.getName();
+                author = musicBean.getAuthor() == null ? "" : musicBean.getAuthor();
+                cover = musicBean.getCover() == null ? "" : musicBean.getCover();
+                duration = musicBean.getDuring() == null ? "00:00" : musicBean.getDuring();
+                if (musicBean.getFree() == null) {
+                    isNeedPay = false;
+                } else {
+                    if (musicBean.getFree() == 0) {
+                        isNeedPay = false;
+                    } else if (musicBean.getFree() == 1) {
+                        isNeedPay = true;
+                    }
+                }
+                price = musicBean.getPrice() == null ? "0" : musicBean.getPrice().stripTrailingZeros().toPlainString();
+                url = musicBean.getResource() == null ? "" : musicBean.getResource();
+                playTimes = musicBean.getPlayTimes() == null ? 0 : musicBean.getPlayTimes();
+                status = musicBean.getStatus() == null ? 0 : musicBean.getStatus();
+            }
+        }
+    }
+
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -186,5 +227,21 @@ public class MusicItem extends BaseItem {
 
     public void setHasPay(boolean hasPay) {
         isHasPay = hasPay;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

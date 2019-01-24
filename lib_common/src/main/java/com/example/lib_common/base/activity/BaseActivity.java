@@ -11,14 +11,17 @@ import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
 import com.example.lib_common.base.dialog.WaittingDialog;
 import com.example.lib_common.base.inter.ILifeProcessor;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.ActivityManager;
 import com.example.lib_common.util.MessageLooper;
 import com.example.lib_common.util.MessageLooperMgr;
+import com.example.lib_common.util.SharedPreferencesUtil;
 import com.example.lib_common.util.ToastUtil;
 
 /**
  * project: ModuleDemo
- * author : 叶天华
+ *
+ * @author : 叶天华
  * date   : 2018/10/14
  * time   : 13:02
  * email  : 15869107730@163.com
@@ -28,6 +31,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
 
     public T mPresenter;
     public WaittingDialog mWaittingDialog;
+    public SharedPreferencesUtil sharedPreferencesUtil;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,6 +134,17 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
     @Override
     public void showError(String message, String code) {
 
+    }
+
+    @Override
+    public void clearLoginInformation() {
+        if (sharedPreferencesUtil == null) {
+            sharedPreferencesUtil = new SharedPreferencesUtil(this, "monkey");
+        }
+        sharedPreferencesUtil.put("user_id", "");
+        sharedPreferencesUtil.put("token", "");
+        Constant.USER_ID = 0L;
+        Constant.TOKEN = "";
     }
 
     @Override

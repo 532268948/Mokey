@@ -1,7 +1,5 @@
 package com.example.lib_common.base.bean.response;
 
-import com.example.lib_common.base.bean.BaseItem;
-
 import java.io.Serializable;
 
 /**
@@ -12,7 +10,7 @@ import java.io.Serializable;
  * @email : 15869107730@163.com
  * @note :
  */
-public class LoginItem extends BaseItem implements Serializable {
+public class LoginItem implements Serializable {
 
     /**
      * head :
