@@ -26,6 +26,11 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
     private FloatingMusicView mFloatingMusicView;
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
     protected MusicPresenter<MusicContract.View> createPresenter() {
         return new MusicPresenter<>();
     }
@@ -48,7 +53,8 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
 
     @Override
     public void initData() {
-
+        mViewPager.setAdapter(mAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -74,8 +80,6 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
             mAdapter = new TopTabFragmentPagerAdapter(getChildFragmentManager());
         }
         mAdapter.setData(fragmentList, titleList);
-        mViewPager.setAdapter(mAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override

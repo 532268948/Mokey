@@ -39,6 +39,11 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
     public View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_music_before, container, false);
         mRefreshLayout = view.findViewById(R.id.refresh_layout);

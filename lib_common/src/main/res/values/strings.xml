@@ -28,4 +28,7 @@
 
     <!--WaittingDialog-->
     <string name="common_dialog_waiting">请等待...</string>
+
+    <!--NinePictureView-->
+    <string name="nine_picture_more">更多...</string>
 </resources>

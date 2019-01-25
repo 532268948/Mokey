@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.fragment.BaseListFragment;
+import com.example.lib_common.util.ViewUtil;
 import com.example.module_community.R;
 import com.example.module_community.contract.CommunityContract;
 import com.example.module_community.presenter.CommunityPresenter;
@@ -42,5 +43,19 @@ public class CommunityFragment extends BaseListFragment<CommunityContract.View, 
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void showNormal() {
+        super.showNormal();
+        setEmptyViewVisible(false,false,null);
+        ViewUtil.setViewVisible(mRecyclerView);
+    }
+
+    @Override
+    public void showEmpty() {
+        super.showEmpty();
+        setEmptyViewVisible(false,false,null);
+        ViewUtil.setViewVisible(mRecyclerView);
     }
 }

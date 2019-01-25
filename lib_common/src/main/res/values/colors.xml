@@ -114,4 +114,6 @@
     <color name="community_publish_edit_hint_text_color">#A0A0A0</color>
     <color name="community_publish_title_bar_right_text_color">#141414</color>
 
+    <color name="nine_picture_item_bg">#80646464</color>
+
 </resources>
