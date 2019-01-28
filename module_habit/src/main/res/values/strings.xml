@@ -51,6 +51,7 @@
     <string name="sleep_tip_4">前往设置</string>
     <string name="sleep_btn_str">长按结束</string>
     <string name="sleep_press_end_str">长按结束</string>
+    <string name="sleep_alarm_time">%d:%d</string>
 
     <!--AlarmActivity-->
     <string name="alarm_setting_title">闹钟设置</string>

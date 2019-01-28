@@ -25,6 +25,10 @@ android {
         }
     }
 
+    greendao {
+        schemaVersion 1//指定数据库版本号，更新操作会用到;
+    }
+
 }
 
 dependencies {

@@ -2,6 +2,7 @@ package com.example.lib_common.base.db;
 
 import android.content.Context;
 
+import com.example.lib_common.base.db.dao.AlarmDaoUtil;
 import com.example.lib_common.base.db.dao.UserDaoUtil;
 import com.example.lib_common.base.db.entity.DaoMaster;
 import com.example.lib_common.base.db.entity.DaoSession;
@@ -9,13 +10,15 @@ import com.example.lib_common.base.db.entity.DaoSession;
 /**
  * @author: tianhuaye
  * date:   2018/11/15 15:20
- * description:
+ * description: 数据库管理类
  */
 public class DBManager {
     private static DBManager instance;
     private DaoMaster daoMaster;
     private DaoSession daoSession = null;
     private DaoMaster.DevOpenHelper devOpenHelper;
+    private UserDaoUtil userDao;
+    private AlarmDaoUtil alarmDao;
 
     private DBManager(Context context) {
         if (daoMaster == null) {
@@ -48,7 +51,22 @@ public class DBManager {
      * @return
      */
     public UserDaoUtil getUserDB() {
-        return new UserDaoUtil(instance, getDaoSession());
+        if (userDao == null) {
+            userDao = new UserDaoUtil(instance, getDaoSession());
+        }
+        return userDao;
+    }
+
+    /**
+     * 得到闹钟信息数据表
+     *
+     * @return
+     */
+    public AlarmDaoUtil getAlarmDB() {
+        if (alarmDao == null) {
+            alarmDao = new AlarmDaoUtil(instance, getDaoSession());
+        }
+        return alarmDao;
     }
 
     /**

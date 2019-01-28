@@ -52,7 +52,7 @@ public class NinePictureAdapter extends RecyclerView.Adapter<NinePictureAdapter.
                         @Override
                         public void onClick(View v) {
                             if (moreButtonClickListener != null) {
-                                moreButtonClickListener.onClick();
+                                moreButtonClickListener.onMoreClick();
                             }
                         }
                     });
@@ -62,13 +62,21 @@ public class NinePictureAdapter extends RecyclerView.Adapter<NinePictureAdapter.
                         @Override
                         public void onClick(View v) {
                             if (onPictureClickListener != null) {
-                                onPictureClickListener.onClick();
+                                onPictureClickListener.onPictureClick();
                             }
                         }
                     });
                 }
             } else {
-
+                ViewUtil.setViewGone(viewHolder.mMoreTv);
+                viewHolder.mPictureIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (onPictureClickListener != null) {
+                            onPictureClickListener.onPictureClick();
+                        }
+                    }
+                });
             }
         }
     }
@@ -113,10 +121,10 @@ public class NinePictureAdapter extends RecyclerView.Adapter<NinePictureAdapter.
     }
 
     public interface MoreButtonClickListener {
-        void onClick();
+        void onMoreClick();
     }
 
     public interface OnPictureClickListener {
-        void onClick();
+        void onPictureClick();
     }
 }

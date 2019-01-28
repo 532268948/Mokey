@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lib_common.base.activity.BaseActivity;
+import com.example.lib_common.base.db.entity.Alarm;
+import com.example.lib_common.common.Constant;
+import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_habit.R;
 import com.example.module_habit.contract.SleepContract;
@@ -72,9 +76,25 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.RequestAndResultCode.SLEEP_REQUEST) {
+            switch (resultCode) {
+                case Constant.RequestAndResultCode.ALARM_RESULT_OK:
+                    if (mAlarmSettingTv != null && data != null) {
+                        mAlarmSettingTv.setText(DateUtil.timeToStr(data.getIntExtra("hour", 0), data.getIntExtra("minute", 0)));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_alarm_setting) {
-            startActivity(new Intent(this, AlarmActivity.class));
+            startActivityForResult(new Intent(this, AlarmActivity.class), Constant.RequestAndResultCode.SLEEP_REQUEST);
         }
     }
 
@@ -96,8 +116,8 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         mPressEndTv = findViewById(R.id.tv_press_end);
         mProgressView = findViewById(R.id.process_view);
 
-        ViewUtil.setViewGone(mScreenTopLl);
-        ViewUtil.setViewVisible(mScreenBottomLl);
+        ViewUtil.setViewVisible(mScreenTopLl);
+        ViewUtil.setViewGone(mScreenBottomLl);
 
     }
 
@@ -157,7 +177,7 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
 
     @Override
     public void initData() {
-
+        mPresenter.getAlarmFromDB();
     }
 
     @Override
@@ -233,6 +253,13 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         }
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
+        }
+    }
+
+    @Override
+    public void setAlarm(Alarm alarm) {
+        if (alarm != null) {
+            mAlarmSettingTv.setText(DateUtil.timeToStr(alarm.getHour(), alarm.getMinute()));
         }
     }
 

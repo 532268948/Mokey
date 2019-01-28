@@ -3,7 +3,7 @@ package com.example.lib_common.music;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 
-import com.example.lib_common.base.Constants;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.StorageUtil;
 
 import java.io.File;
@@ -41,7 +41,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
     /**
      * 是否边播放边下载
      */
-    private boolean mDownloadWhilePlaying=false;
+    private boolean mDownloadWhilePlaying = false;
 
     /**
      * 是否为缓存文件
@@ -55,6 +55,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
 
     /**
      * 设置是否边播放边下载
+     *
      * @param downloadWhilePlaying
      */
     public void setDownLoadWhilePlaying(boolean downloadWhilePlaying) {
@@ -84,7 +85,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
                     mCahceFile = true;
                     String tempFilename = getTmpFile(cacheFilename);
                     file = new File(tempFilename);
-                    if (!file.exists() && StorageUtil.getSDAvailableStore() < Constants.MUSIC_TEMP_MAX_SIZE) {
+                    if (!file.exists() && StorageUtil.getSDAvailableStore() < Constant.MUSIC_TEMP_MAX_SIZE) {
                         setDataSource(path);
                         mCahceFile = false;
                     } else {
@@ -112,6 +113,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
 
     /**
      * 获取缓存文件名字
+     *
      * @param filename
      * @return
      */

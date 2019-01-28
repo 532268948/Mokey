@@ -43,7 +43,7 @@
     </declare-styleable>
 
     <declare-styleable name="NinePictureView">
-        <attr name="span_count" format="integer" />
+        <attr name="grid_span_count" format="integer" />
     </declare-styleable>
 
 </resources>
