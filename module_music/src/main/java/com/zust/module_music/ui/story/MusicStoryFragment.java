@@ -31,6 +31,11 @@ public class MusicStoryFragment extends BaseListFragment<MusicStoryContract.View
     private MusicStoryAdapter mAdapter;
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
     protected MusicStoryPresenter createPresenter() {
         return new MusicStoryPresenter();
     }

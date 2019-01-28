@@ -32,4 +32,7 @@
     <!--RecyclerView-->
     <string name="common_recycler_view_no_more_data">—— 我是有底线的 ——</string>
     <string name="common_recycler_view_loading">加载中...</string>
+
+    <!--NinePictureView-->
+    <string name="nine_picture_more">更多...</string>
 </resources>

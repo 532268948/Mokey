@@ -2,6 +2,7 @@ package com.example.lib_common.base.db;
 
 import android.content.Context;
 
+import com.example.lib_common.base.db.dao.AlarmDaoUtil;
 import com.example.lib_common.base.db.dao.MusicBeforeDao;
 import com.example.lib_common.base.db.dao.UserDaoUtil;
 import com.example.lib_common.base.db.entity.DaoMaster;
@@ -10,7 +11,7 @@ import com.example.lib_common.base.db.entity.DaoSession;
 /**
  * @author: tianhuaye
  * date:   2018/11/15 15:20
- * description:
+ * description: 数据库管理类
  */
 public class DBManager {
     private static DBManager instance;
@@ -19,6 +20,7 @@ public class DBManager {
     private DaoMaster.DevOpenHelper devOpenHelper;
     private UserDaoUtil userDao;
     private MusicBeforeDao musicBeforeDao;
+    private AlarmDaoUtil alarmDao;
 
     private DBManager(Context context) {
         if (daoMaster == null) {
@@ -68,6 +70,18 @@ public class DBManager {
             daoSession = daoMaster.newSession();
         }
         return daoSession;
+    }
+
+    /**
+     * 得到闹钟信息数据表
+     *
+     * @return
+     */
+    public AlarmDaoUtil getAlarmDB() {
+        if (alarmDao == null) {
+            alarmDao = new AlarmDaoUtil(instance, getDaoSession());
+        }
+        return alarmDao;
     }
 
     /**

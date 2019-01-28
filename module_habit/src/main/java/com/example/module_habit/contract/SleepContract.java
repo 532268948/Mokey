@@ -1,6 +1,7 @@
 package com.example.module_habit.contract;
 
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.base.db.entity.Alarm;
 
 /**
  * @author: tianhuaye
@@ -10,8 +11,10 @@ import com.example.lib_common.base.BaseView;
 public interface SleepContract {
 
     interface View extends BaseView {
+        void setAlarm(Alarm alarm);
     }
 
     interface Presenter {
+        void getAlarmFromDB();
     }
 }
