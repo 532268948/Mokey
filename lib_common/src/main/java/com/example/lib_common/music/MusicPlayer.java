@@ -35,10 +35,10 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      * 当前播放的音乐id
      */
     private long currentMusicId;
-    /**
-     * 上次播放的音频id
-     */
-    private long lastMusicId;
+//    /**
+//     * 上次播放的音频id
+//     */
+//    private long lastMusicId;
     /**
      * 是否正在定位到指定时间
      */
@@ -48,10 +48,10 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      * 当前播放的item
      */
     private MusicItem curItem;
-    /**
-     * 上次播放的source
-     */
-    private MusicSource lastSource;
+//    /**
+//     * 上次播放的source
+//     */
+//    private MusicSource lastSource;
 
     private Context mContext;
 
@@ -274,18 +274,49 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
 
     /**
      * 跳到指定时间
+     *
      * @param time
      */
     void seekTo(int time) {
         seek(time);
     }
 
-    /**
-     * 更新lastMusicId 、lastSource
-     */
-    void updateLastIds() {
-        lastMusicId = currentMusicId;
-        lastSource = source;
+//    /**
+//     * 更新lastMusicId 、lastSource
+//     */
+//    void updateLastIds() {
+//        lastMusicId = currentMusicId;
+//        lastSource = source;
+//    }
+
+    void initMusicItemList(List<MusicItem> items, long musicId, boolean play) {
+        if (items == null || items.isEmpty()) {
+            return;
+        }
+        if (playList!=null){
+            if (playList.equals(items)){
+
+            }else {
+                playList = items;
+            }
+        }else {
+            playList = items;
+        }
+
+        MusicItem musicItem = getMusicItem(items, musicId);
+        curItem = musicItem;
+        if (musicItem == null) {
+            return;
+        }
+        mState = MusicState.Stopped;
+        //更新当前musicId
+        musicId = musicItem.getMusicId();
+        //获取指定musicId的index
+        changeIndex(musicId);
+        initMusicItem(currentIndex);
+        if (play) {
+            play();
+        }
     }
 
     /**
@@ -337,7 +368,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
     /**
      * 获取指定位置的MusicItem
      *
-     * @param index
+     * @param index 位置
      * @return
      */
     private MusicItem getMusicItem(int index) {
@@ -345,6 +376,28 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
             return playList.get(index);
         }
         return null;
+    }
+
+    /**
+     * 从集合中获取指定id的音频
+     *
+     * @param items   音频集合
+     * @param musicId 音频id
+     * @return
+     */
+    private MusicItem getMusicItem(List<MusicItem> items, long musicId) {
+        if (items == null || items.isEmpty()) {
+            return null;
+        }
+        for (MusicItem musicItem : items) {
+            if (musicItem == null) {
+                continue;
+            }
+            if (musicItem.getMusicId() == musicId) {
+                return musicItem;
+            }
+        }
+        return items.get(0);
     }
 
     /**
@@ -429,6 +482,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
 
     /**
      * 更新currentIndex为指定musicId的集合下标
+     *
      * @param musicId MusicItem的musicId
      */
     private void changeIndex(long musicId) {
@@ -436,17 +490,18 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
             MusicItem item;
             for (int i = 0; i < playList.size(); i++) {
                 item = playList.get(i);
-                if (item != null && item.getMusicId()== musicId) {
+                if (item != null && item.getMusicId() == musicId) {
                     currentIndex = i;
                     break;
                 }
             }
         }
     }
+
     /**
      * 更新currentIndex
      *
-     * @param next true下一首 false前一首
+     * @param next        true下一首 false前一首
      * @param isCompleted 是否播放完
      */
     private void changeIndex(boolean next, boolean isCompleted) {
@@ -480,11 +535,11 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
         if (playList != null && index >= 0 && index < playList.size()) {
             MusicItem item = playList.get(index);
 //            lastSource = source;
-            long tmpMusicId = currentMusicId;
+//            long tmpMusicId = currentMusicId;
             currentMusicId = item.getMusicId();
-            if (tmpMusicId != currentMusicId) {
-                lastMusicId = tmpMusicId;
-            }
+//            if (tmpMusicId != currentMusicId) {
+//                lastMusicId = tmpMusicId;
+//            }
             curItem = item;
         }
     }

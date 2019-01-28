@@ -109,7 +109,7 @@ public class MusicItem extends BaseItem {
                     }
                 }
                 price = musicBean.getPrice() == null ? "0" : musicBean.getPrice().stripTrailingZeros().toPlainString();
-                url = musicBean.getResource() == null ? "" : musicBean.getResource();
+                url = musicBean.getResource() == null ? "" : Constant.BASE_URL+musicBean.getResource();
                 playTimes = musicBean.getPlayTimes() == null ? 0 : musicBean.getPlayTimes();
                 status = musicBean.getStatus() == null ? 0 : musicBean.getStatus();
             }

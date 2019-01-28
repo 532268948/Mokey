@@ -3,6 +3,9 @@ package com.example.lib_common.music;
 import android.content.Context;
 
 import com.example.lib_common.base.BaseApplication;
+import com.example.lib_common.base.bean.MusicItem;
+
+import java.util.List;
 
 /**
  * @author : 叶天华
@@ -15,8 +18,12 @@ import com.example.lib_common.base.BaseApplication;
 public class MusicHelper {
 
     private MusicPlayer mPlayer;
-    private static Context mContext=BaseApplication.mContext;
+    private static Context mContext = BaseApplication.mContext;
     private static MusicHelper mHelper;
+
+    public MusicHelper() {
+
+    }
 
     public static MusicHelper getInstance() {
         if (mHelper == null) {
@@ -29,11 +36,11 @@ public class MusicHelper {
         return mHelper;
     }
 
-    private void bindPlayer(OnMusicPlayStateListener listener) {
+    public void bindPlayer(OnMusicPlayStateListener listener) {
         bindPlayer(listener, false);
     }
 
-    private void bindPlayer(OnMusicPlayStateListener listener, boolean restore) {
+    public void bindPlayer(OnMusicPlayStateListener listener, boolean restore) {
         if (mPlayer == null) {
             mPlayer = new MusicPlayer(mContext);
 //            mPlayer.setJumpSeekListener(BTEngine.singleton().getParentAstMgr());
@@ -48,51 +55,58 @@ public class MusicHelper {
 //        return mPlayer != null && mPlayer.isPlayed();
 //    }
 
-    private void next() {
+    public void initMusicItem(List<MusicItem> items, long musicId, boolean play, OnMusicPlayStateListener listener) {
+        bindPlayer(listener);
+        if (mPlayer != null) {
+            mPlayer.initMusicItemList(items, musicId, play);
+        }
+    }
+
+    public void next() {
         if (mPlayer != null) {
             mPlayer.next(false);
         }
     }
 
-    private void prev() {
+    public void prev() {
         if (mPlayer != null) {
             mPlayer.prev();
         }
     }
 
-    private void seekTo(int time) {
+    public void seekTo(int time) {
         if (mPlayer != null) {
             mPlayer.seekTo(time);
         }
     }
 
-    private void play(long musicId) {
+    public void play(long musicId) {
         if (mPlayer != null) {
             mPlayer.play(musicId);
         }
     }
 
-    private void pause() {
+    public void pause() {
         if (mPlayer != null) {
             mPlayer.pause();
         }
     }
 
-    private void stop() {
+    public void stop() {
         if (mPlayer != null) {
-            mPlayer.updateLastIds();
+//            mPlayer.updateLastIds();
             mPlayer.stop(false);
         }
     }
 
-    private void stop(boolean updateNoti) {
+    public void stop(boolean updateNoti) {
         if (mPlayer != null) {
-            mPlayer.updateLastIds();
+//            mPlayer.updateLastIds();
             mPlayer.stop(updateNoti);
         }
     }
 
-    private void play() {
+    public void play() {
         if (mPlayer != null) {
             mPlayer.play();
         }

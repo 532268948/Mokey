@@ -13,6 +13,8 @@ import com.example.lib_common.base.fragment.BaseListFragment;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.inter.OnLoadMoreListener;
 import com.example.lib_common.common.Constant;
+import com.example.lib_common.music.MusicHelper;
+import com.example.lib_common.music.OnMusicPlayStateListener;
 import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
 import com.zust.module_music.contract.before.MusicBeforeContract;
@@ -30,7 +32,11 @@ import java.util.List;
  * @email : 15869107730@163.com
  * @note :
  */
-public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.View, MusicBeforePresenter<MusicBeforeContract.View>> implements MusicBeforeContract.View, OnItemClickListener, OnLoadMoreListener {
+public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.View, MusicBeforePresenter<MusicBeforeContract.View>> implements
+        MusicBeforeContract.View,
+        OnItemClickListener,
+        OnLoadMoreListener,
+        OnMusicPlayStateListener {
 
 
     private int currentPage = 0;
@@ -85,19 +91,23 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
     public void onItemClick(BaseRecyclerHolder holder, int position) {
         if (holder instanceof MusicBeforeViewHolder) {
             MusicItem musicItem;
-            if (mItems != null) {
+            if (mItems != null && position < mAdapter.getItemCount() - 1) {
+                List<MusicItem> musicItemList = new ArrayList<>();
                 for (int i = 0; i < mItems.size() - 1; i++) {
                     musicItem = (MusicItem) mItems.get(i);
+                    musicItemList.add(musicItem);
                     if (i == position) {
                         musicItem.setPlaying(true);
                     } else {
                         musicItem.setPlaying(false);
                     }
                 }
+                MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
                 mAdapter.notifyDataSetChanged();
+                MusicFragment fragment = (MusicFragment) getParentFragment();
+                fragment.showBigMusicView();
             }
-            MusicFragment fragment = (MusicFragment) getParentFragment();
-            fragment.showBigMusicView();
+
         }
     }
 
@@ -212,5 +222,40 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         }
         currentPage = 0;
         mPresenter.refreshSleepBeforeMusicList();
+    }
+
+    @Override
+    public void onPlay(MusicItem item) {
+
+    }
+
+    @Override
+    public void onStopped() {
+
+    }
+
+    @Override
+    public void onPaused() {
+
+    }
+
+    @Override
+    public void onPrepare() {
+
+    }
+
+    @Override
+    public void onPosition(int pos) {
+
+    }
+
+    @Override
+    public void onRemain(int count, long time) {
+
+    }
+
+    @Override
+    public void onSeekToLast(int time) {
+
     }
 }
