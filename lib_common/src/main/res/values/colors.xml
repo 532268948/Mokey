@@ -58,6 +58,10 @@
     <color name="main_status_bar_color">#ffffff</color>
     <color name="music_story_play_status_bar_color">#ffffff</color>
 
+    <!--PrepareActivity-->
+    <color name="habit_prepare_item_select_color">#ffffff</color>
+    <color name="habit_prepare_item_un_select_color">#141414</color>
+
     <!--SleepPrepareView-->
     <color name="sleep_prepare_dash_line_color">#969696</color>
     <color name="sleep_prepare_line_color">#969696</color>

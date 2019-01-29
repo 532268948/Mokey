@@ -3,6 +3,7 @@ package com.example.lib_common.base.dialog;
 import android.support.annotation.IdRes;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -37,6 +38,17 @@ public class DialogViewHolder {
             views.put(viewId, view);
         }
         return (T) view;
+    }
+
+    /**
+     * 设置图片
+     *
+     * @param viewId
+     * @param resId
+     */
+    public void setImageResource(int viewId, int resId) {
+        ImageView view = getView(viewId);
+        view.setImageResource(resId);
     }
 
     /**

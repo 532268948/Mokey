@@ -2,6 +2,8 @@ package com.example.module_habit.bean;
 
 import android.graphics.Rect;
 
+import com.example.lib_common.base.bean.SleepPrepareItem;
+
 /**
  * @author: tianhuaye
  * @date: 2019/1/2 13:01
@@ -9,7 +11,7 @@ import android.graphics.Rect;
  */
 public class PrepareBean {
     private float time;
-    private int icon;
+    private SleepPrepareItem sleepPrepareItem;
 
     public float getTime() {
         return time;
@@ -19,11 +21,11 @@ public class PrepareBean {
         this.time = time;
     }
 
-    public int getIcon() {
-        return icon;
+    public SleepPrepareItem getSleepPrepareItem() {
+        return sleepPrepareItem;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setSleepPrepareItem(SleepPrepareItem sleepPrepareItem) {
+        this.sleepPrepareItem = sleepPrepareItem;
     }
 }

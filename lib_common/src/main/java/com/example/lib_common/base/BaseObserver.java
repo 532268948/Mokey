@@ -14,7 +14,8 @@ import retrofit2.HttpException;
 
 /**
  * project: ModuleDemo
- * author : 叶天华
+ *
+ * @author : 叶天华
  * date   : 2018/10/14
  * time   : 13:03
  * email  : 15869107730@163.com
@@ -59,7 +60,7 @@ public class BaseObserver<T> extends ResourceObserver<T> {
             mView.showError(Constant.MESSAGE_GET_DATA_FALSE);
             return;
         }
-        if (responseWrapper.getCode()==null){
+        if (responseWrapper.getCode() == null) {
             mView.showError(Constant.MESSAGE_GET_DATA_FALSE);
             return;
         }

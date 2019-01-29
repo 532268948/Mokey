@@ -92,6 +92,10 @@ public final class Constant {
          * 睡前小曲
          */
         public static final int MUSIC_BEFORE = 2;
+        /**
+         * 睡前准备
+         */
+        public static final int HABIT_SLEEP_PREPARE = 3;
     }
 
     /**

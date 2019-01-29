@@ -86,14 +86,13 @@ public class AlarmCardView extends LinearLayout {
         } finally {
             typedArray.recycle();
         }
-//
+
         mLeftTopTv = view.findViewById(R.id.left_top_text);
         mLeftTopHintTv = view.findViewById(R.id.left_top_text_hint);
         mLeftBottomTv = view.findViewById(R.id.left_bottom_text);
         mLeftBottomIv = view.findViewById(R.id.left_bottom_image);
         mEditLl = view.findViewById(R.id.alarm_edit);
-//
-//        Log.e(TAG, "" + leftTopTextSize + " " + leftTopTextColor);
+
         mLeftTopTv.setText(leftTopText);
         mLeftTopTv.setTextSize(leftTopTextSize);
         mLeftTopTv.setTextColor(leftTopTextColor);

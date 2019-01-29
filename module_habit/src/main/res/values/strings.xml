@@ -27,9 +27,17 @@
     <string name="prepare_short_tip_1">良好个人习惯，开启优质睡眠</string>
     <string name="prepare_tip_1">缓解身体疲劳，形成仪式感，建议为睡着前首个步骤，因为洗澡后往往体温多高不宜睡眠，所以留出时间让身体顺应昼夜节奏调低体温，酝酿睡意</string>
     <string name="prepare_tip_name_2">轻度阅读</string>
+    <string name="prepare_short_tip_2">轻松的、平静的碎片阅读</string>
+    <string name="prepare_tip_2">阅读纸质书比电子设备更有利于睡前。有研究者认为，营造良好的睡前阅读氛围，尤其是轻松式阅读，确实有利于人们更好的进入优质睡眠</string>
     <string name="prepare_tip_name_3">整理行程</string>
+    <string name="prepare_short_tip_3">为明天做好准备，无忧进入梦乡</string>
+    <string name="prepare_tip_3">把第二天的事情列出清单，准备好必需品，也可以提前做一些简单和缓的准备工作，这样可以避免睡前让琐碎小事塞满大脑，彻底的放空自己</string>
     <string name="prepare_tip_name_4">整理环境</string>
+    <string name="prepare_short_tip_4">睡前扫扫地，整理抽屉什么的</string>
+    <string name="prepare_tip_4">根据自己的习惯对环境略加整理：扫地、整理桌面或抽屉、收拾散落的衣服等，让物件们各得其所，及优化生活环境，又放慢思绪，安心入眠</string>
     <string name="prepare_tip_name_5">轻度学习</string>
+    <string name="prepare_short_tip_5">睡眠是学习者的铠甲，记忆的伴侣</string>
+    <string name="prepare_tip_5">在睡眠过程中发生的离线记忆再处理过程是记忆形成机制非常重要的组成部分。依据你自己的喜好，记少量单词/练字/复习今天所习得的技能等等，利用睡眠巩固记忆</string>
     <string name="prepare_tip_name_6">按摩头皮</string>
     <string name="prepare_tip_name_7">搓涌泉穴</string>
     <string name="prepare_tip_name_8">仰卧揉腹</string>

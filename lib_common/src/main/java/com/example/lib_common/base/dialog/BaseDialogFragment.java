@@ -30,14 +30,31 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @LayoutRes
     protected int mLayoutResId;
 
-    private float mDimAmount = 0.5f;//背景昏暗度
-    private boolean mShowBottomEnable;//是否底部显示
-    private int mMargin = 0;//左右边距
-    private int mAnimStyle = 0;//进入退出动画
-    private boolean mOutCancel = true;//点击外部取消
+    /**
+     * 背景昏暗度
+     */
+    private float mDimAmount = 0.5f;
+    /**
+     * 是否底部显示
+     */
+    private boolean mShowBottomEnable;
+    /**
+     * 左右边距
+     */
+    private int mMargin = 0;
+    /**
+     * 进入退出动画
+     */
+    private int mAnimStyle = 0;
+    /**
+     * 点击外部取消
+     */
+    private boolean mOutCancel = true;
     private Context mContext;
     private int mWidth;
     private int mHeight;
+
+    private DialogViewHolder viewHolder;
 
     @Override
     public void onAttach(Context context) {
@@ -56,7 +73,8 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(mLayoutResId, container, false);
-        convertView(DialogViewHolder.create(view), this);
+        viewHolder = DialogViewHolder.create(view);
+        convertView(viewHolder, this);
         return view;
     }
 
@@ -71,6 +89,18 @@ public abstract class BaseDialogFragment extends DialogFragment {
         super.onStart();
         initParams();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData(viewHolder);
+    }
+
+    /**
+     * 初始化数据
+     * @param holder
+     */
+    protected abstract void initData(DialogViewHolder holder);
 
     private void initParams() {
         Window window = getDialog().getWindow();

@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -86,12 +85,6 @@ public class SleepPrepareView extends View {
     public SleepPrepareView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mPrepareList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            PrepareBean prepareBean = new PrepareBean();
-            prepareBean.setTime((i + 1) * 10);
-            prepareBean.setIcon(R.drawable.habit_prepare_tip_1);
-            mPrepareList.add(prepareBean);
-        }
         init();
     }
 
@@ -100,16 +93,34 @@ public class SleepPrepareView extends View {
         initPaint();
     }
 
+    public void setData(List<PrepareBean> mPrepareList) {
+        this.mPrepareList = mPrepareList;
+        PrepareBean temp = null;
+        if (this.mPrepareList != null) {
+            for (int i = 0; i < this.mPrepareList.size() - 1; i++) {
+                for (int j = i + 1; j < this.mPrepareList.size(); j++) {
+                    if (this.mPrepareList.get(i).getSleepPrepareItem().getCheckNum() > this.mPrepareList.get(j).getSleepPrepareItem().getCheckNum()) {
+                        temp = this.mPrepareList.get(i);
+                        this.mPrepareList.set(i, this.mPrepareList.get(j));
+                        this.mPrepareList.set(j, temp);
+                    }
+                }
+            }
+            for (int i = 0; i < this.mPrepareList.size(); i++) {
+                this.mPrepareList.get(i).setTime(PREPARE_TOTAL_TIME*(i+1)/((float)this.mPrepareList.size()));
+            }
+        }
+        invalidate();
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Log.e(TAG, "onAttachedToWindow: ");
         mTagBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.habit_dash_line_tag);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.e(TAG, "onMeasure: ");
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(mTagBitmap.getHeight() + ScreenUtil.dp2px(this.getContext(), 100), MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -118,7 +129,7 @@ public class SleepPrepareView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawLine(canvas, 0, getHeight() / 3, getWidth(), getHeight() / 3);
-        if (mPrepareList != null) {
+        if (mPrepareList != null && mPrepareList.size() > 0) {
             for (int i = 0; i < mPrepareList.size() - 1; i++) {
                 drawDashLine(canvas, mPrepareList.get(i));
                 drawTagBitmap(canvas, mPrepareList.get(i));
@@ -126,10 +137,10 @@ public class SleepPrepareView extends View {
             for (int i = 0; i < mPrepareList.size(); i++) {
                 if (i == 0) {
                     drawTimeText(canvas, 0f, mPrepareList.get(i).getTime());
-                    drawIcon(canvas, 0f, mPrepareList.get(i).getTime(), mPrepareList.get(i).getIcon());
+                    drawIcon(canvas, 0f, mPrepareList.get(i).getTime(), mPrepareList.get(i).getSleepPrepareItem().getImageResId());
                 } else if (i > 0) {
                     drawTimeText(canvas, mPrepareList.get(i - 1).getTime(), mPrepareList.get(i).getTime());
-                    drawIcon(canvas, mPrepareList.get(i - 1).getTime(), mPrepareList.get(i).getTime(), mPrepareList.get(i).getIcon());
+                    drawIcon(canvas, mPrepareList.get(i - 1).getTime(), mPrepareList.get(i).getTime(), mPrepareList.get(i).getSleepPrepareItem().getImageResId());
                 }
             }
         }
