@@ -6,17 +6,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.lib_common.base.view.SwitchButtonView;
 import com.example.module_habit.R;
 
 /**
- * author: tianhuaye
+ * @author: tianhuaye
  * date:   2018/11/14 12:37
  * description:
  */
@@ -28,10 +28,12 @@ public class AlarmCardView extends LinearLayout {
     private TextView mLeftTopTv;
     private TextView mLeftTopHintTv;
     private TextView mLeftBottomTv;
-    private ImageView mLeftBottomIv;
     private TextView mRightBottomTv;
     private ImageView mRightBottomIv;
     private LinearLayout mEditLl;
+    private SwitchButtonView mSwitchButtonView;
+    private LinearLayout mLeftBottomContainer;
+    private OnToggleChangeListener onToggleChangeListener;
 
     private int leftTopText;
     private int leftTopTextSize;
@@ -82,7 +84,6 @@ public class AlarmCardView extends LinearLayout {
             leftBottomText = typedArray.getResourceId(R.styleable.AlarmCardView_left_bottom_text, R.string.habit_alarm_text_empty);
             leftBottomTextSize = typedArray.getDimensionPixelSize(R.styleable.AlarmCardView_left_bottom_text_size, 20);
             leftBottomTextColor = typedArray.getColor(R.styleable.AlarmCardView_left_bottom_text_color, 0XFF13227a);
-            leftBottomImage = typedArray.getResourceId(R.styleable.AlarmCardView_left_bottom_image_src, 0);
         } finally {
             typedArray.recycle();
         }
@@ -90,8 +91,9 @@ public class AlarmCardView extends LinearLayout {
         mLeftTopTv = view.findViewById(R.id.left_top_text);
         mLeftTopHintTv = view.findViewById(R.id.left_top_text_hint);
         mLeftBottomTv = view.findViewById(R.id.left_bottom_text);
-        mLeftBottomIv = view.findViewById(R.id.left_bottom_image);
         mEditLl = view.findViewById(R.id.alarm_edit);
+        mSwitchButtonView = view.findViewById(R.id.switch_button);
+        mLeftBottomContainer = view.findViewById(R.id.left_bottom);
 
         mLeftTopTv.setText(leftTopText);
         mLeftTopTv.setTextSize(leftTopTextSize);
@@ -100,9 +102,25 @@ public class AlarmCardView extends LinearLayout {
         mLeftBottomTv.setText(leftBottomText);
         mLeftBottomTv.setTextSize(leftBottomTextSize);
         mLeftBottomTv.setTextColor(leftBottomTextColor);
-        if (leftBottomImage != 0) {
-            mLeftBottomIv.setImageResource(leftBottomImage);
-        }
+
+
+        mSwitchButtonView.setOnStateChangedListener(new SwitchButtonView.OnStateChangedListener() {
+            @Override
+            public void toggleToOn(SwitchButtonView view) {
+                view.toggleSwitch(true);
+                if (onToggleChangeListener != null) {
+                    onToggleChangeListener.toggleChange(true);
+                }
+            }
+
+            @Override
+            public void toggleToOff(SwitchButtonView view) {
+                view.toggleSwitch(false);
+                if (onToggleChangeListener != null) {
+                    onToggleChangeListener.toggleChange(false);
+                }
+            }
+        });
     }
 
     public int getLeftTopText() {
@@ -164,6 +182,12 @@ public class AlarmCardView extends LinearLayout {
         }
     }
 
+    public void setLeftBottomText(String leftBottomText) {
+        if (!TextUtils.isEmpty(leftBottomText)) {
+            this.mLeftBottomTv.setText(leftBottomText);
+        }
+    }
+
     public int getLeftBottomTextSize() {
         return leftBottomTextSize;
     }
@@ -188,10 +212,23 @@ public class AlarmCardView extends LinearLayout {
         return leftBottomImage;
     }
 
-    public void setLeftBottomImage(int leftBottomImage) {
-        this.leftBottomImage = leftBottomImage;
-        if (this.leftBottomImage > 0) {
-            this.mLeftBottomIv.setImageResource(this.leftBottomImage);
+//    public void setLeftBottomImage(int leftBottomImage) {
+//        this.leftBottomImage = leftBottomImage;
+//        if (this.leftBottomImage > 0) {
+//            this.mLeftBottomIv.setImageResource(this.leftBottomImage);
+//        }
+//    }
+
+    public void setLeftBottomImages(int[] src) {
+        for (int i = 0; i < src.length; i++) {
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageDrawable(getContext().getResources().getDrawable(src[i]));
+            mLeftBottomContainer.addView(imageView);
+            if (i < src.length - 1) {
+                ImageView imageView1 = new ImageView(getContext());
+                imageView1.setImageDrawable(getContext().getResources().getDrawable(R.drawable.habit_alarm_card_add));
+                mLeftBottomContainer.addView(imageView1);
+            }
         }
     }
 
@@ -237,9 +274,18 @@ public class AlarmCardView extends LinearLayout {
         }
     }
 
+    public void setSwitchButtonOpen(boolean open) {
+        mSwitchButtonView.toggleSwitch(open);
+    }
+
+    public void setSwitchButtonClickListener(OnToggleChangeListener onToggleChangeListener) {
+        this.onToggleChangeListener = onToggleChangeListener;
+    }
+
+
     public void addEditClickListener(final OnEditClickListener onEditClickListener) {
         this.onEditClickListener = onEditClickListener;
-        if (this.onEditClickListener != null&&this.mEditLl!=null) {
+        if (this.onEditClickListener != null && this.mEditLl != null) {
             mEditLl.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -251,5 +297,9 @@ public class AlarmCardView extends LinearLayout {
 
     public interface OnEditClickListener {
         void onEditClick();
+    }
+
+    public interface OnToggleChangeListener {
+        void toggleChange(boolean open);
     }
 }

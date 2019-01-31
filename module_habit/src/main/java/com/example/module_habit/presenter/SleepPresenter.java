@@ -18,7 +18,7 @@ import java.util.List;
 public class SleepPresenter<V extends SleepContract.View> extends BasePresenter<V> implements SleepContract.Presenter {
     @Override
     public void getAlarmFromDB() {
-        DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.ALARM_ID_FOUR, new DbOperateListener.OnQuerySingleListener() {
+        DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.Alarm.ALARM_ID_FOUR, new DbOperateListener.OnQuerySingleListener() {
             @Override
             public void onQuerySingleListener(Object entry) {
                 if (entry != null) {

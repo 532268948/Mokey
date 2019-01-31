@@ -124,9 +124,9 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
 
     private void setAlarm() {
         if (alarm_mode == 0) {
-            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
+            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
         } else if (alarm_mode == 1) {
-            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
+            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
         }
         mPresenter.saveAlarmToDB(alarm_mode, hour, minute, ringPath, mNameEt.getText().toString());
         Intent intent = new Intent();

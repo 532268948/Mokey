@@ -11,7 +11,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * @date : 2019/1/23
  * @time : 16:15
  * @email : 15869107730@163.com
- * @note :
+ * @note : 睡前小曲
  */
 @Entity
 public class MusicBefore {

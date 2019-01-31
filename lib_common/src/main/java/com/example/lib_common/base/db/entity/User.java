@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.Property;
 /**
  * author: tianhuaye
  * date:   2018/11/15 15:34
- * description:
+ * description: 用户
  */
 @Entity
 public class User {

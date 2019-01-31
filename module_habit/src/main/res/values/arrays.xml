@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="titles">
+        <item>睡前洗漱</item>
+        <item>轻度阅读</item>
+        <item>整理行程</item>
+        <item>整理环境</item>
+        <item>轻度学习</item>
+    </string-array>
+    <string-array name="shortTips">
+        <item>良好个人习惯，开启优质睡眠</item>
+        <item>轻松的、平静的碎片阅读</item>
+        <item>为明天做好准备，无忧进入梦乡</item>
+        <item>睡前扫扫地，整理抽屉什么的</item>
+        <item>睡眠是学习者的铠甲，记忆的伴侣</item>
+    </string-array>
+    <string-array name="tips">
+        <item>缓解身体疲劳，形成仪式感，建议为睡着前首个步骤，因为洗澡后往往体温多高不宜睡眠，所以留出时间让身体顺应昼夜节奏调低体温，酝酿睡意</item>
+        <item>阅读纸质书比电子设备更有利于睡前。有研究者认为，营造良好的睡前阅读氛围，尤其是轻松式阅读，确实有利于人们更好的进入优质睡眠</item>
+        <item>把第二天的事情列出清单，准备好必需品，也可以提前做一些简单和缓的准备工作，这样可以避免睡前让琐碎小事塞满大脑，彻底的放空自己</item>
+        <item>根据自己的习惯对环境略加整理：扫地、整理桌面或抽屉、收拾散落的衣服等，让物件们各得其所，及优化生活环境，又放慢思绪，安心入眠</item>
+        <item>在睡眠过程中发生的离线记忆再处理过程是记忆形成机制非常重要的组成部分。依据你自己的喜好，记少量单词/练字/复习今天所习得的技能等等，利用睡眠巩固记忆</item>
+    </string-array>
+</resources>

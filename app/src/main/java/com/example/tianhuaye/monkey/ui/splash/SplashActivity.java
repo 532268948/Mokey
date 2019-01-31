@@ -20,6 +20,11 @@ import com.example.tianhuaye.monkey.ui.activity.MainActivity;
  */
 public class SplashActivity extends BaseActivity<SplashContract.View, SplashPresenter<SplashContract.View>> implements SplashContract.View {
 
+    /**
+     * 是否第一次打开app
+     */
+    private boolean first=false;
+
     @Override
     protected SplashPresenter<SplashContract.View> createPresenter() {
         return new SplashPresenter<>();
@@ -72,11 +77,21 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
         Constant.TOKEN = (String) sharedPreferencesUtil.getSharedPreference("token", "");
         //获取用户信息
         mPresenter.getUserInformation(Constant.TOKEN);
+        first=(Boolean)sharedPreferencesUtil.getSharedPreference("first",true);
+        if (first){
+            mPresenter.initFirst();
+            updateFirst();
+        }
     }
 
     private void gotoMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void updateFirst() {
+        sharedPreferencesUtil.put("first",false);
     }
 }

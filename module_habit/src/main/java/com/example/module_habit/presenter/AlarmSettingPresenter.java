@@ -16,8 +16,8 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
 
     @Override
     public void saveAlarmToDB(int alarm_mode, int hour, int minute, String ringPath, String tip) {
-        final Alarm alarm = new Alarm(Constant.ALARM_ID_FOUR, hour, minute, alarm_mode, ringPath, tip);
-        DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.ALARM_ID_FOUR, new DbOperateListener.OnQuerySingleListener() {
+        final Alarm alarm = new Alarm(Constant.Alarm.ALARM_ID_FOUR, hour, minute, alarm_mode, ringPath, tip, Constant.Alarm.ALARM_TYPE_FOUR, true);
+        DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.Alarm.ALARM_ID_FOUR, new DbOperateListener.OnQuerySingleListener() {
             @Override
             public void onQuerySingleListener(Object entry) {
                 if (entry != null) {

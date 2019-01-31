@@ -34,7 +34,6 @@
         android:layout_marginBottom="10dp"
         app:left_top_text="@string/lifestyle_sleep_remind"
         app:left_top_text_color="@color/lifestyle_sleep_remind"
-        app:left_bottom_text="@string/lifestyle_sleep_time"
         app:left_bottom_text_color="@color/lifestyle_sleep_time"/>
     <View
         android:layout_width="match_parent"

@@ -1,6 +1,9 @@
 package com.example.module_habit.ui.prepare;
 
 import com.example.lib_common.base.BaseView;
+import com.example.module_habit.bean.PrepareBean;
+
+import java.util.List;
 
 /**
  * author: tianhuaye
@@ -10,8 +13,10 @@ import com.example.lib_common.base.BaseView;
 public interface PrepareContract {
 
     interface View extends BaseView {
+        void setAlarmSuccess();
     }
 
     interface Presenter {
+        void setSleepPrepareAlarm(List<PrepareBean> list);
     }
 }

@@ -7,6 +7,8 @@ import com.example.lib_common.base.db.entity.Alarm;
 import com.example.lib_common.base.db.entity.AlarmDao;
 import com.example.lib_common.base.db.entity.DaoSession;
 
+import java.util.List;
+
 /**
  * @author: tianhuaye
  * @date: 2019/1/28 16:00
@@ -27,15 +29,51 @@ public class AlarmDaoUtil extends DaoUtil<Alarm> {
         insertSingle(alarm);
     }
 
+    public void insertBatchAlarm(List<Alarm> list) {
+        insertBatchAlarm(list, null);
+    }
+
     /**
-     * 单个更新
+     * 批量插入
+     *
+     * @param list
+     * @param insertListener
      */
-    public void updateSingleAlarm(Alarm alarm) {
-        updateSingleAlarm(alarm,null);
+    public void insertBatchAlarm(List<Alarm> list, DbOperateListener.OnInsertListener insertListener) {
+        setOnInsertListener(insertListener);
+        insertBatch(Alarm.class, list);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param list
+     */
+    public void deleteBatchAlarm(List<Alarm> list) {
+        deleteBatchAlarm(list, null);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param list
+     * @param deleteListener
+     */
+    public void deleteBatchAlarm(List<Alarm> list, DbOperateListener.OnDeleteListener deleteListener) {
+        setOnDeleteListener(deleteListener);
+        deleteBatch(Alarm.class, list);
     }
 
     /**
      * 单个更新
+     */
+    public void updateSingleAlarm(Alarm alarm) {
+        updateSingleAlarm(alarm, null);
+    }
+
+    /**
+     * 单个更新
+     *
      * @param alarm
      * @param updateListener 更新结果监听回调
      */
@@ -60,6 +98,26 @@ public class AlarmDaoUtil extends DaoUtil<Alarm> {
     public void queryWhereAlarm(long memberId, DbOperateListener.OnQuerySingleListener querySingleListener) {
         setOnQuerySingleListener(querySingleListener);
         query(Alarm.class, AlarmDao.Properties.Id.eq(memberId));
+    }
+
+    /**
+     * 条件查询
+     *
+     * @param type 闹钟类型
+     */
+    public void queryWhereTypeAlarm(int type) {
+        queryWhereTypeAlarm(type, null);
+    }
+
+    /**
+     * 条件查询
+     *
+     * @param type             闹钟类型
+     * @param queryAllListener
+     */
+    public void queryWhereTypeAlarm(int type, DbOperateListener.OnQueryAllListener queryAllListener) {
+        setOnQueryAllListener(queryAllListener);
+        queryAll(Alarm.class, daoSession.queryBuilder(Alarm.class).where(AlarmDao.Properties.Type.eq(type)).build());
     }
 
     /**

@@ -25,8 +25,9 @@ import java.util.List;
 public class SleepPrepareView extends View {
 
     private final String TAG = "SleepPrepareView";
+    public static final float PREPARE_TOTAL_TIME = 30f;
     private final int MOVE_DISTANCE = 1;
-    private final float PREPARE_TOTAL_TIME = 30f;
+
     private final float PREPARE_MIN_TIME = 5f;
     private int DASH_LINE_HEIGHT;
 
@@ -107,10 +108,14 @@ public class SleepPrepareView extends View {
                 }
             }
             for (int i = 0; i < this.mPrepareList.size(); i++) {
-                this.mPrepareList.get(i).setTime(PREPARE_TOTAL_TIME*(i+1)/((float)this.mPrepareList.size()));
+                this.mPrepareList.get(i).setTime(PREPARE_TOTAL_TIME * (i + 1) / ((float) this.mPrepareList.size()));
             }
         }
         invalidate();
+    }
+
+    public List<PrepareBean> getData() {
+        return this.mPrepareList;
     }
 
     @Override

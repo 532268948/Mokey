@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
         app:title_text="@string/prepare_title"
-        app:text_size="@dimen/dp_16"
-        app:left_icon="@drawable/common_title_bar_back"/>
+        app:text_size="@dimen/dp_18"
+        app:left_icon="@drawable/common_title_bar_back"
+        app:right_text="@string/prepare_title_bar_right_text"/>
     
     <com.example.module_habit.view.SleepPrepareView
         android:id="@+id/sleep_prepare_view"

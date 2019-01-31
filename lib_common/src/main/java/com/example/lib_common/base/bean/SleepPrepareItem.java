@@ -6,6 +6,7 @@ package com.example.lib_common.base.bean;
  * @description:
  */
 public class SleepPrepareItem extends BaseItem {
+    private long id;
     private int imageResId;
     private int bigImageResId;
     private String title;
@@ -13,6 +14,14 @@ public class SleepPrepareItem extends BaseItem {
     private String message;
     private boolean checked;
     private int checkNum;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public int getImageResId() {
         return imageResId;

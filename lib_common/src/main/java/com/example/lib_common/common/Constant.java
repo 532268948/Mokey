@@ -10,21 +10,6 @@ package com.example.lib_common.common;
  */
 public final class Constant {
 
-    public static final long ALARM_ID_ONE = 1001;
-    public static final long ALARM_ID_TWO = 1002;
-    public static final long ALARM_ID_THREE = 1003;
-    public static final long ALARM_ID_FOUR = 1004;
-
-
-//    public static final int ALARM_ONE_ID_ONCE = 1001;
-//    public static final int ALARM_ONE_ID_REPEAT = 1002;
-//    public static final int ALARM_TWO_ID_ONCE = 2001;
-//    public static final int ALARM_TWO_ID_REPEAT = 2002;
-//    public static final int ALARM_THREE_ID_ONCE = 3001;
-//    public static final int ALARM_THREE_ID_REPEAT = 3002;
-//    public static final int ALARM_FOUR_ID_ONCE = 4001;
-//    public static final int ALARM_FOUR_ID_REPEAT = 4002;
-
     public static final int SPLASH_DURING = 3000;
 
     public static final String MESSAGE_GET_DATA_FALSE = "获取数据失败";
@@ -32,12 +17,57 @@ public final class Constant {
     public static final long MUSIC_TEMP_MAX_SIZE = 100 * 1024 * 1024L;
     public static final long DAY = 24 * 60 * 60 * 1000L;
     public static final long WEEK = 7 * 24 * 60 * 60 * 1000L;
+    public static final int HOUR = 60;
 
     public static final String BASE_URL = "http://192.168.2.119:8080/";
-    public static final String ALARM_ACTION = "com.example.alarm.clock";
+
 
     public static String TOKEN = "";
     public static Long USER_ID = 0L;
+
+    public static class Alarm {
+        public static final String ALARM_ACTION = "com.example.alarm.clock";
+        public static final int ALARM_MODE_ONCE = 0;
+        public static final int ALARM_MODE_REPEAT = 1;
+
+        /////////闹钟ID/////////////////////////////
+        /**
+         * 自定义闹钟
+         */
+        public static final long ALARM_ID_ONE = 1001;
+        public static final long ALARM_ID_TWO = 1002;
+        public static final long ALARM_ID_THREE = 1003;
+        /**
+         * 晨起闹钟
+         */
+        public static final long ALARM_ID_FOUR = 1004;
+        /**
+         * 入睡闹钟
+         */
+        public static final long ALARM_ID_FIVE = 1005;
+        /**
+         * 睡前准备起始ID （预留10个ID,1006-1016，当前睡前准备最多为三件事，支持日后扩展）
+         */
+        public static final long ALARM_ID_SIX = 1006;
+
+        //////////闹钟类型////////////////////////
+        /**
+         * 自定义
+         */
+        public static final int ALARM_TYPE_ONE = 1;
+        /**
+         * 睡前准备
+         */
+        public static final int ALARM_TYPE_TWO = 2;
+        /**
+         * 入睡提醒
+         */
+        public static final int ALARM_TYPE_THREE = 3;
+        /**
+         * 晨起提醒
+         */
+        public static final int ALARM_TYPE_FOUR = 4;
+    }
 
     public static class ListPageSize {
         public static final int MUSIC_SLEEP_BEFORE_PAGE_SIZE = 10;

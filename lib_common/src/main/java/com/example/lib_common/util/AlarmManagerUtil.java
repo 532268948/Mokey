@@ -25,7 +25,7 @@ public class AlarmManagerUtil {
      * @param id      闹铃id
      */
     public static void cancelAlarm(Context context, int id) {
-        Intent intent = new Intent(Constant.ALARM_ACTION);
+        Intent intent = new Intent(Constant.Alarm.ALARM_ACTION);
         PendingIntent pi = PendingIntent.getBroadcast(context, id, intent, PendingIntent
                 .FLAG_CANCEL_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -91,7 +91,7 @@ public class AlarmManagerUtil {
         } else if (flag == 2) {
             intervalMillis = 24 * 3600 * 1000 * 7;
         }
-        Intent intent = new Intent(Constant.ALARM_ACTION);
+        Intent intent = new Intent(Constant.Alarm.ALARM_ACTION);
         intent.putExtra("intervalMillis", intervalMillis);
         intent.putExtra("msg", tips);
         intent.putExtra("id", id);

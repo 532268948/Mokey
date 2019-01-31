@@ -17,12 +17,13 @@
     <!--lifestyle-->
     <string name="lifestyle_sleep_tip_1">开始记录睡眠</string>
     <string name="lifestyle_sleep_prepare">睡前准备</string>
-    <string name="lifestyle_sleep_prepare_tip_1">提前45min进行</string>
+    <string name="lifestyle_sleep_prepare_tip_1">提前30min进行</string>
     <string name="lifestyle_sleep_remind">入睡提醒</string>
     <string name="lifestyle_sleep_time">12:30</string>
 
     <!--prepare-->
     <string name="prepare_title">设置睡前准备</string>
+    <string name="prepare_title_bar_right_text">确定</string>
     <string name="prepare_tip_name_1">睡前洗漱</string>
     <string name="prepare_short_tip_1">良好个人习惯，开启优质睡眠</string>
     <string name="prepare_tip_1">缓解身体疲劳，形成仪式感，建议为睡着前首个步骤，因为洗澡后往往体温多高不宜睡眠，所以留出时间让身体顺应昼夜节奏调低体温，酝酿睡意</string>

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.example.lib_common.base.BaseView;
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
 import com.example.lib_common.base.bean.BaseItem;
@@ -26,7 +25,7 @@ import java.util.List;
 /**
  * @author 53226
  */
-public class PrepareActivity extends BaseActivity<PrepareContract.View, PreparePresenter<PrepareContract.View>> implements OnItemClickListener, BaseView, PrepareAdapter.OnSelectChangeListener {
+public class PrepareActivity extends BaseActivity<PrepareContract.View, PreparePresenter<PrepareContract.View>> implements PrepareContract.View, OnItemClickListener, PrepareAdapter.OnSelectChangeListener {
 
     private TitleBar mTitleBar;
     private RecyclerView mRecyclerView;
@@ -36,9 +35,9 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
     private List<BaseItem> mItems;
     private int[] images = {R.drawable.habit_prepare_tip_1, R.drawable.habit_prepare_tip_2, R.drawable.habit_prepare_tip_3, R.drawable.habit_prepare_tip_4, R.drawable.habit_prepare_tip_5};
     private int[] bigImages = {R.drawable.habit_prepare_tip_big_1, R.drawable.habit_prepare_tip_big_2, R.drawable.habit_prepare_tip_big_3, R.drawable.habit_prepare_tip_big_4, R.drawable.habit_prepare_tip_big_5};
-    private int[] titles = {R.string.prepare_tip_name_1, R.string.prepare_tip_name_2, R.string.prepare_tip_name_3, R.string.prepare_tip_name_4, R.string.prepare_tip_name_5};
-    private int[] shortTips = {R.string.prepare_short_tip_1, R.string.prepare_short_tip_2, R.string.prepare_short_tip_3, R.string.prepare_short_tip_4, R.string.prepare_short_tip_5};
-    private int[] tips = {R.string.prepare_tip_1, R.string.prepare_tip_2, R.string.prepare_tip_3, R.string.prepare_tip_4, R.string.prepare_tip_5};
+    private String[] titles;
+    private String[] shortTips;
+    private String[] tips;
 
     @Override
     protected PreparePresenter<PrepareContract.View> createPresenter() {
@@ -63,23 +62,40 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
 
     @Override
     public void initListener() {
+        mTitleBar.setLeftIconClickListener(new TitleBar.LeftIconClickListener() {
+            @Override
+            public void leftIconClick() {
+                finish();
+            }
+        });
+        mTitleBar.setRightTextClickListener(new TitleBar.RightTextClickListener() {
+            @Override
+            public void rightTextClick() {
+                showDialog(null);
+                mPresenter.setSleepPrepareAlarm(mSleepPrepareView.getData());
+            }
+        });
         mAdapter.addItemClickListener(this);
         mAdapter.setSelectChangeListener(this);
     }
 
     @Override
     public void initData() {
+        titles = getResources().getStringArray(R.array.titles);
+        shortTips = getResources().getStringArray(R.array.shortTips);
+        tips = getResources().getStringArray(R.array.tips);
         if (mItems == null) {
             mItems = new ArrayList<>();
             SleepPrepareItem sleepPrepareItem;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < titles.length; i++) {
                 sleepPrepareItem = new SleepPrepareItem();
+                sleepPrepareItem.setId(i);
                 sleepPrepareItem.setItemType(Constant.ItemType.HABIT_SLEEP_PREPARE);
                 sleepPrepareItem.setImageResId(images[i]);
                 sleepPrepareItem.setBigImageResId(bigImages[i]);
-                sleepPrepareItem.setTitle(getResources().getString(titles[i]));
-                sleepPrepareItem.setShortTip(getResources().getString(shortTips[i]));
-                sleepPrepareItem.setMessage(getResources().getString(tips[i]));
+                sleepPrepareItem.setTitle(titles[i]);
+                sleepPrepareItem.setShortTip(shortTips[i]);
+                sleepPrepareItem.setMessage(tips[i]);
                 mItems.add(sleepPrepareItem);
             }
         }
@@ -117,8 +133,8 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
         List<PrepareBean> list = new ArrayList<>();
         for (BaseItem baseItem : mItems) {
             if (baseItem.getItemType() == Constant.ItemType.HABIT_SLEEP_PREPARE) {
-                SleepPrepareItem prepareItem=(SleepPrepareItem)baseItem;
-                if (prepareItem.getChecked()){
+                SleepPrepareItem prepareItem = (SleepPrepareItem) baseItem;
+                if (prepareItem.getChecked()) {
                     PrepareBean prepareBean = new PrepareBean();
                     prepareBean.setSleepPrepareItem((SleepPrepareItem) baseItem);
                     list.add(prepareBean);
@@ -126,5 +142,11 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
             }
         }
         mSleepPrepareView.setData(list);
+    }
+
+    @Override
+    public void setAlarmSuccess() {
+        dismissDialog();
+        finish();
     }
 }
