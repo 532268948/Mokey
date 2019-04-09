@@ -1,6 +1,6 @@
-package com.example.lib_common.base.db;
+package com.example.lib_common.db;
 
-import com.example.lib_common.base.db.entity.DaoSession;
+import com.example.lib_common.db.entity.DaoSession;
 
 import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;
@@ -46,6 +46,14 @@ public class DaoUtil<T> extends DbOperate {
         asyncSession.queryUnique(query);
     }
 
+    /**
+     * 分页查询
+     * @param cls
+     * @param currentPage
+     * @param pageSize
+     * @param whereCondition
+     * @param <T>
+     */
     public <T> void query(Class cls, int currentPage, int pageSize, WhereCondition whereCondition) {
         AsyncSession asyncSession = daoSession.startAsyncSession();
         asyncSession.setListenerMainThread(new AsyncOperationListener() {

@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:clipChildren="false">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff"
+              android:orientation="vertical">
 
-    <com.example.lib_common.base.view.WrapContentHeightViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="#ffffff"
-        android:clipChildren="false"/>
-</RelativeLayout>
+    <com.example.lib_common.base.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_title_bar_height"
+        app:title_text="@string/report_title"/>
+
+    <com.example.lib_common.base.view.RefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:clipChildren="false">
+            <com.example.lib_common.base.view.WrapContentHeightViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="50dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:overScrollMode="never"
+                android:background="#ffffff"/>
+        </FrameLayout>
+    </com.example.lib_common.base.view.RefreshLayout>
+
+
+</LinearLayout>

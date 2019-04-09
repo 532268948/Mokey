@@ -2,8 +2,7 @@ package com.example.lib_common.util;
 
 import android.app.Activity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * project: ModuleDemo
@@ -15,6 +14,7 @@ import java.util.Set;
  */
 public class ActivityManager {
     private static ActivityManager activityManager;
+    private ArrayList<Activity> allActivities;
 
     public synchronized static ActivityManager getInstance() {
         if (activityManager == null) {
@@ -23,11 +23,10 @@ public class ActivityManager {
         return activityManager;
     }
 
-    private Set<Activity> allActivities;
 
     public void addActivity(Activity act) {
         if (allActivities == null) {
-            allActivities = new HashSet<>();
+            allActivities = new ArrayList<>();
         }
         allActivities.add(act);
     }
@@ -48,5 +47,16 @@ public class ActivityManager {
         }
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
+    }
+
+    public Activity getTopActivity() {
+        if (allActivities != null) {
+            for (int i = allActivities.size() - 1; i >= 0; i--) {
+                if (allActivities.get(i) != null) {
+                    return allActivities.get(i);
+                }
+            }
+        }
+        return null;
     }
 }

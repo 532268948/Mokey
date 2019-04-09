@@ -3,7 +3,7 @@ package com.example.lib_common.base;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.lib_common.base.db.DBManager;
+import com.example.lib_common.db.DBManager;
 
 /**
  * @author : 叶天华

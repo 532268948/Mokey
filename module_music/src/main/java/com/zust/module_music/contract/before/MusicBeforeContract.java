@@ -16,6 +16,8 @@ import java.util.List;
 public interface MusicBeforeContract {
 
     interface View extends BaseView {
+
+        void setDBData(List<MusicItem> musicItemList);
         void updateMusic(List<MusicItem> musicItemList, int position);
 
         void addMoreData(List<MusicItem> musicItemList);
@@ -25,6 +27,7 @@ public interface MusicBeforeContract {
         void updateCurrentPage(int page);
 
         void noMoreData();
+
     }
 
     interface Presenter {
@@ -46,5 +49,12 @@ public interface MusicBeforeContract {
          * 刷新数据
          */
         void refreshSleepBeforeMusicList();
+
+        /**
+         * 更新音乐本地缓存路径
+         * @param localFile
+         * @param id
+         */
+        void updateMusicDb(String localFile,MusicItem musicItem);
     }
 }

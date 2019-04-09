@@ -1,22 +1,25 @@
 package com.example.module_report.bean;
 
+import java.io.Serializable;
+
 /**
  * @author: tianhuaye
  * @date: 2019/1/4 13:52
  * @description:
  */
-public class QualityBean {
+public class QualityBean implements Serializable {
+    private static final long serialVersionUID = 7774352248569445319L;
     /**
      * 0error 1deep 2shallow 3dream
      */
-    private Integer type;
+    private int type;
     private float grade;
 
     public Integer getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(int type) {
         this.type = type;
     }
 

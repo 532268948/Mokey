@@ -1,7 +1,9 @@
 package com.example.module_habit.contract;
 
+import android.media.AudioRecord;
+
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.db.entity.Alarm;
+import com.example.lib_common.db.entity.Alarm;
 
 /**
  * @author: tianhuaye
@@ -16,5 +18,11 @@ public interface SleepContract {
 
     interface Presenter {
         void getAlarmFromDB();
+
+        /**
+         * 存储录音
+         * @param audioRecord
+         */
+        void saveVolume(AudioRecord audioRecord);
     }
 }

@@ -1,12 +1,12 @@
-package com.example.lib_common.base.db;
+package com.example.lib_common.db;
 
 import android.content.Context;
 
-import com.example.lib_common.base.db.dao.AlarmDaoUtil;
-import com.example.lib_common.base.db.dao.MusicBeforeDao;
-import com.example.lib_common.base.db.dao.UserDaoUtil;
-import com.example.lib_common.base.db.entity.DaoMaster;
-import com.example.lib_common.base.db.entity.DaoSession;
+import com.example.lib_common.db.dao.AlarmDaoUtil;
+import com.example.lib_common.db.dao.MusicBeforeDao;
+import com.example.lib_common.db.dao.UserDaoUtil;
+import com.example.lib_common.db.entity.DaoMaster;
+import com.example.lib_common.db.entity.DaoSession;
 
 /**
  * @author: tianhuaye

@@ -1,11 +1,11 @@
-package com.example.lib_common.base.db.dao;
+package com.example.lib_common.db.dao;
 
-import com.example.lib_common.base.db.DBManager;
-import com.example.lib_common.base.db.DaoUtil;
-import com.example.lib_common.base.db.DbOperateListener;
-import com.example.lib_common.base.db.entity.Alarm;
-import com.example.lib_common.base.db.entity.AlarmDao;
-import com.example.lib_common.base.db.entity.DaoSession;
+import com.example.lib_common.db.DBManager;
+import com.example.lib_common.db.DaoUtil;
+import com.example.lib_common.db.DbOperateListener;
+import com.example.lib_common.db.entity.Alarm;
+import com.example.lib_common.db.entity.AlarmDao;
+import com.example.lib_common.db.entity.DaoSession;
 
 import java.util.List;
 

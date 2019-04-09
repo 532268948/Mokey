@@ -1,6 +1,9 @@
 package com.example.module_report.contract;
 
 import com.example.lib_common.base.BaseView;
+import com.example.module_report.bean.ReportBean;
+
+import java.util.List;
 
 /**
  * @author: tianhuaye
@@ -10,8 +13,18 @@ import com.example.lib_common.base.BaseView;
 public interface ReportContract {
 
     interface View extends BaseView {
+        /**
+         * 显示用户睡眠数据
+         * @param list
+         */
+        void showUserSleepData(List<ReportBean> list);
     }
 
     interface Presenter {
+
+        /**
+         * 获取用户睡眠数据
+         */
+        void getUserSleepData();
     }
 }

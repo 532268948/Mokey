@@ -1,9 +1,9 @@
 package com.example.module_habit.ui.prepare;
 
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.db.DBManager;
-import com.example.lib_common.base.db.DbOperateListener;
-import com.example.lib_common.base.db.entity.Alarm;
+import com.example.lib_common.db.DBManager;
+import com.example.lib_common.db.DbOperateListener;
+import com.example.lib_common.db.entity.Alarm;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.AlarmManagerUtil;
 import com.example.module_habit.bean.PrepareBean;
@@ -17,6 +17,19 @@ import java.util.List;
  * description:
  */
 public class PreparePresenter<V extends PrepareContract.View> extends BasePresenter<V> implements PrepareContract.Presenter {
+    @Override
+    public void getSleepPrepareAlarm() {
+        DBManager.getInstance(context.get()).getAlarmDB().queryWhereTypeAlarm(Constant.Alarm.ALARM_TYPE_TWO, new DbOperateListener.OnQueryAllListener<Alarm>() {
+
+            @Override
+            public void onQueryAllBatchListener(List<Alarm> list) {
+                if (list!=null){
+                    view.get().setPrepareAlarmList(list);
+                }
+            }
+        });
+    }
+
     @Override
     public void setSleepPrepareAlarm(final List<PrepareBean> list) {
         //获取入睡闹钟信息
@@ -44,7 +57,7 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
                                 setMinute = (int) (minute - leftTime);
                             } else {
                                 setHour = hour - 1;
-                                setMinute = (int) (Constant.HOUR + (minute - leftTime));
+                                setMinute = (int) (Constant.HOUR_TO_MIMUTE + (minute - leftTime));
                             }
                             Alarm alarm1 = new Alarm(Constant.Alarm.ALARM_ID_SIX + i, setHour, setMinute, alarm.getMode(), null, list.get(i).getSleepPrepareItem().getTitle(), Constant.Alarm.ALARM_TYPE_TWO, true);
                             alarmList.add(alarm1);
@@ -73,26 +86,29 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
                                                         //一次性闹钟
                                                         if (alarm.getMode() == 0) {
                                                             for (Alarm alarm1 : alarmList) {
-                                                                AlarmManagerUtil.setOnceAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
+                                                                AlarmManagerUtil.setOnceAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm1.getRingPath(), alarm1.getMsg());
                                                             }
                                                             //重复闹钟
                                                         } else if (alarm.getMode() == 1) {
                                                             for (Alarm alarm1 : alarmList) {
-                                                                AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
+                                                                AlarmManagerUtil.setRepeatAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm1.getRingPath(), alarm1.getMsg());
                                                             }
                                                         }
                                                         //入睡闹钟未开启
                                                         if (!alarm.getOpen()) {
+                                                            //设置入睡闹钟
+                                                            AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                                             //设置开启
                                                             alarm.setOpen(true);
-                                                            //更新数据库
-                                                            DBManager.getInstance(context.get()).getAlarmDB().updateSingleAlarm(alarm, new DbOperateListener.OnUpdateListener() {
-                                                                @Override
-                                                                public void onUpdateListener(boolean type) {
-                                                                    view.get().setAlarmSuccess();
-                                                                }
-                                                            });
+
                                                         }
+                                                        //更新数据库
+                                                        DBManager.getInstance(context.get()).getAlarmDB().updateSingleAlarm(alarm, new DbOperateListener.OnUpdateListener() {
+                                                            @Override
+                                                            public void onUpdateListener(boolean type) {
+                                                                view.get().setAlarmSuccess();
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             }

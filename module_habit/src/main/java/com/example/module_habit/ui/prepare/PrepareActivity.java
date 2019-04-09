@@ -13,6 +13,7 @@ import com.example.lib_common.base.bean.SleepPrepareItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.common.Constant;
+import com.example.lib_common.db.entity.Alarm;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_habit.R;
 import com.example.module_habit.bean.PrepareBean;
@@ -55,7 +56,7 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
         mTitleBar = findViewById(R.id.title_bar);
         mRecyclerView = findViewById(R.id.recycler_view);
         mSleepPrepareView = findViewById(R.id.sleep_prepare_view);
-        mAdapter = new PrepareAdapter(this);
+        mAdapter = new PrepareAdapter(this, mRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -100,6 +101,7 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
             }
         }
         mAdapter.setData(mItems);
+        mPresenter.getSleepPrepareAlarm();
     }
 
     @Override
@@ -145,8 +147,41 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
     }
 
     @Override
+    public void setPrepareAlarmList(List<Alarm> alarmList) {
+        int k = 0;
+        for (Alarm alarm : alarmList) {
+            for (BaseItem baseItem : mItems) {
+                if (baseItem.getItemType() == Constant.ItemType.HABIT_SLEEP_PREPARE) {
+                    SleepPrepareItem prepareItem = (SleepPrepareItem) baseItem;
+                    if (alarm.getMsg().equals(prepareItem.getTitle())) {
+                        prepareItem.setChecked(true);
+                        k=k+1;
+                        prepareItem.setCheckNum(k);
+                    }
+                }
+            }
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+        List<PrepareBean> list = new ArrayList<>();
+        for (BaseItem baseItem : mItems) {
+            if (baseItem.getItemType() == Constant.ItemType.HABIT_SLEEP_PREPARE) {
+                SleepPrepareItem prepareItem = (SleepPrepareItem) baseItem;
+                if (prepareItem.getChecked()) {
+                    PrepareBean prepareBean = new PrepareBean();
+                    prepareBean.setSleepPrepareItem((SleepPrepareItem) baseItem);
+                    list.add(prepareBean);
+                }
+            }
+        }
+        mSleepPrepareView.setData(list);
+    }
+
+    @Override
     public void setAlarmSuccess() {
         dismissDialog();
+        setResult(Constant.RequestAndResultCode.ACTIVITY_PREAPRE_RESULT_OK);
         finish();
     }
 }

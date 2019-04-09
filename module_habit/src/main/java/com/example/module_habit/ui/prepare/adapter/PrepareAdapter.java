@@ -2,6 +2,7 @@ package com.example.module_habit.ui.prepare.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +27,12 @@ public class PrepareAdapter extends BaseRecyclerAdapter {
 
     private boolean isMax = false;
     private final int MAX_SIZE = 3;
+    private RecyclerView mRecyclerView;
     private OnSelectChangeListener onSelectChangeListener;
 
-    public PrepareAdapter(Context context) {
+    public PrepareAdapter(Context context,RecyclerView recyclerView) {
         super(context);
+        this.mRecyclerView=recyclerView;
     }
 
     @NonNull
@@ -68,10 +71,22 @@ public class PrepareAdapter extends BaseRecyclerAdapter {
                 }
                 prepareViewHolder.mSelectCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        updateState(sleepPrepareItem, isChecked);
-                        if (onSelectChangeListener!=null){
-                            onSelectChangeListener.onChange();
+                    public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                        if (mRecyclerView.isComputingLayout()){
+                            mRecyclerView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateState(sleepPrepareItem, isChecked);
+                                    if (onSelectChangeListener!=null){
+                                        onSelectChangeListener.onChange();
+                                    }
+                                }
+                            });
+                        }else {
+                            updateState(sleepPrepareItem, isChecked);
+                            if (onSelectChangeListener!=null){
+                                onSelectChangeListener.onChange();
+                            }
                         }
                     }
                 });

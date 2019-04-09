@@ -23,6 +23,8 @@ import com.example.module_habit.presenter.AlarmSettingPresenter;
  */
 public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, AlarmSettingPresenter<AlarmSettingContract.View>> implements AlarmSettingContract.View {
 
+    public static final String INTENT_SOURCE_PAGE = "sourcePage";
+
     private LinearLayout mParentLl;
     private TitleBar mTitleBar;
     private TimePicker mTimePicker;
@@ -36,6 +38,10 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
      */
     private int alarm_mode = 0;
     private String ringPath;
+    /**
+     * 1 lifestyleFragment 2 SleepActivity
+     */
+    private int sourcePage = 0;
 
     @Override
     protected AlarmSettingPresenter<AlarmSettingContract.View> createPresenter() {
@@ -51,6 +57,11 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
     public void initUIParams() {
         super.initUIParams();
         StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 0);
+    }
+
+    @Override
+    public void initIntent(Intent intent) {
+        sourcePage = intent.getIntExtra(INTENT_SOURCE_PAGE, 0);
     }
 
     @Override
@@ -92,7 +103,11 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
         mTitleBar.setRightTextClickListener(new TitleBar.RightTextClickListener() {
             @Override
             public void rightTextClick() {
-                setAlarm();
+                if (sourcePage == 1) {
+                    setSleepAlarm();
+                } else if (sourcePage == 2) {
+                    setMorningAlarm();
+                }
             }
         });
         mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
@@ -122,13 +137,33 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
 
     }
 
-    private void setAlarm() {
+    /**
+     * 设置入睡闹钟
+     */
+    private void setSleepAlarm() {
+        if (alarm_mode == 0) {
+            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
+        } else if (alarm_mode == 1) {
+            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
+        }
+        mPresenter.saveAlarmToDB(alarm_mode,Constant.Alarm.ALARM_ID_FIVE,Constant.Alarm.ALARM_TYPE_THREE , hour, minute, ringPath, mNameEt.getText().toString());
+        Intent intent = new Intent();
+        intent.putExtra("hour", hour);
+        intent.putExtra("minute", minute);
+        setResult(Constant.RequestAndResultCode.ALARM_RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * 设置晨起闹钟
+     */
+    private void setMorningAlarm() {
         if (alarm_mode == 0) {
             AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
         } else if (alarm_mode == 1) {
             AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
         }
-        mPresenter.saveAlarmToDB(alarm_mode, hour, minute, ringPath, mNameEt.getText().toString());
+        mPresenter.saveAlarmToDB(alarm_mode, Constant.Alarm.ALARM_ID_FOUR, Constant.Alarm.ALARM_TYPE_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
         Intent intent = new Intent();
         intent.putExtra("hour", hour);
         intent.putExtra("minute", minute);

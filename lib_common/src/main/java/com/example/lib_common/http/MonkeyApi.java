@@ -4,6 +4,7 @@ package com.example.lib_common.http;
 import com.example.lib_common.base.bean.ResponseWrapper;
 import com.example.lib_common.base.bean.response.LoginItem;
 import com.example.lib_common.base.bean.response.MusicBean;
+import com.example.lib_common.base.bean.response.UserSleepBean;
 import com.example.lib_common.common.Constant;
 
 import java.util.List;
@@ -49,4 +50,12 @@ public interface MonkeyApi {
      */
     @POST(Constant.Url.MUSIC_BEFORE)
     Observable<ResponseWrapper<List<MusicBean>>> getMusicSleepBefore(@Query("token") String token, @Query("currentPage") int currentPage);
+
+    /**
+     * 获取用户睡眠质量报告数据
+     * @param token
+     * @return
+     */
+    @POST(Constant.Url.SLEEP_USER_DATA)
+    Observable<ResponseWrapper<UserSleepBean>> getUserSleepData(@Query("token") String token);
 }

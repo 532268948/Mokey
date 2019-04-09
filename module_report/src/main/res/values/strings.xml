@@ -1,6 +1,7 @@
 <resources>
     <!--<string name="app_name">Module_Report</string>-->
 
+    <string name="report_title">睡眠报告</string>
     <!--ReportView-->
     <string name="report_view_english_name">monkey sleep</string>
     <string name="report_view_sleep_quality_grade_str">睡眠评分</string>
@@ -24,4 +25,12 @@
     <string name="report_detail_time_minute_tr">分钟</string>
     <string name="report_detail_part_title_1">梦话</string>
     <string name="report_detail_title_tip">%d段梦话</string>
+    <string name="report_detail_status_1">正常</string>
+    <string name="report_detail_status_2">偏早</string>
+    <string name="report_detail_status_3">偏迟</string>
+    <string name="report_detail_status_4">偏少</string>
+    <string name="report_detail_status_5">偏多</string>
+    <string name="report_detail_status_6">偏低</string>
+    <string name="report_detail_status_7">偏高</string>
+    <string name="report_detail_status_8">异常</string>
 </resources>

@@ -101,6 +101,22 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
 //        }
 //    }
 
+
+    public void insertAll(List<BaseItem> items) {
+        if (items == null || items.size() == 0) {
+            return;
+        }
+        if (mItems == null) {
+            mItems = items;
+            notifyDataSetChanged();
+            return;
+        }
+
+        mItems.addAll(items);
+        notifyDataSetChanged();
+
+    }
+
     public void notifyItemChanged(BaseItem baseItem, int position) {
         if (this.mItems != null) {
             this.mItems.set(position, baseItem);

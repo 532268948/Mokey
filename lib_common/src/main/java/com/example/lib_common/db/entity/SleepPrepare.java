@@ -1,4 +1,4 @@
-package com.example.lib_common.base.db.entity;
+package com.example.lib_common.db.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

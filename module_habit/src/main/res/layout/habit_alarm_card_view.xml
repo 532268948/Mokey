@@ -35,22 +35,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/left_top"/>
     <LinearLayout
-        android:id="@+id/left_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/left_top"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/left_bottom_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/habit_alarm_number_1"/>
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/alarm_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,4 +55,21 @@
             android:layout_marginLeft="@dimen/dp_4"
             android:src="@drawable/habit_alarm_card_edit"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/left_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/left_top"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/left_bottom_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/habit_alarm_number_1"/>
+    </LinearLayout>
+
 </RelativeLayout>

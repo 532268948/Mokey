@@ -220,6 +220,7 @@ public class AlarmCardView extends LinearLayout {
 //    }
 
     public void setLeftBottomImages(int[] src) {
+        mLeftBottomContainer.removeAllViews();
         for (int i = 0; i < src.length; i++) {
             ImageView imageView = new ImageView(getContext());
             imageView.setImageDrawable(getContext().getResources().getDrawable(src[i]));
@@ -229,6 +230,11 @@ public class AlarmCardView extends LinearLayout {
                 imageView1.setImageDrawable(getContext().getResources().getDrawable(R.drawable.habit_alarm_card_add));
                 mLeftBottomContainer.addView(imageView1);
             }
+        }
+        if (mLeftBottomContainer.getChildCount()==0){
+            TextView textView=new TextView(getContext());
+            textView.setText("还没有设置任何习惯");
+            mLeftBottomContainer.addView(textView);
         }
     }
 

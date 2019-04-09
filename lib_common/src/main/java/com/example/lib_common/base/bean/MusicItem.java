@@ -1,6 +1,7 @@
 package com.example.lib_common.base.bean;
 
 import com.example.lib_common.base.bean.response.MusicBean;
+import com.example.lib_common.db.entity.MusicBefore;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.music.MusicSource;
 
@@ -70,7 +71,7 @@ public class MusicItem extends BaseItem {
     /**
      * 是否需要付款播放
      */
-    private boolean isNeedPay = true;
+    private boolean isNeedPay = false;
 
     /**
      * 是否已经付款
@@ -109,10 +110,31 @@ public class MusicItem extends BaseItem {
                     }
                 }
                 price = musicBean.getPrice() == null ? "0" : musicBean.getPrice().stripTrailingZeros().toPlainString();
-                url = musicBean.getResource() == null ? "" : Constant.BASE_URL+musicBean.getResource();
+                url = musicBean.getResource() == null ? "" : Constant.BASE_URL + musicBean.getResource();
                 playTimes = musicBean.getPlayTimes() == null ? 0 : musicBean.getPlayTimes();
                 status = musicBean.getStatus() == null ? 0 : musicBean.getStatus();
             }
+        }
+    }
+
+    public MusicItem(MusicBefore musicBefore) {
+        if (musicBefore != null) {
+            itemType = Constant.ItemType.MUSIC_BEFORE;
+            musicId = musicBefore.getId() == null ? -1 : musicBefore.getId();
+            playTimes = musicBefore.getPlayTimes() == null ? 0 : musicBefore.getPlayTimes();
+            duration = musicBefore.getDuring() == null ? "00:00" : musicBefore.getDuring();
+            name=musicBefore.getName()==null?"":musicBefore.getName();
+            author=musicBefore.getAuthor()==null?"":musicBefore.getAuthor();
+            cover=musicBefore.getCover()==null?"":musicBefore.getCover();
+            url=musicBefore.getResource()==null?"":musicBefore.getResource();
+            localFile=musicBefore.getLocalFile()==null?"":musicBefore.getLocalFile();
+            price=String.valueOf(musicBefore.getPrice());
+            if (musicBefore.getFree()==0){
+                isNeedPay=false;
+            }else {
+                isNeedPay=true;
+            }
+            status=musicBefore.getStatus();
         }
     }
 

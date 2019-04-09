@@ -1,16 +1,26 @@
 package com.example.lib_common.music;
 
+import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.RemoteViews;
 
-import com.example.lib_common.BuildConfig;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.lib_common.R;
 import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.common.Constant;
+import com.example.lib_common.util.ActivityManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,10 +45,11 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      * 当前播放的音乐id
      */
     private long currentMusicId;
-//    /**
-//     * 上次播放的音频id
-//     */
-//    private long lastMusicId;
+    /**
+     * 上次播放音频id
+     */
+    private long lastMusicId = 0L;
+
     /**
      * 是否正在定位到指定时间
      */
@@ -48,10 +59,6 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      * 当前播放的item
      */
     private MusicItem curItem;
-//    /**
-//     * 上次播放的source
-//     */
-//    private MusicSource lastSource;
 
     private Context mContext;
 
@@ -68,6 +75,8 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      * 通知管理
      */
     private NotificationManager notificationMgr;
+    private Notification notification = null;
+    private RemoteViews smallView;
 
     private ServiceConnection connection;
 
@@ -82,21 +91,87 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      */
     private List<OnMusicPlayStateListener> listeners;
 
+    private ServiceConnectionListener serviceConnectionListener;
+
+    /**
+     * 播放进度监听器
+     */
+    private OnPlayProgressUpdateListener onPlayProgressUpdateListener;
+
+    private CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener;
+
+    /**
+     * 是否监听歌曲播放进度
+     */
+    private boolean checking = true;
+
     MusicPlayer(Context context) {
         this.mContext = context.getApplicationContext();
         notificationMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
         bindService();
     }
 
     @Override
     public void onStateChanged(MusicState state) {
-
+        mState = state;
+        Log.e("MusicPlayer", "onStateChanged: " + currentMusicId + " " + state);
+        if (mState == MusicState.Stopped) {
+            if (listeners != null) {
+                for (int i = 0; i < listeners.size(); i++) {
+                    OnMusicPlayStateListener l = listeners.get(i);
+                    if (l != null) {
+                        l.onStopped(curItem);
+                    }
+                }
+            }
+        } else if (mState == MusicState.Preparing) {
+            if (listeners != null) {
+                for (int i = 0; i < listeners.size(); i++) {
+                    OnMusicPlayStateListener l = listeners.get(i);
+                    if (l != null) {
+                        l.onPrepare(curItem);
+                    }
+                }
+            }
+        } else if (mState == MusicState.Playing) {
+            if (listeners != null) {
+                for (int i = 0; i < listeners.size(); i++) {
+                    OnMusicPlayStateListener l = listeners.get(i);
+                    if (l != null) {
+                        l.onPlay(getCurMusicItem());
+                    }
+                }
+            }
+        } else if (mState == MusicState.Paused) {
+            if (listeners != null) {
+                for (int i = 0; i < listeners.size(); i++) {
+                    OnMusicPlayStateListener l = listeners.get(i);
+                    if (l != null) {
+                        l.onPaused(curItem);
+                    }
+                }
+            }
+        } else if (mState == MusicState.Completed) {
+            if (listeners != null) {
+                for (int i = 0; i < listeners.size(); i++) {
+                    OnMusicPlayStateListener l = listeners.get(i);
+                    if (l != null) {
+                        l.onComplete(curItem);
+                    }
+                    if (service != null) {
+                        next(true);
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void onControlAction(String action) {
-
+        updateNotification();
     }
+
 
     @Override
     public void onSeekToLast() {
@@ -107,6 +182,33 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
     public void onSeekCompleted() {
 
     }
+
+    public void setMusicCacheProgressListener(CacheableMediaPlayer.OnCachedProgressUpdateListener onCachedProgressUpdateListener) {
+        if (service != null) {
+            service.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+        }
+    }
+
+    public void setMusicCacheSuccessListener(CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener) {
+        this.musicCacheSuccessListener = musicCacheSuccessListener;
+        if (service != null) {
+            service.setMusicCacheSuccessListener(this.musicCacheSuccessListener);
+        }
+    }
+
+    private Runnable progressListener = new Runnable() {
+        @Override
+        public void run() {
+            if (checking && onPlayProgressUpdateListener != null) {
+                onPlayProgressUpdateListener.onPlayProgress(getCurrentPosition());
+            }
+        }
+    };
+
+    public interface OnPlayProgressUpdateListener {
+        void onPlayProgress(int position);
+    }
+
 
     /**
      * 重新绑定MusicService
@@ -143,10 +245,33 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
     }
 
     void play(long musicId) {
-        changeIndex(musicId);
-        initMusicItem(currentIndex);
-        stop(false);
-        play();
+        //与上次的音频id相同
+        if (lastMusicId == musicId) {
+            //正在播放
+            if (mState == MusicState.Playing) {
+                //暂停播放
+                pause();
+            } else if (mState == MusicState.Paused) {
+                //恢复播放
+                recover();
+            } else {
+                //开始播放
+                stop(false);
+                play();
+            }
+        } else {//不同
+            //未播放
+            if (mState == MusicState.Stopped) {
+                changeIndex(musicId);
+                initMusicItem(currentIndex);
+                play();
+            } else {
+                changeIndex(musicId);
+                initMusicItem(currentIndex);
+                stop(false);
+                play();
+            }
+        }
     }
 
     void play() {
@@ -160,6 +285,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
         } else if (mState == MusicState.Paused) {
             recover();
         }
+        lastMusicId = currentMusicId;
 //        sendLimitTimeMsg();
 
 //        mPlayed = true;
@@ -293,29 +419,118 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
         if (items == null || items.isEmpty()) {
             return;
         }
-        if (playList!=null){
-            if (playList.equals(items)){
+        if (playList != null) {
+            if (playList.equals(items)) {
 
-            }else {
+            } else {
                 playList = items;
             }
-        }else {
+        } else {
             playList = items;
         }
 
         MusicItem musicItem = getMusicItem(items, musicId);
         curItem = musicItem;
+        currentMusicId = musicId;
         if (musicItem == null) {
             return;
         }
         mState = MusicState.Stopped;
-        //更新当前musicId
-        musicId = musicItem.getMusicId();
-        //获取指定musicId的index
-        changeIndex(musicId);
-        initMusicItem(currentIndex);
         if (play) {
             play();
+        }
+    }
+
+    private void updateNotification() {
+        notification = getNotification();
+        goNotify();
+    }
+
+    private Notification getNotification() {
+        Notification status = null;
+        if (curItem != null) {
+            int resId = R.drawable.drawable_album_default_thumb;
+            status = new Notification(resId, null, System.currentTimeMillis());
+            if (smallView == null) {
+                smallView = new RemoteViews(mContext.getPackageName(), R.layout.music_notify);
+            }
+            Glide.with(mContext).load(curItem.getCover()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    smallView.setImageViewBitmap(R.id.iv_status_bar_small_thumb, resource);
+                }
+            });
+            smallView.setTextViewText(R.id.tv_status_bar_music_title, curItem.getName());
+            if (mState == MusicState.Playing) {
+                smallView.setOnClickPendingIntent(R.id.iv_status_bar_small_playback,
+                        controlMusicIntent(ControlAction.ACTION_PAUSE));
+                smallView.setImageViewResource(R.id.iv_status_bar_small_playback,
+                        R.drawable.btn_treasury_music_noti_pause);
+            }
+
+            if (mState == MusicState.Paused || mState == MusicState.Stopped) {
+                smallView.setOnClickPendingIntent(R.id.iv_status_bar_small_playback,
+                        controlMusicIntent(ControlAction.ACTION_PLAY));
+                smallView.setImageViewResource(R.id.iv_status_bar_small_playback,
+                        R.drawable.btn_treasury_music_noti_play);
+            }
+
+            smallView.setOnClickPendingIntent(R.id.iv_status_bar_small_next, controlMusicIntent(ControlAction
+                    .ACTION_NEXT));
+
+            smallView.setOnClickPendingIntent(R.id.iv_status_bar_small_del, controlMusicIntent(ControlAction
+                    .ACTION_STOP));
+            status.contentView = smallView;
+            status.contentIntent = getPendingIntent();
+            status.flags |= Notification.FLAG_ONGOING_EVENT;
+            status.flags |= Notification.FLAG_FOREGROUND_SERVICE;
+            status.when = -1000;
+        }
+        return status;
+    }
+
+    private PendingIntent getPendingIntent() {
+        Intent it = new Intent();
+        String className = null;
+        Activity topActivity = ActivityManager.getInstance().getTopActivity();
+        if (topActivity != null) {
+            className = topActivity.getComponentName().getClassName();
+        }
+        if (!TextUtils.isEmpty(className)) {
+            try {
+                it.setComponent(new ComponentName(mContext, Class.forName(className)));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        // it.setAction(Intent.ACTION_MAIN);
+        it.addCategory(Intent.CATEGORY_LAUNCHER);
+        it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        PendingIntent contentIntent = PendingIntent.getActivity(mContext,
+                R.string.app_name, it, PendingIntent.FLAG_UPDATE_CURRENT);
+        return contentIntent;
+    }
+
+    private PendingIntent controlMusicIntent(String action) {
+        if (service != null) {
+            return service.getControlMusicIntent(action);
+        }
+        return null;
+    }
+
+    private void goNotify() {
+        if (notification != null) {
+            if (notificationMgr == null) {
+                notificationMgr = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            }
+            if (notificationMgr != null) {
+                try {
+                    notificationMgr.notify(Constant.NOTIFICATION_MUSIC_ID, notification);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -424,22 +639,15 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                 }
             }
             if (TextUtils.isEmpty(filename) && TextUtils.isEmpty(item.getUrl())) {
-//                hideLoading();
-//                BTEngine.singleton().getMessageLooper().sendMessage(Utils.KEY_MUSIC_NOT_EXIST, Message.obtain());
-                if (BuildConfig.DEBUG) {
-                    Log.w("MusicPlayer", "startPlay: local file not exists and url is empty");
-                }
                 return;
             }
-            startPlay(filename, item.getUrl(), item.getCachedFile(), item.isDownloadWhenPlaying());
+            startPlay(item.getMusicId(), filename, item.getUrl(), item.getCachedFile(), item.isDownloadWhenPlaying());
         }
     }
 
-    private void startPlay(String filename, String url, String cachedFile, boolean downloadWhenPlaying) {
-        Log.d("BBMusicPlayer", "startPlay: filename = " + filename + ", url = " + url + ", cachedFile = " +
-                cachedFile);
+    private void startPlay(long id, String filename, String url, String cachedFile, boolean downloadWhenPlaying) {
         if (service != null) {
-            service.startPlay(filename, url, cachedFile, downloadWhenPlaying);
+            service.startPlay(id, filename, url, cachedFile, downloadWhenPlaying);
         }
     }
 
@@ -448,7 +656,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      *
      * @return
      */
-    private MusicItem getCurMusicItem() {
+    public MusicItem getCurMusicItem() {
         if (curItem != null) {
             return curItem;
         }
@@ -534,13 +742,9 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
     private void initMusicItem(int index) {
         if (playList != null && index >= 0 && index < playList.size()) {
             MusicItem item = playList.get(index);
-//            lastSource = source;
-//            long tmpMusicId = currentMusicId;
             currentMusicId = item.getMusicId();
-//            if (tmpMusicId != currentMusicId) {
-//                lastMusicId = tmpMusicId;
-//            }
             curItem = item;
+            lastMusicId = currentMusicId;
         }
     }
 
@@ -571,7 +775,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
             for (int i = 0; i < listeners.size(); i++) {
                 OnMusicPlayStateListener l = listeners.get(i);
                 if (l != null) {
-                    l.onPosition(pos);
+                    l.onPosition(curItem, pos);
                 }
             }
         }
@@ -629,18 +833,38 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                 public void onServiceConnected(ComponentName name, IBinder iBinder) {
                     service = ((MusicService.MusicBinder) iBinder).getService();
                     service.setCallback(MusicPlayer.this);
+                    if (serviceConnectionListener != null) {
+                        serviceConnectionListener.serviceConnected();
+                    }
+                    service.setMusicCacheSuccessListener(musicCacheSuccessListener);
                 }
 
                 @Override
                 public void onServiceDisconnected(ComponentName name) {
                     if (service != null) {
                         service.setCallback(null);
+                        service.setMusicCacheProgressListener(null);
+                        service.setMusicCacheSuccessListener(null);
                         service = null;
+                    }
+                    if (serviceConnectionListener != null) {
+                        serviceConnectionListener.serviceDisconnected();
                     }
                 }
             };
         }
         Intent intent = new Intent(mContext, MusicService.class);
         mContext.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    void setConnectListener(ServiceConnectionListener serviceConnectionListener) {
+        this.serviceConnectionListener = serviceConnectionListener;
+    }
+
+    interface ServiceConnectionListener {
+
+        void serviceConnected();
+
+        void serviceDisconnected();
     }
 }

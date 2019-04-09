@@ -20,6 +20,7 @@ public class MusicHelper {
     private MusicPlayer mPlayer;
     private static Context mContext = BaseApplication.mContext;
     private static MusicHelper mHelper;
+    private CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener;
 
     public MusicHelper() {
 
@@ -43,23 +44,34 @@ public class MusicHelper {
     public void bindPlayer(OnMusicPlayStateListener listener, boolean restore) {
         if (mPlayer == null) {
             mPlayer = new MusicPlayer(mContext);
-//            mPlayer.setJumpSeekListener(BTEngine.singleton().getParentAstMgr());
         }
         if (restore) {
             mPlayer.reBindForLowMemoryKilled();
         }
         mPlayer.registerCallback(listener);
+
     }
 
-//    private boolean isPlayed() {
-//        return mPlayer != null && mPlayer.isPlayed();
-//    }
-
-    public void initMusicItem(List<MusicItem> items, long musicId, boolean play, OnMusicPlayStateListener listener) {
+    public void initMusicItem(final List<MusicItem> items, final long musicId, final boolean play, OnMusicPlayStateListener listener) {
         bindPlayer(listener);
         if (mPlayer != null) {
-            mPlayer.initMusicItemList(items, musicId, play);
+            mPlayer.setConnectListener(new MusicPlayer.ServiceConnectionListener() {
+                @Override
+                public void serviceConnected() {
+                    mPlayer.initMusicItemList(items, musicId, play);
+                    mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
+                }
+
+                @Override
+                public void serviceDisconnected() {
+
+                }
+            });
         }
+    }
+
+    public MusicPlayer getMusicPlayer() {
+        return mPlayer;
     }
 
     public void next() {
@@ -94,14 +106,12 @@ public class MusicHelper {
 
     public void stop() {
         if (mPlayer != null) {
-//            mPlayer.updateLastIds();
             mPlayer.stop(false);
         }
     }
 
     public void stop(boolean updateNoti) {
         if (mPlayer != null) {
-//            mPlayer.updateLastIds();
             mPlayer.stop(updateNoti);
         }
     }
@@ -111,4 +121,24 @@ public class MusicHelper {
             mPlayer.play();
         }
     }
+
+
+
+    public void setMusicCacheProgressListener(CacheableMediaPlayer.OnCachedProgressUpdateListener onCachedProgressUpdateListener) {
+        if (mPlayer != null) {
+            mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+        }
+
+    }
+
+    public void setMusicCacheSuccessListener(CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener) {
+        this.musicCacheSuccessListener=musicCacheSuccessListener;
+//        if (mPlayer != null) {
+//            mPlayer.setMusicCacheSuccessListener(this.musicCacheSuccessListener);
+//        }
+    }
+
+//    public void setMusicPlayProgressListener(MusicPlayer.OnPlayProgressUpdateListener onPlayProgressUpdateListener) {
+//        mPlayer.setMusicPlayProgressListener(onPlayProgressUpdateListener);
+//    }
 }

@@ -3,6 +3,7 @@
     package="com.example.module_habit">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:name=".app.MyApplication"

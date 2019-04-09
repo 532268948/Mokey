@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.bean.BaseItem;
-import com.example.module_report.bean.QualityBean;
+import com.example.lib_common.common.Constant;
+import com.example.module_report.bean.ReportBean;
 import com.example.module_report.view.ReportView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +22,6 @@ public class ReportPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private List<BaseItem> reportBeanList;
-    private ReportView reportView;
 
     public ReportPagerAdapter(Context context, List<BaseItem> reportBeanList) {
         this.mContext = context;
@@ -51,14 +50,14 @@ public class ReportPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         if (reportBeanList != null && reportBeanList.size() != 0) {
             ReportView view = new ReportView(mContext);
-            List<QualityBean> qualityBeans = new ArrayList<>();
-            for (int i = 0; i < 20; i++) {
-                QualityBean qualityBean = new QualityBean();
-                qualityBean.setType(i % 4);
-                qualityBean.setGrade(10 + (i % 5) * 20);
-                qualityBeans.add(qualityBean);
+
+            if (reportBeanList!=null&&reportBeanList.get(position%reportBeanList.size())!=null){
+                if (reportBeanList.get(position%reportBeanList.size()).getItemType()==Constant.ItemType.SLEEP_REPORT){
+                    ReportBean reportBean=(ReportBean)reportBeanList.get(position%reportBeanList.size());
+                    view.setData(reportBean);
+                }
             }
-            view.setData(qualityBeans);
+
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             container.addView(view);
             return view;
@@ -70,5 +69,10 @@ public class ReportPagerAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         ReportView view = (ReportView) object;
         container.removeView(view);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 }

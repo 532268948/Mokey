@@ -1,6 +1,7 @@
 package com.zust.module_music.contract;
 
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.music.MusicState;
 
 /**
  * @author : 叶天华
@@ -16,7 +17,7 @@ public interface MusicContract {
         /**
          * 显示音乐播放浮窗
          */
-        void showBigMusicView();
+        void showBigMusicView(MusicState state);
 
         /**
          * 音乐浮窗缩至右下角

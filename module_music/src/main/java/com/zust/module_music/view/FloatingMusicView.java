@@ -7,6 +7,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,11 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.bumptech.glide.Glide;
 import com.example.lib_common.R;
 import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.common.Constant;
+import com.example.lib_common.music.MusicState;
 import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.ui.play.MusicPlayActivity;
 
@@ -45,7 +49,20 @@ public class FloatingMusicView extends RelativeLayout {
     private Space space;
     private LinearLayout mContainerLl;
 
-    private int mDrawableLevel = 0;
+    private Context mContext;
+
+//    /**
+//     * 歌曲作者
+//     */
+//    private String author;
+//    /**
+//     * 歌曲名
+//     */
+//    private String title;
+//    /**
+//     * 封面
+//     */
+//    private String cover;
 
     /**
      * 大浮窗背景色
@@ -67,7 +84,7 @@ public class FloatingMusicView extends RelativeLayout {
     /**
      * 是否正在播放
      */
-    private boolean isPlaying = true;
+    private boolean isPlaying = false;
 
     private GradientDrawable mDrawable;
 
@@ -105,6 +122,7 @@ public class FloatingMusicView extends RelativeLayout {
 
     public FloatingMusicView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.mContext = context;
         initAttributes(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.music_play, this, true);
         mCoverIv = findViewById(R.id.iv_music_cover);
@@ -251,6 +269,44 @@ public class FloatingMusicView extends RelativeLayout {
             titleTv.setText(getResources().getString(R.string.music_floating_title, title));
         } else {
             ViewUtil.setViewGone(titleTv);
+        }
+    }
+
+    /**
+     * 设置胡传信息
+     *
+     * @param musicItem music信息
+     * @param state     歌曲状态
+     */
+    public void setMessage(MusicItem musicItem, MusicState state) {
+        Log.e("FloatingMusicView", "setMessage: "+state);
+        if (musicItem == null) {
+            return;
+        } else {
+            this.mMusicItem=musicItem;
+        }
+//        if (!(this.mMusicItem != null && this.mMusicItem.getMusicId() == musicItem.getMusicId())) {
+//            this.mMusicItem = musicItem;
+        if (this.mMusicItem.getName() != null) {
+            titleTv.setText(this.mMusicItem.getName());
+        }
+        if (this.mMusicItem.getAuthor() != null) {
+            tagTv.setText(this.mMusicItem.getAuthor());
+        }
+        if (this.mMusicItem.getCover() != null) {
+            Glide.with(mContext).load(Constant.BASE_URL + this.mMusicItem.getCover()).into(mCoverIv);
+        }
+//        }
+        isPlaying = (state == MusicState.Playing ? true : false);
+        if (isPlaying) {
+            Glide.with(mContext).load(R.drawable.icon_music_pause).into(playImg);
+        } else {
+            Glide.with(mContext).load(R.drawable.icon_music_play).into(playImg);
+        }
+        if (mType){
+            smallPlayAnimation(isPlaying);
+        }else {
+            bigPlayAnimation(isPlaying);
         }
     }
 

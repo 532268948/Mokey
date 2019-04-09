@@ -5,9 +5,10 @@ import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.bean.MusicItem;
 import com.example.lib_common.base.bean.ResponseWrapper;
 import com.example.lib_common.base.bean.response.MusicBean;
-import com.example.lib_common.base.db.DBManager;
-import com.example.lib_common.base.db.DbOperateListener;
 import com.example.lib_common.common.Constant;
+import com.example.lib_common.db.DBManager;
+import com.example.lib_common.db.DbOperateListener;
+import com.example.lib_common.db.entity.MusicBefore;
 import com.example.lib_common.http.MonkeyApiService;
 import com.zust.module_music.contract.before.MusicBeforeContract;
 
@@ -29,16 +30,25 @@ public class MusicBeforePresenter<V extends MusicBeforeContract.View> extends Ba
 
     @Override
     public void getDataFromDB(final int currentPage) {
+//        view.get().showLoading();
         DBManager.getInstance(context.get()).getMusicBeforeDB().queryWhereMusic(currentPage, null, new DbOperateListener.OnQueryAllListener() {
             @Override
             public void onQueryAllBatchListener(List list) {
                 if (list == null || list.size() == 0) {
-                    if (currentPage == 0) {
-                        view.get().showEmpty();
-                    } else {
-                        view.get().noMoreData();
+//                    if (currentPage == 0) {
+//                        view.get().showEmpty();
+//                    } else {
+//                        view.get().noMoreData();
+//                    }
+                } else {
+                    List<MusicItem> musicItemList = new ArrayList<>();
+                    for (MusicBefore musicBefore : (List<MusicBefore>) list) {
+                        MusicItem musicItem = new MusicItem(musicBefore);
+                        musicItemList.add(musicItem);
                     }
+                    view.get().setDBData(musicItemList);
                 }
+//                view.get().dismissDialog();
             }
         });
     }
@@ -54,15 +64,31 @@ public class MusicBeforePresenter<V extends MusicBeforeContract.View> extends Ba
                     public void onNext(ResponseWrapper<List<MusicBean>> musicBeanResponseWrapper) {
                         super.onNext(musicBeanResponseWrapper);
                         if (musicBeanResponseWrapper.getCode() == Constant.HttpCode.SUCCESS) {
-                            List<MusicItem> musicItemList = new ArrayList<>();
+                            final List<MusicItem> musicItemList = new ArrayList<>();
                             if (musicBeanResponseWrapper.getData() != null) {
                                 for (MusicBean musicBean : musicBeanResponseWrapper.getData()) {
                                     MusicItem musicItem = new MusicItem(musicBean);
+                                    musicItem.setDownloadWhenPlaying(true);
                                     musicItemList.add(musicItem);
                                 }
                             }
-                            view.get().addMoreData(musicItemList);
-                            view.get().updateCurrentPage(currentPage + 1);
+                            DBManager.getInstance(context.get()).getMusicBeforeDB().queryAllMusic(new DbOperateListener.OnQueryAllListener<MusicBefore>() {
+                                @Override
+                                public void onQueryAllBatchListener(List<MusicBefore> list) {
+                                    for (int i = 0; i < musicItemList.size(); i++) {
+                                        for (int j = 0; j < list.size(); j++) {
+                                            if (musicItemList.get(i).getMusicId() == list.get(j).getId()) {
+                                                musicItemList.get(i).setLocalFile(list.get(j).getLocalFile());
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    view.get().addMoreData(musicItemList);
+                                    view.get().updateCurrentPage(currentPage + 1);
+                                }
+                            });
+
+
                         } else if (musicBeanResponseWrapper.getCode() == Constant.HttpCode.NO_MORE_DATA) {
                             view.get().addMoreData(null);
                         }
@@ -95,6 +121,25 @@ public class MusicBeforePresenter<V extends MusicBeforeContract.View> extends Ba
                         }
                     }
                 }));
+    }
+
+    @Override
+    public void updateMusicDb(final String localFile, final MusicItem musicItem) {
+        if (musicItem == null) {
+            return;
+        }
+        DBManager.getInstance(context.get()).getMusicBeforeDB().queryMusicById(musicItem.getMusicId(), new DbOperateListener.OnQuerySingleListener<MusicBefore>() {
+            @Override
+            public void onQuerySingleListener(MusicBefore entry) {
+                if (entry == null) {
+                    musicItem.setLocalFile(localFile);
+                    DBManager.getInstance(context.get()).getMusicBeforeDB().insertSingle(new MusicBefore(musicItem));
+                } else {
+                    musicItem.setLocalFile(localFile);
+                    DBManager.getInstance(context.get()).getMusicBeforeDB().updateSingleMusic(new MusicBefore(musicItem));
+                }
+            }
+        });
     }
 
 

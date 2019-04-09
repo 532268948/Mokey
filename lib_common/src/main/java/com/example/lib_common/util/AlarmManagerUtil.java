@@ -24,7 +24,7 @@ public class AlarmManagerUtil {
      * @param context
      * @param id      闹铃id
      */
-    public static void cancelAlarm(Context context, int id) {
+    private static void cancelAlarm(Context context, int id) {
         Intent intent = new Intent(Constant.Alarm.ALARM_ACTION);
         PendingIntent pi = PendingIntent.getBroadcast(context, id, intent, PendingIntent
                 .FLAG_CANCEL_CURRENT);
@@ -46,7 +46,15 @@ public class AlarmManagerUtil {
         //取消重复闹铃
         cancelAlarm(context, id);
         //设置一次性闹钟
-        AlarmManagerUtil.setAlarm(context, 0, hour, minute, id, 0, tip, ringPath);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            AlarmManagerUtil.setAlarm(context, 0, hour, minute, id, 0, tip, ringPath);
+        }else if (Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP){
+
+        }else{
+
+        }
+
     }
 
 
@@ -64,7 +72,10 @@ public class AlarmManagerUtil {
         //取消仅一次闹钟
         cancelAlarm(context, id);
         //设置重复闹钟
-        AlarmManagerUtil.setAlarm(context, 1, hour, minute, id, 0, tip, ringPath);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            AlarmManagerUtil.setAlarm(context, 1, hour, minute, id, 0, tip, ringPath);
+        }
     }
 
     /**

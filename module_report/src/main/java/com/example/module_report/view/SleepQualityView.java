@@ -56,7 +56,7 @@ public class SleepQualityView extends View {
             AVERAGE_WIDTH = ((float) getWidth()) / ((float) (this.qualityBeanList.size() + 1));
             for (int i = 0; i < qualityBeanList.size(); i++) {
                 float x = (i + 1) * AVERAGE_WIDTH;
-                RectF oval = new RectF(x - 6f, ((float)getHeight()) * (100f - qualityBeanList.get(i).getGrade()) / 100f, x + 6f, getHeight());
+                RectF oval = new RectF(x - 6f, ((float)getHeight()) * (qualityBeanList.get(i).getGrade()) / 10f, x + 6f, getHeight());
                 switch (qualityBeanList.get(i).getType()) {
                     case 0:
                         mQualityPaint.setColor(getResources().getColor(R.color.sleep_quality_error_color));

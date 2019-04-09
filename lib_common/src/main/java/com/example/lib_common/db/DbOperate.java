@@ -1,4 +1,4 @@
-package com.example.lib_common.base.db;
+package com.example.lib_common.db;
 
 /**
  * author: tianhuaye
@@ -32,7 +32,7 @@ public class DbOperate<T> {
         return onInsertListener;
     }
 
-    public void setOnInsertListener(DbOperateListener.OnInsertListener<T> onIsertListener) {
+    public void setOnInsertListener(DbOperateListener.OnInsertListener<T> onInsertListener) {
         this.onInsertListener = onInsertListener;
     }
 

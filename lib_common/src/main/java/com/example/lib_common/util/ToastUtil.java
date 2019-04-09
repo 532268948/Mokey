@@ -1,6 +1,7 @@
 package com.example.lib_common.util;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 /**
@@ -20,5 +21,9 @@ public class ToastUtil {
 
     public static void showLongToastMessage(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public static void showShortToastMessage(Context context, @StringRes int resId) {
+        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
     }
 }

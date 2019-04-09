@@ -35,4 +35,6 @@
 
     <!--NinePictureView-->
     <string name="nine_picture_more">更多...</string>
+
+    <string name="music_error">音频出错</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.module_habit.ui.lifestyle;
 
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.db.entity.Alarm;
+import com.example.lib_common.db.entity.Alarm;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.lib_common.base.db.entity;
+package com.example.lib_common.db.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -110,4 +110,17 @@ public class Alarm {
         this.open = open;
     }
 
+
+    @Override
+    public String toString() {
+        return "id:" + id + " " +
+                "hour:" + hour + " " +
+                "minute:" + minute + " " +
+                "mode" + mode + " " +
+                "ringPath" + ringPath + " " +
+                "msg:" + msg + " " +
+                "type:" + type + " " +
+                "open:" + open;
+
+    }
 }

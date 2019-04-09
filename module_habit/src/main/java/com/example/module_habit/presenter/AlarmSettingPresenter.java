@@ -1,9 +1,9 @@
 package com.example.module_habit.presenter;
 
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.db.DBManager;
-import com.example.lib_common.base.db.DbOperateListener;
-import com.example.lib_common.base.db.entity.Alarm;
+import com.example.lib_common.db.DBManager;
+import com.example.lib_common.db.DbOperateListener;
+import com.example.lib_common.db.entity.Alarm;
 import com.example.lib_common.common.Constant;
 import com.example.module_habit.contract.AlarmSettingContract;
 
@@ -15,8 +15,8 @@ import com.example.module_habit.contract.AlarmSettingContract;
 public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends BasePresenter<V> implements AlarmSettingContract.Presenter {
 
     @Override
-    public void saveAlarmToDB(int alarm_mode, int hour, int minute, String ringPath, String tip) {
-        final Alarm alarm = new Alarm(Constant.Alarm.ALARM_ID_FOUR, hour, minute, alarm_mode, ringPath, tip, Constant.Alarm.ALARM_TYPE_FOUR, true);
+    public void saveAlarmToDB(int alarm_mode,long id,int type, int hour, int minute, String ringPath, String tip) {
+        final Alarm alarm = new Alarm(id, hour, minute, alarm_mode, ringPath, tip, type, true);
         DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.Alarm.ALARM_ID_FOUR, new DbOperateListener.OnQuerySingleListener() {
             @Override
             public void onQuerySingleListener(Object entry) {

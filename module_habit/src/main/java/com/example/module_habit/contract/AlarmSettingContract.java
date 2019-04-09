@@ -1,7 +1,6 @@
 package com.example.module_habit.contract;
 
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.db.entity.Alarm;
 
 /**
  * @author: tianhuaye
@@ -15,6 +14,6 @@ public interface AlarmSettingContract {
 
     interface Presenter {
 
-        void saveAlarmToDB(int alarm_mode, int hour, int minute, String ringPath, String tip);
+        void saveAlarmToDB(int alarm_mode,long id,int type, int hour, int minute, String ringPath, String tip);
     }
 }

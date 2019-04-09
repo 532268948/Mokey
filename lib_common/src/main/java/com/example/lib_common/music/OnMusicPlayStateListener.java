@@ -13,13 +13,15 @@ import com.example.lib_common.base.bean.MusicItem;
 public interface OnMusicPlayStateListener {
     void onPlay(MusicItem item);
 
-    void onStopped();
+    void onStopped(MusicItem item);
 
-    void onPaused();
+    void onPaused(MusicItem item);
 
-    void onPrepare();
+    void onPrepare(MusicItem item);
 
-    void onPosition(int pos);
+    void onPosition(MusicItem item,int pos);
+
+    void onComplete(MusicItem item);
 
     void onRemain(int count, long time);
 

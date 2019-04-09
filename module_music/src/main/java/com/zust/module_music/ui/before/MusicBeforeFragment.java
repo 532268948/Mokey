@@ -2,18 +2,22 @@ package com.zust.module_music.ui.before;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
+import com.example.lib_common.base.bean.BaseItem;
 import com.example.lib_common.base.bean.HasMoreItem;
 import com.example.lib_common.base.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseListFragment;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.inter.OnLoadMoreListener;
 import com.example.lib_common.common.Constant;
+import com.example.lib_common.music.CacheableMediaPlayer;
 import com.example.lib_common.music.MusicHelper;
+import com.example.lib_common.music.MusicState;
 import com.example.lib_common.music.OnMusicPlayStateListener;
 import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
@@ -36,11 +40,16 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         MusicBeforeContract.View,
         OnItemClickListener,
         OnLoadMoreListener,
-        OnMusicPlayStateListener {
+        OnMusicPlayStateListener,
+        CacheableMediaPlayer.OnCachedProgressUpdateListener {
 
 
     private int currentPage = 0;
     private MusicBeforeAdapter mAdapter;
+    /**
+     * 数据是否有更新
+     */
+    private boolean update = true;
 
 
     @Override
@@ -70,6 +79,21 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
                 refreshData();
             }
         });
+        MusicHelper.getInstance().setMusicCacheSuccessListener(new CacheableMediaPlayer.MusicControlInterface() {
+            @Override
+            public void updateBufferFinishMusicPath(String localPath, long id) {
+                for (int i = 0; i < mItems.size(); i++) {
+                    if (mItems.get(i).getItemType() == Constant.ItemType.MUSIC_BEFORE) {
+                        MusicItem musicItem = (MusicItem) mItems.get(i);
+                        musicItem.setLocalFile(localPath);
+                        if (musicItem.getMusicId() == id) {
+                            mPresenter.updateMusicDb(localPath, musicItem);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -77,13 +101,13 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         if (mItems == null) {
             mItems = new ArrayList<>();
         }
-//        mPresenter.getDataFromDB(0);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new MusicBeforeAdapter(getContext());
         mAdapter.addItemClickListener(this);
         mAdapter.addLoadMoreListener(this);
         mAdapter.setData(mItems);
         mRecyclerView.setAdapter(mAdapter);
+//        mPresenter.getDataFromDB(0);
         mPresenter.getSleepBeforeMusicList(currentPage);
     }
 
@@ -101,18 +125,33 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
                 for (int i = 0; i < mItems.size() - 1; i++) {
                     musicItem = (MusicItem) mItems.get(i);
                     musicItemList.add(musicItem);
-                    if (i == position) {
-                        musicItem.setPlaying(true);
-                    } else {
-                        musicItem.setPlaying(false);
-                    }
+//                    if (i == position) {
+//                        musicItem.setPlaying(true);
+//                    } else {
+//                        musicItem.setPlaying(false);
+//                    }
                 }
-                MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
-                mAdapter.notifyDataSetChanged();
-                MusicFragment fragment = (MusicFragment) getParentFragment();
-                fragment.showBigMusicView();
+                if (update) {
+                    MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
+//                    MusicHelper.getInstance().
+                    MusicHelper.getInstance().setMusicCacheProgressListener(this);
+                    update = false;
+                } else {
+                    MusicHelper.getInstance().play(musicItemList.get(position).getMusicId());
+                }
+//                mAdapter.notifyDataSetChanged();
             }
 
+        }
+    }
+
+    @Override
+    public void setDBData(List<MusicItem> musicItemList) {
+        if (mItems != null && mItems.size() == 0) {
+            mItems.addAll(musicItemList);
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -128,6 +167,9 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
             if (mAdapter != null) {
                 mAdapter.setData(mItems);
             }
+        }
+        if (currentPage == 0) {
+            mItems.clear();
         }
         if (mItems.size() == 0) {
             if (musicItemList != null && musicItemList.size() != 0) {
@@ -231,26 +273,80 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
 
     @Override
     public void onPlay(MusicItem item) {
+        MusicFragment parentFragment = (MusicFragment) getParentFragment();
+        if (parentFragment != null) {
+            Log.e("MusicBeforeFragment", "onPlay: ");
+            parentFragment.showBigMusicView(MusicState.Playing);
+            for (BaseItem baseItem : mItems) {
+                if (baseItem.getItemType() == Constant.ItemType.MUSIC_BEFORE) {
+                    if (((MusicItem) baseItem).getMusicId() == item.getMusicId()) {
+                        ((MusicItem) baseItem).setPlaying(true);
+                    } else {
+                        ((MusicItem) baseItem).setPlaying(false);
+                    }
+                }
+            }
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onStopped(MusicItem item) {
+        MusicFragment parentFragment = (MusicFragment) getParentFragment();
+        if (parentFragment != null) {
+            parentFragment.showBigMusicView(MusicState.Stopped);
+            if (mItems != null) {
+                for (BaseItem baseItem : mItems) {
+                    if (baseItem.getItemType() == Constant.ItemType.MUSIC_BEFORE) {
+                        if (((MusicItem) baseItem).getMusicId() == item.getMusicId()) {
+                            ((MusicItem) baseItem).setPlaying(false);
+                        }
+                    }
+                }
+                if (mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onPaused(MusicItem item) {
+        MusicFragment parentFragment = (MusicFragment) getParentFragment();
+        if (parentFragment != null) {
+            parentFragment.showBigMusicView(MusicState.Paused);
+            if (mItems != null) {
+                for (BaseItem baseItem : mItems) {
+                    if (baseItem.getItemType() == Constant.ItemType.MUSIC_BEFORE) {
+                        if (((MusicItem) baseItem).getMusicId() == item.getMusicId()) {
+                            ((MusicItem) baseItem).setPlaying(false);
+                        }
+                    }
+                }
+                if (mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onPrepare(MusicItem item) {
+        MusicFragment parentFragment = (MusicFragment) getParentFragment();
+        if (parentFragment != null) {
+            parentFragment.showBigMusicView(MusicState.Preparing);
+        }
+    }
+
+    @Override
+    public void onPosition(MusicItem item, int pos) {
 
     }
 
     @Override
-    public void onStopped() {
-
-    }
-
-    @Override
-    public void onPaused() {
-
-    }
-
-    @Override
-    public void onPrepare() {
-
-    }
-
-    @Override
-    public void onPosition(int pos) {
+    public void onComplete(MusicItem item) {
 
     }
 
@@ -262,5 +358,10 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
     @Override
     public void onSeekToLast(int time) {
 
+    }
+
+    @Override
+    public void updateCachedProgress(int progress) {
+        Log.e("MusicBeforeFragment", "updateCachedProgress: " + progress);
     }
 }

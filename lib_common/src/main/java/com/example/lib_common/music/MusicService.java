@@ -1,5 +1,6 @@
 package com.example.lib_common.music;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -72,6 +73,11 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
      * 缓存文件
      */
     private String mCacheFile;
+
+    /**
+     * 音频id
+     */
+    public long musicId;
 
     /**
      * 是否是本地
@@ -214,7 +220,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public boolean onError(MediaPlayer mp, int what, int extra) {
         if (what == CacheableMediaPlayer.MEDIA_ERROR_GET_SIZE
                 || what == CacheableMediaPlayer.STOP_DOWNLOAD_WHILE_PLAY) {
-            startPlay(mLocalFile, mUrl, mCacheFile, false);
+            startPlay(musicId, mLocalFile, mUrl, mCacheFile, false);
         } else {
             mState = MusicState.Stopped;
             notifyMusicState(mState);
@@ -259,6 +265,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     /**
      * 失去音频焦点时调用
+     *
      * @param canDuck If true, audio can continue in "ducked" mode (low volume). Otherwise, all
      */
     @Override
@@ -272,6 +279,20 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             pause(mIsForeground);
             mPausedOnFocusLost = true;
         }
+    }
+
+    public PendingIntent getControlMusicIntent(String action) {
+        if (TextUtils.isEmpty(action)) {
+            return null;
+        }
+
+        Intent intent = new Intent(action);
+        intent.setComponent(mMediaButtonReceiverComponent);
+        intent.setPackage(getPackageName());
+        PendingIntent contentIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        return contentIntent;
     }
 
 
@@ -290,6 +311,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     /**
      * 是否正在播放
+     *
      * @return
      */
     public boolean isPlaying() {
@@ -298,6 +320,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     /**
      * 获取当前播放时间
+     *
      * @return
      */
     public int getCurrentPosition() {
@@ -309,6 +332,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     /**
      * 获取音乐时长
+     *
      * @return
      */
     public int getDuration() {
@@ -316,6 +340,18 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             return mPlayer.getDuration();
         }
         return 0;
+    }
+
+    public void setMusicCacheProgressListener(CacheableMediaPlayer.OnCachedProgressUpdateListener onCachedProgressUpdateListener) {
+        if (mPlayer != null) {
+            mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+        }
+    }
+
+    public void setMusicCacheSuccessListener(CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener) {
+        if (mPlayer != null) {
+            mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
+        }
     }
 
     void tryToGetAudioFocus() {
@@ -453,7 +489,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
      * song in the user's device). If manualUrl is non-null, then it specifies
      * the URL or path to the song that will be played next.
      */
-    void startPlay(String filename, String url, String cachedFile, boolean downloadWhenPlaying) {
+    void startPlay(long id, String filename, String url, String cachedFile, boolean downloadWhenPlaying) {
         mState = MusicState.Stopped;
         notifyMusicState(mState);
         // release everything except MediaPlayer
@@ -475,7 +511,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
                 createMediaPlayerIfNeeded();
                 mPlayer.setDownLoadWhilePlaying(downloadWhenPlaying);
                 mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mPlayer.setDataSource(url, cachedFile);
+                mPlayer.setDataSource(url, cachedFile, id);
                 isLocal = false;
                 if (!TextUtils.isEmpty(url)) {
                     mIsStreaming = url.startsWith("http:") || url.startsWith("https:");
@@ -484,6 +520,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
             mLocalFile = filename;
             mUrl = url;
+            musicId = id;
             mCacheFile = cachedFile;
             mState = MusicState.Preparing;
             notifyMusicState(mState);
@@ -657,12 +694,6 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             callback.onStateChanged(state);
         }
     }
-
-//    private void notifyLogicAction(LogicAction action) {
-//        if (callback != null) {
-//            callback.onLogicAction(action);
-//        }
-//    }
 
     /**
      * 更新控制状态

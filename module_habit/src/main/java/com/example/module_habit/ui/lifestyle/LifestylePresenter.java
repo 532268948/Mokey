@@ -1,9 +1,9 @@
 package com.example.module_habit.ui.lifestyle;
 
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.db.DBManager;
-import com.example.lib_common.base.db.DbOperateListener;
-import com.example.lib_common.base.db.entity.Alarm;
+import com.example.lib_common.db.DBManager;
+import com.example.lib_common.db.DbOperateListener;
+import com.example.lib_common.db.entity.Alarm;
 import com.example.lib_common.common.Constant;
 
 import java.util.List;

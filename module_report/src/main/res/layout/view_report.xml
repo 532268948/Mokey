@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_gravity="top|right">
+        android:layout_gravity="top|right"
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/report_view_monkey_icon" />
+            android:src="@drawable/report_view_monkey_icon"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,13 +32,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
                 android:textColor="@color/report_view_app_name_color"
-                android:textSize="10dp" />
+                android:textSize="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/report_view_english_name"
-                android:textSize="6dp" />
+                android:textSize="6dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -50,41 +51,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <TextView
+            android:id="@+id/tv_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="73"
             android:textColor="@color/report_view_sleep_quality_grade"
-            android:textSize="34dp" />
+            android:textSize="34dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/report_view_sleep_quality_grade_str"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <TextView
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="2018-3-8"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/report_view_sleep_quality_analysis_str"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <com.example.module_report.view.SleepQualityView
             android:id="@+id/sleep_quality_view"
             android:layout_width="match_parent"
-            android:layout_height="160dp" />
+            android:layout_height="160dp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -92,17 +95,19 @@
             android:layout_marginTop="4dp">
 
             <TextView
+                android:id="@+id/tv_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/report_view_moon_icon"
-                android:text="23:30" />
+                android:text="23:30"/>
 
             <TextView
+                android:id="@+id/tv_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:drawableLeft="@drawable/report_view_sun_icon"
-                android:text="8.30" />
+                android:text="8.30"/>
         </FrameLayout>
 
         <LinearLayout
@@ -111,36 +116,41 @@
             android:layout_marginTop="4dp">
 
             <TextView
+                android:id="@+id/tv_start_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/report_shape_blue_circle"
                 android:text="入睡时间 23:40"
                 android:textColor="@color/report_view_bottom_text_color"
-                android:textSize="10dp" />
+                android:textSize="10dp"/>
 
             <TextView
+                android:id="@+id/tv_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/report_shape_blue_circle"
                 android:text="入睡时间 23:40"
                 android:textColor="@color/report_view_bottom_text_color"
-                android:textSize="10dp" />
+                android:textSize="10dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
+                android:id="@+id/tv_deep_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/report_shape_blue_circle"
                 android:text="入睡时间 23:40"
                 android:textColor="@color/report_view_bottom_text_color"
-                android:textSize="10dp" />
+                android:textSize="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -148,7 +158,7 @@
                 android:drawableLeft="@drawable/report_shape_blue_circle"
                 android:text="入睡时间 23:40"
                 android:textColor="@color/report_view_bottom_text_color"
-                android:textSize="10dp" />
+                android:textSize="10dp"/>
         </LinearLayout>
     </LinearLayout>
 

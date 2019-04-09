@@ -4,7 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.lib_common.util.ToastUtil;
+import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.music.MusicHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: tianhuaye
@@ -14,6 +18,15 @@ import com.example.lib_common.util.ToastUtil;
 public class AlarmBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        ToastUtil.showShortToastMessage(context, intent.getStringExtra("msg"));
+        String ring=intent.getStringExtra("ringPath");
+        MusicItem musicItem=new MusicItem();
+        musicItem.setMusicId(100000);
+        musicItem.setLocalFile(ring);
+        musicItem.setDownloadWhenPlaying(false);
+        List<MusicItem> musicItemList=new ArrayList<>();
+        musicItemList.add(musicItem);
+        MusicHelper.getInstance().initMusicItem(musicItemList,100000,true,null);
+        
+//        ToastUtil.showShortToastMessage(context, intent.getStringExtra("msg"));
     }
 }

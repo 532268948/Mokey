@@ -1,26 +1,30 @@
 package com.zust.module_music.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.lib_common.base.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseTopTabFragment;
-import com.zust.module_music.ui.story.MusicStoryFragment;
-import com.zust.module_music.view.FloatingMusicView;
 import com.example.lib_common.base.view.TitleBar;
+import com.example.lib_common.music.MusicHelper;
+import com.example.lib_common.music.MusicState;
 import com.example.lib_common.test.BlankFragment;
 import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
 import com.zust.module_music.contract.MusicContract;
 import com.zust.module_music.presenter.MusicPresenter;
 import com.zust.module_music.ui.before.MusicBeforeFragment;
+import com.zust.module_music.ui.story.MusicStoryFragment;
+import com.zust.module_music.view.FloatingMusicView;
 
 import java.util.ArrayList;
 
 /**
  * @author 53226
  */
-public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicPresenter<MusicContract.View>> implements MusicContract.View {
+public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicPresenter<MusicContract.View>> implements MusicContract.View, FloatingMusicView.OnMusicControlClickListener {
 
     private TitleBar mTitleBar;
     private FloatingMusicView mFloatingMusicView;
@@ -48,7 +52,7 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
 
     @Override
     public void initListener() {
-
+        mFloatingMusicView.addMusicControlClickListener(this);
     }
 
     @Override
@@ -83,8 +87,24 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
     }
 
     @Override
-    public void showBigMusicView() {
+    public void showBigMusicView(MusicState state) {
         ViewUtil.setViewVisible(mFloatingMusicView);
+        MusicItem musicItem = MusicHelper.getInstance().getMusicPlayer().getCurMusicItem();
+        if (musicItem != null) {
+            mFloatingMusicView.setMessage(musicItem, state);
+//            if (state == MusicState.Stopped) {
+//                mFloatingMusicView.setAudio(musicItem.getName());
+//            } else if (state == MusicState.Preparing){
+//
+//            }else if (state==MusicState.Playing){
+//
+//            }else if (state==MusicState.Paused){
+//
+//            }else if (state==MusicState.Completed){
+//
+//            }
+        }
+
     }
 
     @Override
@@ -103,4 +123,29 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
     }
 
 
+    @Override
+    public void onPlayClick(MusicItem musicItem) {
+        Log.d("MusicFragment", "onPlayClick: " + musicItem.isPlaying());
+        if (musicItem.isPlaying()) {
+            MusicHelper.getInstance().pause();
+        } else {
+            MusicHelper.getInstance().play();
+        }
+
+    }
+
+    @Override
+    public void onNextClick(MusicItem musicItem) {
+        MusicHelper.getInstance().next();
+    }
+
+    @Override
+    public void onPreClick(MusicItem musicItem) {
+        MusicHelper.getInstance().prev();
+    }
+
+    @Override
+    public void onNarrowClick(boolean type) {
+
+    }
 }
