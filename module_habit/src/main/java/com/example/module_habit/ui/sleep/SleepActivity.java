@@ -28,11 +28,16 @@ import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_habit.BuildConfig;
 import com.example.module_habit.R;
+import com.example.lib_common.base.bean.request.TurnBean;
+import com.example.module_habit.broadcast.UnLockReceiver;
 import com.example.module_habit.contract.SleepContract;
 import com.example.module_habit.listener.OnRecordListener;
 import com.example.module_habit.presenter.SleepPresenter;
 import com.example.module_habit.ui.alarm.AlarmActivity;
 import com.example.module_habit.view.ProgressView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tianhuaye
@@ -44,6 +49,14 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
 
     private final int BOTTOM_SHRESHOLD_VALUE = -7;
     private final int TOP_SHRESHOLD_VALUE = 0;
+    /**
+     * 睡眠开始时间
+     */
+    private long startSleepTime = 0L;
+    /**
+     * 睡眠结束时间
+     */
+    private long stopSleepTime = 0L;
     /**
      * 长按结束进度值
      */
@@ -78,6 +91,10 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
      * 0 下 1过渡 2上
      */
     private int status = 2;
+    /**
+     * 睡觉翻身数据
+     */
+    private List<TurnBean> turnBeanList;
 
     private CheckMicophoneVolume volumeThread;
 
@@ -206,13 +223,32 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         //不是震动状态
         if (!isVibrate) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
+                //  使用加速度传感器可以实现了检测手机的摇一摇功能，通过摇一摇，弹出是否退出应用的对话框，选择是则退出应用
+                if (status == 0) {
+                    double value = 0.6f;
+                    double max = 3;
+                    if (BuildConfig.DEBUG) {
+                        Log.e("SleepActivity", "onSensorChanged: " + event.values[0]);
+                    }
+                    if (Math.abs(event.values[0]) > value || Math.abs(event.values[1]) > value) {
+                        if (Math.abs(event.values[0]) < max || Math.abs(event.values[1]) < max) {
+                            if (turnBeanList != null) {
+                                if (BuildConfig.DEBUG) {
+                                    Log.e("SleepActivity", "onSensorChanged: turn");
+                                }
+                                turnBeanList.add(new TurnBean(System.currentTimeMillis(), 1));
+                            }
+                        }
+                    }
+                }
                 int z = (int) event.values[2];
 
                 //屏幕在上下翻转过程中
                 if (z > BOTTOM_SHRESHOLD_VALUE && z < TOP_SHRESHOLD_VALUE) {
                     //设置当前状态为翻转状态
-                    Log.e(TAG, "onSensorChanged: 1" + z);
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "onSensorChanged: 1" + z);
+                    }
                     status = 1;
                 } else //屏幕朝下
                     if (z <= BOTTOM_SHRESHOLD_VALUE) {
@@ -224,10 +260,12 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                             vibrator.vibrate(2000);
                             //2秒后设置为非震动状态
                             handler.postDelayed(new Runnable() {
+
                                 @Override
                                 public void run() {
                                     isVibrate = false;
-                                    startSleepRecord();
+                                    startSleep();
+//                                    startSleepRecord();
                                 }
                             }, 2000);
 
@@ -246,7 +284,8 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                                         @Override
                                         public void run() {
                                             isVibrate = false;
-                                            endSleepRecord();
+                                            stopSleep();
+//                                            endSleepRecord();
                                         }
                                     }, 1000);
 
@@ -285,6 +324,44 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
     public void setAlarm(Alarm alarm) {
         if (alarm != null) {
             mAlarmSettingTv.setText(DateUtil.timeToStr(alarm.getHour(), alarm.getMinute()));
+        }
+    }
+
+    @Override
+    public void analysisSuccess() {
+        showError("！！！！！！！！！！");
+    }
+
+    private void showTopScreen(boolean show){
+        if (show){
+            ViewUtil.setViewVisible(mScreenTopLl);
+            ViewUtil.setViewGone(mScreenBottomLl);
+        }else {
+            ViewUtil.setViewGone(mScreenTopLl);
+            ViewUtil.setViewVisible(mScreenBottomLl);
+        }
+    }
+
+    /**
+     * 开始睡眠
+     */
+    private void startSleep() {
+        showTopScreen(false);
+        if (turnBeanList == null) {
+            turnBeanList = new ArrayList<>();
+        }
+        turnBeanList.clear();
+        startSleepTime=System.currentTimeMillis();
+    }
+
+    private void stopSleep() {
+        showTopScreen(true);
+        stopSleepTime=System.currentTimeMillis();
+        if (stopSleepTime-startSleepTime<Constant.MINUTE*2){
+            showError(getResources().getString(R.string.sleep_tip_5));
+            return;
+        }else {
+            mPresenter.sendSleepData(startSleepTime,stopSleepTime,UnLockReceiver.getNum2(),turnBeanList);
         }
     }
 
@@ -335,11 +412,6 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
      * 如果需要播放就必须加入一些格式或者编码的头信息。但是这样的好处就是你可以对音频的 裸数据进行处理，比如你要做一个爱说话的TOM
      * 猫在这里就进行音频的处理，然后重新封装 所以说这样得到的音频比较容易做一些音频的处理。
      */
-
-
-
-
-
 
 
     /**
@@ -401,7 +473,7 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
 
         public void exit() {
             isGetVoiceRun = false;
-            isRecord=false;
+            isRecord = false;
         }
 
         public boolean isRuning() {

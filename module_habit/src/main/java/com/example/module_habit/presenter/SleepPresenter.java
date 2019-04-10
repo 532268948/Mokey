@@ -3,11 +3,15 @@ package com.example.module_habit.presenter;
 import android.media.AudioRecord;
 import android.util.Log;
 
+import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
+import com.example.lib_common.base.bean.request.SleepData;
+import com.example.lib_common.base.bean.request.TurnBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.Alarm;
+import com.example.lib_common.http.MonkeyApiService;
 import com.example.module_habit.BuildConfig;
 import com.example.module_habit.contract.SleepContract;
 
@@ -17,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -47,6 +52,26 @@ public class SleepPresenter<V extends SleepContract.View> extends BasePresenter<
 //
 //            }
 //        });
+    }
+
+    @Override
+    public void sendSleepData(long start_time, long end_time, int unLockTimes, List<TurnBean> turnBeans) {
+        SleepData sleepData=new SleepData();
+        sleepData.setStart_time(start_time);
+        sleepData.setEnd_time(end_time);
+        sleepData.setUnLockTimes(unLockTimes);
+        sleepData.setTurns(turnBeans);
+        addDisposable(MonkeyApiService.getInstance(context.get()).getMonkeyApi().sendSleepData(Constant.TOKEN,sleepData)
+        .subscribeOn(Schedulers.io())
+        .unsubscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeWith(new BaseObserver(view.get()){
+            @Override
+            public void onNext(Object o) {
+                super.onNext(o);
+                view.get().analysisSuccess();
+            }
+        }));
     }
 
     @Override

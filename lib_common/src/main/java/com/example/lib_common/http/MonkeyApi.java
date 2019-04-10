@@ -2,6 +2,7 @@ package com.example.lib_common.http;
 
 
 import com.example.lib_common.base.bean.ResponseWrapper;
+import com.example.lib_common.base.bean.request.SleepData;
 import com.example.lib_common.base.bean.response.LoginItem;
 import com.example.lib_common.base.bean.response.MusicBean;
 import com.example.lib_common.base.bean.response.UserSleepBean;
@@ -10,6 +11,7 @@ import com.example.lib_common.common.Constant;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -53,9 +55,20 @@ public interface MonkeyApi {
 
     /**
      * 获取用户睡眠质量报告数据
+     *
      * @param token
      * @return
      */
     @POST(Constant.Url.SLEEP_USER_DATA)
     Observable<ResponseWrapper<UserSleepBean>> getUserSleepData(@Query("token") String token);
+
+    /**
+     * 发送睡眠数据到服务器
+     *
+     * @param token
+     * @param sleepData
+     * @return
+     */
+    @POST(Constant.Url.SLEEP_DATA_SEND)
+    Observable<ResponseWrapper> sendSleepData(@Query("token") String token, @Body SleepData sleepData);
 }

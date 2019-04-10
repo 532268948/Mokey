@@ -58,6 +58,7 @@
     <string name="sleep_tip_2">屏幕朝下放置，开始记录</string>
     <string name="sleep_tip_3">屏幕朝下放置，继续记录</string>
     <string name="sleep_tip_4">前往设置</string>
+    <string name="sleep_tip_5">睡眠时间太短，无法生成睡眠质量报告</string>
     <string name="sleep_btn_str">长按结束</string>
     <string name="sleep_press_end_str">长按结束</string>
     <string name="sleep_alarm_time">%d:%d</string>

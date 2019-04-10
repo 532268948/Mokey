@@ -95,6 +95,7 @@ public final class Constant {
         public static final String USER_INFORMATION = "user/information";
         public static final String MUSIC_BEFORE = "music/sleep_before";
         public static final String SLEEP_USER_DATA = "sleep/user_all_sleep_data";
+        public static final String SLEEP_DATA_SEND="sleep/send_sleep_data";
     }
 
     public static class HttpCode {

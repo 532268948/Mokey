@@ -35,6 +35,11 @@
                 <action android:name="com.example.alarm.clock"/>
             </intent-filter>
         </receiver>
+        <receiver android:name="com.example.module_habit.broadcast.UnLockReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
