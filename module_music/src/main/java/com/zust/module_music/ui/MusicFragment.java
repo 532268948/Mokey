@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseTopTabFragment;
 import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.music.MusicHelper;

@@ -1,4 +1,6 @@
-package com.example.lib_common.base.bean.response;
+package com.example.lib_common.bean.response;
+
+import java.io.Serializable;
 
 /**
  * @author : 叶天华
@@ -8,7 +10,8 @@ package com.example.lib_common.base.bean.response;
  * @email : 15869107730@163.com
  * @note :
  */
-public class SleepBean {
+public class SleepBean implements Serializable {
+    private static final long serialVersionUID = -144302231938931041L;
     private Integer id;
     private Integer grade;
     private Long start_time;

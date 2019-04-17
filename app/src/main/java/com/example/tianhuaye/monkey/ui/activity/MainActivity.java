@@ -16,7 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.activity.BaseBottomTabActivity;
-import com.example.lib_common.base.bean.response.LoginItem;
+import com.example.lib_common.bean.response.LoginItem;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.User;

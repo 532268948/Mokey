@@ -1,7 +1,7 @@
 package com.zust.module_music.contract.before;
 
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 
 import java.util.List;
 

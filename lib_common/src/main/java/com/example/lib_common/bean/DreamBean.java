@@ -1,6 +1,4 @@
-package com.example.module_report.bean;
-
-import com.example.lib_common.base.bean.BaseItem;
+package com.example.lib_common.bean;
 
 /**
  * @author: tianhuaye

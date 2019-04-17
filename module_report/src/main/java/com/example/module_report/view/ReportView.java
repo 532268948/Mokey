@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.lib_common.util.DateUtil;
 import com.example.module_report.R;
-import com.example.module_report.bean.ReportBean;
+import com.example.lib_common.bean.ReportBean;
 import com.example.module_report.ui.ReportDetailActivity;
 
 /**

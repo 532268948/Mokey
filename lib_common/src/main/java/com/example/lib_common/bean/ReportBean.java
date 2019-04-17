@@ -1,9 +1,8 @@
-package com.example.module_report.bean;
+package com.example.lib_common.bean;
 
 import android.text.TextUtils;
 
-import com.example.lib_common.base.bean.BaseItem;
-import com.example.lib_common.base.bean.response.SleepBean;
+import com.example.lib_common.bean.response.SleepBean;
 import com.example.lib_common.common.Constant;
 
 import java.io.Serializable;

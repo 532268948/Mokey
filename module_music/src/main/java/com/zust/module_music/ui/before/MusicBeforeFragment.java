@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.base.bean.BaseItem;
-import com.example.lib_common.base.bean.HasMoreItem;
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.BaseItem;
+import com.example.lib_common.bean.HasMoreItem;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseListFragment;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.inter.OnLoadMoreListener;

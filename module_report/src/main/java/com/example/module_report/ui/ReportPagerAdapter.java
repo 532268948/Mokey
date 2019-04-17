@@ -6,9 +6,9 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.bean.BaseItem;
+import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.common.Constant;
-import com.example.module_report.bean.ReportBean;
+import com.example.lib_common.bean.ReportBean;
 import com.example.module_report.view.ReportView;
 
 import java.util.List;

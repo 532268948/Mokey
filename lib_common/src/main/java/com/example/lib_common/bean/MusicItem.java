@@ -1,6 +1,6 @@
-package com.example.lib_common.base.bean;
+package com.example.lib_common.bean;
 
-import com.example.lib_common.base.bean.response.MusicBean;
+import com.example.lib_common.bean.response.MusicBean;
 import com.example.lib_common.db.entity.MusicBefore;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.music.MusicSource;

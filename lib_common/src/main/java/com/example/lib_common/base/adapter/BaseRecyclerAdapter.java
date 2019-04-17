@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.bean.BaseItem;
+import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.inter.OnLoadMoreListener;
 import com.example.lib_common.base.view.MoreViewHolder;

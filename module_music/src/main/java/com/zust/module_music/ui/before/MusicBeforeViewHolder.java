@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.util.ViewUtil;
 import com.zust.module_music.R;
 

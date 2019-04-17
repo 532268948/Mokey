@@ -2,8 +2,8 @@ package com.example.module_user.Presenter;
 
 import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.bean.ResponseWrapper;
-import com.example.lib_common.base.bean.response.LoginItem;
+import com.example.lib_common.bean.ResponseWrapper;
+import com.example.lib_common.bean.response.LoginItem;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.User;

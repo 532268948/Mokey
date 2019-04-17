@@ -5,12 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.base.bean.BaseItem;
+import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.base.fragment.BaseFragment;
 import com.example.lib_common.base.view.RefreshLayout;
 import com.example.lib_common.base.view.WrapContentHeightViewPager;
 import com.example.module_report.R;
-import com.example.module_report.bean.ReportBean;
+import com.example.lib_common.bean.ReportBean;
 import com.example.module_report.contract.ReportContract;
 import com.example.module_report.presenter.ReportPresenter;
 

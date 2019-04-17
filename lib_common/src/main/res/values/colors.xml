@@ -128,4 +128,6 @@
     <!--NinePictureView-->
     <color name="nine_picture_item_bg">#80646464</color>
 
+    <!--ReportFinishDialog-->
+    <color name="divider_line">#7ec7c7c7</color>
 </resources>

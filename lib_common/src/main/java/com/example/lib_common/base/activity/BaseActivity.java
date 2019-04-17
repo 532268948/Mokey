@@ -105,7 +105,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends AppCom
             mWaittingDialog = new WaittingDialog(this);
         }
         if (!mWaittingDialog.isShowing()) {
-            mWaittingDialog.showWaitingDialog();
+            mWaittingDialog.showWaitingDialog(message);
         }
     }
 

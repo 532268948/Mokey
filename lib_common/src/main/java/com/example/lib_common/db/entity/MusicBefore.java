@@ -1,6 +1,6 @@
 package com.example.lib_common.db.entity;
 
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

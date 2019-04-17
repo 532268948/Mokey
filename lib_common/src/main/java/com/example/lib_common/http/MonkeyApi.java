@@ -1,11 +1,12 @@
 package com.example.lib_common.http;
 
 
-import com.example.lib_common.base.bean.ResponseWrapper;
-import com.example.lib_common.base.bean.request.SleepData;
-import com.example.lib_common.base.bean.response.LoginItem;
-import com.example.lib_common.base.bean.response.MusicBean;
-import com.example.lib_common.base.bean.response.UserSleepBean;
+import com.example.lib_common.bean.ResponseWrapper;
+import com.example.lib_common.bean.request.SleepData;
+import com.example.lib_common.bean.response.LoginItem;
+import com.example.lib_common.bean.response.MusicBean;
+import com.example.lib_common.bean.response.SleepBean;
+import com.example.lib_common.bean.response.UserSleepBean;
 import com.example.lib_common.common.Constant;
 
 import java.util.List;
@@ -70,5 +71,5 @@ public interface MonkeyApi {
      * @return
      */
     @POST(Constant.Url.SLEEP_DATA_SEND)
-    Observable<ResponseWrapper> sendSleepData(@Query("token") String token, @Body SleepData sleepData);
+    Observable<ResponseWrapper<SleepBean>> sendSleepData(@Query("token") String token, @Body SleepData sleepData);
 }

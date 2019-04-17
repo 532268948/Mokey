@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseListFragment;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.zust.module_music.R;

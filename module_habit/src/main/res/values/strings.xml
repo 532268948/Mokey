@@ -53,6 +53,7 @@
     <!--SleepActivity-->
     <string name="sleep_title_str_1">记录睡眠</string>
     <string name="sleep_title_str_2">记录暂停</string>
+    <string name="sleep_title_str_3">记录睡眠中</string>
     <string name="sleep_morning_alarm_str">晨起闹铃</string>
     <string name="sleep_tip_1">将于%s唤醒你</string>
     <string name="sleep_tip_2">屏幕朝下放置，开始记录</string>
@@ -70,4 +71,9 @@
     <string name="alarm_setting_music_str">唤醒音乐</string>
     <string name="alarm_setting_name">闹钟名称</string>
     <string name="alarm_setting_name_hint_text">点击编辑名称</string>
+
+    <!--ReportFinishDialog-->
+    <string name="dialog_report_finish_msg">睡眠报告已生成，是否前往质量报告详情页面</string>
+    <string name="dialog_report_finish_btn_cancel">取消</string>
+    <string name="dialog_report_finish_btn_sure">确定</string>
 </resources>

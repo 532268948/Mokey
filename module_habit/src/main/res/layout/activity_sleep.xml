@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#767676"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ui.sleep.SleepActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#767676"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              tools:context=".ui.sleep.SleepActivity">
 
     <com.example.lib_common.base.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
         android:background="@color/transport"
-        app:left_icon="@drawable/common_title_bar_back" />
+        app:left_icon="@drawable/common_title_bar_back"/>
 
     <LinearLayout
         android:id="@+id/ll_screen_top"
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="@string/sleep_title_str_1"
             android:textColor="@color/sleep_title_color"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:text="@string/sleep_morning_alarm_str"
             android:textColor="@color/sleep_alarm_str_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_alarm_setting"
@@ -54,7 +54,7 @@
             android:paddingBottom="5dp"
             android:text="07:38"
             android:textColor="@color/sleep_alarm_time_color"
-            android:textSize="14dp" />
+            android:textSize="14dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             android:layout_marginTop="80dp"
             android:gravity="center"
             android:text="@string/sleep_tip_2"
-            android:textColor="@color/sleep_tip_2_color" />
+            android:textColor="@color/sleep_tip_2_color"/>
     </LinearLayout>
 
     <LinearLayout
@@ -79,37 +79,37 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:gravity="center"
-            android:text="@string/sleep_title_str_1"
+            android:text="@string/sleep_title_str_2"
             android:textColor="@color/sleep_title_color"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:gravity="center"
-            android:text="@string/sleep_tip_1"
             android:textColor="@color/sleep_alarm_str_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="@string/sleep_tip_1"/>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@string/sleep_tip_2"
+            android:text="@string/sleep_tip_3"
             android:textColor="@color/sleep_tip_2_color"
-            android:textSize="14dp" />
+            android:textSize="14dp"/>
 
         <com.example.module_habit.view.ProgressView
             android:id="@+id/process_view"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_margin="50dp"
+            android:layout_weight="1"
             app:circleWidth="16dp"
             app:firstColor="#d3d3d3"
-            app:secondColor="#3B95C8" />
+            app:secondColor="#3B95C8"/>
 
 
         <Button
@@ -125,6 +125,23 @@
             android:paddingBottom="10dp"
             android:text="@string/sleep_press_end_str"
             android:textColor="@color/sleep_alarm_time_color"
-            android:textSize="14dp" />
+            android:textSize="14dp"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/sleep_title_str_3"
+            android:textColor="@color/sleep_title_color"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
 </LinearLayout>

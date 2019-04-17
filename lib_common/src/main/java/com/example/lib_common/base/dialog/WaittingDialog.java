@@ -2,6 +2,7 @@ package com.example.lib_common.base.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,18 @@ public class WaittingDialog {
 
     public void showWaitingDialog() {
         if (mDialog != null && !mDialog.isShowing()) {
+            displayAnim();
+            mDialog.show();
+        }
+    }
+
+    public void showWaitingDialog(String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            showWaitingDialog();
+        }
+
+        if (mDialog != null && !mDialog.isShowing()) {
+            mTitleTv.setText(msg);
             displayAnim();
             mDialog.show();
         }

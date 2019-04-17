@@ -33,4 +33,6 @@
     <string name="report_detail_status_6">偏低</string>
     <string name="report_detail_status_7">偏高</string>
     <string name="report_detail_status_8">异常</string>
+
+
 </resources>

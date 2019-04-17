@@ -1,7 +1,7 @@
 package com.example.module_report.contract;
 
 import com.example.lib_common.base.BaseView;
-import com.example.module_report.bean.ReportBean;
+import com.example.lib_common.bean.ReportBean;
 
 import java.util.List;
 

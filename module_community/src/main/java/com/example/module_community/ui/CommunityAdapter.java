@@ -6,9 +6,6 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.adapter.BaseRecyclerAdapter;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.base.bean.BaseItem;
-
-import java.util.List;
 
 /**
  * @author: tianhuaye

@@ -1,6 +1,6 @@
 package com.example.lib_common.base;
 
-import com.example.lib_common.base.bean.ResponseWrapper;
+import com.example.lib_common.bean.ResponseWrapper;
 import com.example.lib_common.common.Constant;
 
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.example.lib_common.base.bean.request;
+package com.example.lib_common.bean.request;
 
 import java.io.Serializable;
 

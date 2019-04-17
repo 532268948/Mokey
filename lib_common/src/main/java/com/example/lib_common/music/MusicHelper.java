@@ -3,7 +3,7 @@ package com.example.lib_common.music;
 import android.content.Context;
 
 import com.example.lib_common.base.BaseApplication;
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 
 import java.util.List;
 

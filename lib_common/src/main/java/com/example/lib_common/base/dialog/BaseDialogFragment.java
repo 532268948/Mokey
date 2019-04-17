@@ -115,7 +115,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
             //设置dialog宽度
             if (mWidth == 0) {
-                params.width = getScreenWidth(getContext()) - 2 * dp2px(getContext(), mMargin);
+                params.width = (int)(getContext().getResources().getDisplayMetrics().widthPixels*0.6);
             } else {
                 params.width = mWidth;
             }

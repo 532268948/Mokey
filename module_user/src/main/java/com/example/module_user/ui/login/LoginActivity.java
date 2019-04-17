@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.base.activity.BaseActivity;
-import com.example.lib_common.base.bean.response.LoginItem;
+import com.example.lib_common.bean.response.LoginItem;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.SharedPreferencesUtil;
 import com.example.lib_common.util.SoftKeyboardUtil;

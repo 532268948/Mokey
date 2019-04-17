@@ -2,9 +2,9 @@ package com.zust.module_music.presenter.before;
 
 import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.bean.MusicItem;
-import com.example.lib_common.base.bean.ResponseWrapper;
-import com.example.lib_common.base.bean.response.MusicBean;
+import com.example.lib_common.bean.MusicItem;
+import com.example.lib_common.bean.ResponseWrapper;
+import com.example.lib_common.bean.response.MusicBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;

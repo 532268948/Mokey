@@ -1,4 +1,4 @@
-package com.example.module_report.bean;
+package com.example.lib_common.bean;
 
 import java.io.Serializable;
 

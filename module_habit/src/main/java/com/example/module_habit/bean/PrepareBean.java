@@ -1,8 +1,6 @@
 package com.example.module_habit.bean;
 
-import android.graphics.Rect;
-
-import com.example.lib_common.base.bean.SleepPrepareItem;
+import com.example.lib_common.bean.SleepPrepareItem;
 
 /**
  * @author: tianhuaye

@@ -25,7 +25,7 @@ public final class Constant {
     public static final long DAY = 24 * 60 * 60 * 1000L;
     public static final long WEEK = 7 * 24 * 60 * 60 * 1000L;
 
-    public static final String BASE_URL = "http://192.168.2.119:8080/";
+    public static final String BASE_URL = "http://192.168.2.85:8080/";
     public static final String MESSAGE_GET_DATA_FALSE = "获取数据失败";
 
     public static String TOKEN = "";
@@ -88,6 +88,10 @@ public final class Constant {
          * module_user RegisterActivity
          */
         public static final String ACTICITY_REGISTER = "/user/register";
+        /**
+         *
+         */
+        public static final String ACTIVITY_REPORT_DETAIL="/report/detail";
     }
 
     public static class Url {
@@ -218,7 +222,7 @@ public final class Constant {
     public static class SleepRecord {
         public static final int SAMPLE_RATE_IN_HZ=8000;
         public static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
-        public static final double VOLUME_START_RECORD = 60f;
-        public static final double VOLUME_STOP_RECORD = 50f;
+        public static final double VOLUME_START_RECORD = 20f;
+        public static final double VOLUME_STOP_RECORD = 20f;
     }
 }

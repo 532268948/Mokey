@@ -3,7 +3,8 @@ package com.example.module_habit.contract;
 import android.media.AudioRecord;
 
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.bean.request.TurnBean;
+import com.example.lib_common.bean.ReportBean;
+import com.example.lib_common.bean.request.TurnBean;
 import com.example.lib_common.db.entity.Alarm;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface SleepContract {
         /**
          * 数据分析成功
          */
-        void analysisSuccess();
+        void analysisSuccess(ReportBean reportBean);
     }
 
     interface Presenter {

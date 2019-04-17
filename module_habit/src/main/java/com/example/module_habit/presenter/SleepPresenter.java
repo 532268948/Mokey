@@ -5,8 +5,11 @@ import android.util.Log;
 
 import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.bean.request.SleepData;
-import com.example.lib_common.base.bean.request.TurnBean;
+import com.example.lib_common.bean.ReportBean;
+import com.example.lib_common.bean.ResponseWrapper;
+import com.example.lib_common.bean.request.SleepData;
+import com.example.lib_common.bean.request.TurnBean;
+import com.example.lib_common.bean.response.SleepBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
@@ -56,6 +59,7 @@ public class SleepPresenter<V extends SleepContract.View> extends BasePresenter<
 
     @Override
     public void sendSleepData(long start_time, long end_time, int unLockTimes, List<TurnBean> turnBeans) {
+        view.get().showDialog("数据报告生成中...");
         SleepData sleepData=new SleepData();
         sleepData.setStart_time(start_time);
         sleepData.setEnd_time(end_time);
@@ -65,11 +69,13 @@ public class SleepPresenter<V extends SleepContract.View> extends BasePresenter<
         .subscribeOn(Schedulers.io())
         .unsubscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribeWith(new BaseObserver(view.get()){
+        .subscribeWith(new BaseObserver<ResponseWrapper<SleepBean> >(view.get()){
+
             @Override
-            public void onNext(Object o) {
-                super.onNext(o);
-                view.get().analysisSuccess();
+            public void onNext(ResponseWrapper<SleepBean> integerResponseWrapper) {
+                super.onNext(integerResponseWrapper);
+                view.get().dismissDialog();
+                view.get().analysisSuccess(new ReportBean(integerResponseWrapper.getData(), null));
             }
         }));
     }

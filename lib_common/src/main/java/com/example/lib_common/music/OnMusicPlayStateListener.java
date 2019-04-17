@@ -1,6 +1,6 @@
 package com.example.lib_common.music;
 
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 
 /**
  * @author : 叶天华

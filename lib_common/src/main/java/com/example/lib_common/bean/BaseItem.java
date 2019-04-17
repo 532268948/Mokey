@@ -1,4 +1,4 @@
-package com.example.lib_common.base.bean;
+package com.example.lib_common.bean;
 
 /**
  * project: Monkey

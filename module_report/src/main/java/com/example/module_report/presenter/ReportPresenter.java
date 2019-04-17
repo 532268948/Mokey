@@ -2,12 +2,12 @@ package com.example.module_report.presenter;
 
 import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.bean.ResponseWrapper;
-import com.example.lib_common.base.bean.response.SleepBean;
-import com.example.lib_common.base.bean.response.UserSleepBean;
+import com.example.lib_common.bean.ResponseWrapper;
+import com.example.lib_common.bean.response.SleepBean;
+import com.example.lib_common.bean.response.UserSleepBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.http.MonkeyApiService;
-import com.example.module_report.bean.ReportBean;
+import com.example.lib_common.bean.ReportBean;
 import com.example.module_report.contract.ReportContract;
 
 import java.util.ArrayList;

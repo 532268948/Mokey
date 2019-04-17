@@ -1,7 +1,7 @@
 package com.example.module_user.contract;
 
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.bean.response.LoginItem;
+import com.example.lib_common.bean.response.LoginItem;
 
 /**
  * @author: tianhuaye

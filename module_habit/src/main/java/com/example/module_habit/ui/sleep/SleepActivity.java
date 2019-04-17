@@ -1,40 +1,38 @@
 package com.example.module_habit.ui.sleep;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioFormat;
-import android.media.AudioRecord;
-import android.media.MediaRecorder;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.lib_common.audio.AudioRecordUtil;
 import com.example.lib_common.base.activity.BaseActivity;
+import com.example.lib_common.bean.ReportBean;
+import com.example.lib_common.bean.request.TurnBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.entity.Alarm;
 import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_habit.BuildConfig;
 import com.example.module_habit.R;
-import com.example.lib_common.base.bean.request.TurnBean;
 import com.example.module_habit.broadcast.UnLockReceiver;
 import com.example.module_habit.contract.SleepContract;
-import com.example.module_habit.listener.OnRecordListener;
 import com.example.module_habit.presenter.SleepPresenter;
 import com.example.module_habit.ui.alarm.AlarmActivity;
 import com.example.module_habit.view.ProgressView;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,7 @@ import java.util.List;
 /**
  * @author tianhuaye
  */
-public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresenter<SleepContract.View>> implements SleepContract.View, SensorEventListener, OnRecordListener {
+public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresenter<SleepContract.View>> implements SleepContract.View, SensorEventListener {
 
 
     private final String TAG = getClass().getSimpleName();
@@ -78,6 +76,7 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
     private TextView mAlarmSettingTv;
     private TextView mPressEndTv;
     private ProgressView mProgressView;
+    private LinearLayout mRecordLl;
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
@@ -96,7 +95,12 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
      */
     private List<TurnBean> turnBeanList;
 
-    private CheckMicophoneVolume volumeThread;
+    /**
+     * 是否暂停记录数据
+     */
+    private boolean pause = false;
+
+    private ReportFinishDialog reportFinishDialog;
 
     @Override
     protected SleepPresenter<SleepContract.View> createPresenter() {
@@ -143,20 +147,45 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         mAlarmSettingTv = findViewById(R.id.tv_alarm_setting);
         mPressEndTv = findViewById(R.id.tv_press_end);
         mProgressView = findViewById(R.id.process_view);
+        mRecordLl = findViewById(R.id.ll_record);
 
         ViewUtil.setViewVisible(mScreenTopLl);
         ViewUtil.setViewGone(mScreenBottomLl);
-        checkRecordPermission();
+        checkPermission();
     }
 
-    private void checkRecordPermission() {
+    private void checkPermission() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
-                    123);
-        }
+        AndPermission.with(this)
+                .runtime()
+                .permission(new String[]{Permission.RECORD_AUDIO, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE})
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+//                        try {
+//
+////                            String path=getCacheDir().getAbsolutePath()+File.separator  + (new Date()).getTime()+File.separator ;
+//                            String path = CacheUtil.getRecordSaveFilePath(SleepActivity.this, new Date());
+//                            File file = new File(path);
+//                            if (!file.exists()) {
+//                                file.getParentFile().mkdirs();
+//                                file.createNewFile();
+//                                Log.e("SleepActivity", "onAction:" + path);
+//                            } else {
+//                                Log.e("SleepActivity", "onAction:exists");
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            Log.e("SleepActivity", "onAction: " + e.toString());
+//                        }
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        finish();
+                    }
+                }).start();
     }
 
     @Override
@@ -171,10 +200,6 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         mPressEndTv.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-//                if (!pressEnd) {
-//                    return false;
-//                }
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!sleepRecord) {
@@ -211,6 +236,7 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                 return false;
             }
         });
+
     }
 
     @Override
@@ -227,9 +253,9 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                 if (status == 0) {
                     double value = 0.6f;
                     double max = 3;
-                    if (BuildConfig.DEBUG) {
-                        Log.e("SleepActivity", "onSensorChanged: " + event.values[0]);
-                    }
+//                    if (BuildConfig.DEBUG) {
+//                        Log.e("SleepActivity", "onSensorChanged: " + event.values[0]);
+//                    }
                     if (Math.abs(event.values[0]) > value || Math.abs(event.values[1]) > value) {
                         if (Math.abs(event.values[0]) < max || Math.abs(event.values[1]) < max) {
                             if (turnBeanList != null) {
@@ -246,9 +272,9 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                 //屏幕在上下翻转过程中
                 if (z > BOTTOM_SHRESHOLD_VALUE && z < TOP_SHRESHOLD_VALUE) {
                     //设置当前状态为翻转状态
-                    if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "onSensorChanged: 1" + z);
-                    }
+//                    if (BuildConfig.DEBUG) {
+//                        Log.e(TAG, "onSensorChanged: 1" + z);
+//                    }
                     status = 1;
                 } else //屏幕朝下
                     if (z <= BOTTOM_SHRESHOLD_VALUE) {
@@ -284,7 +310,7 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                                         @Override
                                         public void run() {
                                             isVibrate = false;
-                                            stopSleep();
+                                            pauseSleep();
 //                                            endSleepRecord();
                                         }
                                     }, 1000);
@@ -328,17 +354,34 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
     }
 
     @Override
-    public void analysisSuccess() {
-        showError("！！！！！！！！！！");
+    public void analysisSuccess(ReportBean id) {
+        showReportFinishDialog(id);
     }
 
-    private void showTopScreen(boolean show){
-        if (show){
+    private void showReportFinishDialog(ReportBean id) {
+        if (reportFinishDialog == null) {
+            reportFinishDialog = new ReportFinishDialog();
+            reportFinishDialog.setReportBean(id);
+        }
+        reportFinishDialog.show(getSupportFragmentManager());
+    }
+
+    /**
+     * @param status 0第一次进入 1屏幕朝下 2记录过程屏幕朝上
+     */
+    private void showScreen(int status) {
+        if (status == 0) {
             ViewUtil.setViewVisible(mScreenTopLl);
             ViewUtil.setViewGone(mScreenBottomLl);
-        }else {
+            ViewUtil.setViewGone(mRecordLl);
+        } else if (status == 1) {
+            ViewUtil.setViewVisible(mRecordLl);
             ViewUtil.setViewGone(mScreenTopLl);
+            ViewUtil.setViewGone(mScreenBottomLl);
+        } else if (status == 2) {
             ViewUtil.setViewVisible(mScreenBottomLl);
+            ViewUtil.setViewGone(mRecordLl);
+            ViewUtil.setViewGone(mScreenTopLl);
         }
     }
 
@@ -346,197 +389,42 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
      * 开始睡眠
      */
     private void startSleep() {
-        showTopScreen(false);
+        showScreen(1);
         if (turnBeanList == null) {
             turnBeanList = new ArrayList<>();
         }
-        turnBeanList.clear();
-        startSleepTime=System.currentTimeMillis();
+        if (!pause) {
+            turnBeanList.clear();
+        }
+        pause = false;
+        startSleepTime = System.currentTimeMillis();
+        startRecord();
+    }
+
+    private void pauseSleep() {
+        pause = true;
+        showScreen(2);
+        stopRecord();
     }
 
     private void stopSleep() {
-        showTopScreen(true);
-        stopSleepTime=System.currentTimeMillis();
-        if (stopSleepTime-startSleepTime<Constant.MINUTE*2){
+
+        pause = false;
+        stopSleepTime = System.currentTimeMillis();
+        if (stopSleepTime - startSleepTime < Constant.MINUTE * 2) {
             showError(getResources().getString(R.string.sleep_tip_5));
             return;
-        }else {
-            mPresenter.sendSleepData(startSleepTime,stopSleepTime,UnLockReceiver.getNum2(),turnBeanList);
+        } else {
+            mPresenter.sendSleepData(startSleepTime, stopSleepTime, UnLockReceiver.getNum2(), turnBeanList);
         }
     }
 
-    /**
-     * 开始睡眠记录
-     */
-    private void startSleepRecord() {
-        if (volumeThread == null) {
-            volumeThread = new CheckMicophoneVolume(this);
-        }
-        volumeThread.startRecord();
-
+    public void startRecord() {
+        AudioRecordUtil.getInstance(this).startRecord();
     }
 
-    /**
-     * 结束睡眠记录
-     */
-    private void endSleepRecord() {
-        if (volumeThread != null) {
-            if (volumeThread.isRuning()) {
-                volumeThread.exit();
-            }
-        }
-    }
-
-    @Override
-    public void startRecord(final AudioRecord audioRecord) {
-        SleepActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.saveVolume(audioRecord);
-            }
-        });
-    }
-
-    @Override
-    public void stopRecord(AudioRecord audioRecord) {
-        if (audioRecord != null) {
-            //释放资源
-            audioRecord.stop();
-            audioRecord.release();
-            audioRecord = null;
-        }
-    }
-
-    /**
-     * 这里将数据写入文件，但是并不能播放，因为AudioRecord获得的音频是原始的裸音频，
-     * 如果需要播放就必须加入一些格式或者编码的头信息。但是这样的好处就是你可以对音频的 裸数据进行处理，比如你要做一个爱说话的TOM
-     * 猫在这里就进行音频的处理，然后重新封装 所以说这样得到的音频比较容易做一些音频的处理。
-     */
-
-
-    /**
-     * 获取声音分贝线程
-     */
-    private static class CheckMicophoneVolume extends Thread {
-        /**
-         * 用于在录音时记录最近5次的录音分贝
-         */
-        private double[] record = {70f, 70f, 70f, 70f, 70f};
-        /**
-         * 用于标记下次添加的录音的位置
-         */
-        private int pos = 0;
-        private static final String TAG = "AudioRecord";
-        /**
-         * 获取分贝间隔时间
-         */
-        private static final long LOCK_TIME = 1000L;
-        /**
-         * 缓存大小
-         */
-        private static final int BUFFER_SIZE = Constant.SleepRecord.BUFFER_SIZE;
-
-        private AudioRecord mAudioRecord;
-        /**
-         * 用于控制子线程是否继续获取声音分贝
-         */
-        private boolean isGetVoiceRun;
-        /**
-         * 是否正在缓存声音
-         */
-        private boolean isRecord = false;
-        private static volatile Object mLock;
-        private OnRecordListener onRecordListener;
-
-        public CheckMicophoneVolume(OnRecordListener onRecordListener) {
-            this.onRecordListener = onRecordListener;
-        }
-
-        public void startRecord() {
-            mLock = new Object();
-            if (isGetVoiceRun) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, "还在录着呢");
-                }
-                return;
-            }
-            mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                    Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT,
-                    AudioFormat.ENCODING_PCM_16BIT, Constant.SleepRecord.BUFFER_SIZE);
-            if (mAudioRecord == null) {
-                Log.e(TAG, "mAudioRecord初始化失败");
-            }
-            isGetVoiceRun = true;
-            isRecord = false;
-            start();
-        }
-
-        public void exit() {
-            isGetVoiceRun = false;
-            isRecord = false;
-        }
-
-        public boolean isRuning() {
-            return isGetVoiceRun;
-        }
-
-        @Override
-        public void run() {
-
-            if (mAudioRecord != null) {
-                mAudioRecord.startRecording();
-
-                short[] buffer = new short[BUFFER_SIZE];
-                while (isGetVoiceRun) {
-                    //r是实际读取的数据长度，一般而言r会小于buffersize
-                    int r = mAudioRecord.read(buffer, 0, BUFFER_SIZE);
-                    long v = 0;
-                    // 将 buffer 内容取出，进行平方和运算
-                    for (int i = 0; i < buffer.length; i++) {
-                        v += buffer[i] * buffer[i];
-                    }
-                    // 平方和除以数据总长度，得到音量大小。
-                    double mean = v / (double) r;
-                    double volume = 10 * Math.log10(mean);
-                    if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "分贝值:" + volume);
-                    }
-                    //
-
-                    if (!isRecord && volume >= Constant.SleepRecord.VOLUME_START_RECORD) {
-                        if (onRecordListener != null) {
-                            onRecordListener.startRecord(mAudioRecord);
-                            isRecord = true;
-                        }
-                    }
-                    if (isRecord && AverageRecordVolume(volume) > Constant.SleepRecord.VOLUME_STOP_RECORD) {
-                        if (onRecordListener != null) {
-                            onRecordListener.stopRecord(mAudioRecord);
-                            isRecord = false;
-                        }
-                    }
-                    synchronized (mLock) {
-                        try {
-                            mLock.wait(LOCK_TIME);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                mAudioRecord.stop();
-                mAudioRecord.release();
-                mAudioRecord = null;
-            }
-        }
-
-        public double AverageRecordVolume(double volume) {
-            record[pos] = volume;
-            pos = pos + 1;
-            if (pos >= 5) {
-                pos = 0;
-            }
-            return (record[0] + record[1] + record[2] + record[3] + record[4]) / 5f;
-        }
+    public void stopRecord() {
+        AudioRecordUtil.getInstance(this).stopRecord();
     }
 
     /**
@@ -554,7 +442,6 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         @Override
         public void onTick(long millisUntilFinished) {
             percent = 100f - (((float) millisUntilFinished) / ((float) totalTime)) * 100f;
-            Log.e(TAG, "onTick: " + percent);
             if (mProgressView != null) {
                 mProgressView.setProgress((int) percent);
             }
@@ -567,6 +454,7 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
                 mProgressView.setProgress(100);
             }
 //            pressEnd = true;
+            stopSleep();
             sleepRecord = true;
         }
     }
@@ -586,7 +474,6 @@ public class SleepActivity extends BaseActivity<SleepContract.View, SleepPresent
         @Override
         public void onTick(long millisUntilFinished) {
             int percent = (int) ((((float) millisUntilFinished) / ((float) totalTime)) * SleepActivity.this.percent);
-            Log.e(TAG, "onTick: " + percent);
             if (mProgressView != null) {
                 mProgressView.setProgress(percent);
             }

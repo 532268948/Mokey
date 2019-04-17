@@ -6,15 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.base.activity.BaseActivity;
-import com.example.lib_common.base.bean.BaseItem;
+import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_report.R;
-import com.example.module_report.bean.DreamBean;
-import com.example.module_report.bean.ReportBean;
+import com.example.lib_common.bean.DreamBean;
+import com.example.lib_common.bean.ReportBean;
 import com.example.module_report.contract.ReportDetailContract;
 import com.example.module_report.presenter.ReportDetailPresenter;
 import com.example.module_report.view.SleepQualityView;
@@ -26,6 +28,8 @@ import java.util.List;
 /**
  * @author tianhuaye
  */
+
+@Route(path = Constant.Activity.ACTIVITY_REPORT_DETAIL)
 public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View, ReportDetailPresenter<ReportDetailContract.View>> implements ReportDetailContract.View {
 
     private SleepQualityView mSleepQualityView;

@@ -21,7 +21,7 @@ import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
 import com.example.lib_common.R;
-import com.example.lib_common.base.bean.MusicItem;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.music.MusicState;
 import com.example.lib_common.util.ViewUtil;

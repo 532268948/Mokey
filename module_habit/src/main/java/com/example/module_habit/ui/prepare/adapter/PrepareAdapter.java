@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.example.lib_common.base.adapter.BaseRecyclerAdapter;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.base.bean.BaseItem;
-import com.example.lib_common.base.bean.SleepPrepareItem;
+import com.example.lib_common.bean.BaseItem;
+import com.example.lib_common.bean.SleepPrepareItem;
 import com.example.lib_common.common.Constant;
 import com.example.module_habit.R;
 

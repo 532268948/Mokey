@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.module_report.R;
-import com.example.module_report.bean.QualityBean;
+import com.example.lib_common.bean.QualityBean;
 
 import java.util.List;
 

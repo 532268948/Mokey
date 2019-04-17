@@ -1,4 +1,4 @@
-package com.example.lib_common.base.bean.response;
+package com.example.lib_common.bean.response;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

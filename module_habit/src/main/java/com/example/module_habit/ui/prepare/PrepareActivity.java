@@ -8,8 +8,8 @@ import android.view.WindowManager;
 
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.base.bean.BaseItem;
-import com.example.lib_common.base.bean.SleepPrepareItem;
+import com.example.lib_common.bean.BaseItem;
+import com.example.lib_common.bean.SleepPrepareItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.common.Constant;

@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
-import com.example.lib_common.base.bean.ResponseWrapper;
-import com.example.lib_common.base.bean.response.LoginItem;
+import com.example.lib_common.bean.ResponseWrapper;
+import com.example.lib_common.bean.response.LoginItem;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.Alarm;
@@ -47,6 +47,7 @@ public class SplashPresenter<V extends SplashContract.View> extends BasePresente
                                 user.setNickname(loginItemResponseWrapper.getData().getNickname());
                                 user.setPhone(loginItemResponseWrapper.getData().getPhone());
                                 user.setLoginTime(System.currentTimeMillis());
+
                                 DBManager.getInstance(context.get()).getUserDB().queryWhereUser(user.getId(), new DbOperateListener.OnQuerySingleListener() {
                                     @Override
                                     public void onQuerySingleListener(Object entry) {

@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
-import com.example.lib_common.base.bean.BaseItem;
+import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.util.ViewUtil;
 
 import java.util.List;
