@@ -2,6 +2,7 @@ package com.example.lib_common.audio;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +38,7 @@ public class PcmToWavUtil {
      * @param inFilename 源文件路径
      */
     public static void  pcmToWav(String inFilename,String outFilename,int sampleRate, int channel, int encoding) {
+        Log.e("PcmToWavUtil", "pcmToWav: inFileName"+inFilename+"\n out:"+outFilename);
         try {
             File file=new File(outFilename);
             if (!file.exists()) {

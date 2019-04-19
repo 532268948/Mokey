@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lib_common">
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application>
-        <activity android:name=".test.TestActivity"></activity>
+        <activity android:name=".test.TestActivity"/>
         <service
             android:name=".music.MusicService"
             android:exported="false">
@@ -18,6 +19,13 @@
                 <action android:name="com.dw.btime.musicplayer.action.STOP"/>
             </intent-filter>
         </service>
+
+        <receiver android:name=".broadcast.TestAlarmBroadcast"
+            >
+            <intent-filter>
+                <action android:name="com.example.alarm.clock"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

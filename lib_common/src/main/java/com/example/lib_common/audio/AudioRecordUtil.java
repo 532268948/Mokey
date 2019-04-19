@@ -137,19 +137,12 @@ public class AudioRecordUtil {
          */
         private int pos = 0;
 
-        /**
-         * 获取分贝间隔时间
-         */
-        private static final long LOCK_TIME = 1000L;
-
         private AudioRecord mAudioRecord;
         private AudioState mState = AudioState.IDLE;
         /**
          * 是否正在缓存声音
          */
         private boolean isRecord = false;
-        private static volatile Object mLock = new Object();
-        private File tempFile;
         private OnRecordListener onRecordListener;
         private Context context;
 
@@ -286,20 +279,18 @@ public class AudioRecordUtil {
                         Log.e("CheckMicophoneVolume", "run: stop 中间");
                         try {
                             os.close();
-                            PcmToWavUtil.pcmToWav(file.getPath(),CacheUtil.getRecordSaveWAVFilePath(context,file.getPath()),Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO,
-                                    AudioFormat.ENCODING_PCM_16BIT);
+//                            PcmToWavUtil.pcmToWav(file.getPath(),CacheUtil.getRecordSaveWAVFilePath(context,file.getPath()),Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO,
+//                                    AudioFormat.ENCODING_PCM_16BIT);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-
-
                 }
                 Log.e("CheckMicophoneVolume", "run: stop 最后");
                 try {
                     os.close();
-                    PcmToWavUtil.pcmToWav(file.getPath(),CacheUtil.getRecordSaveWAVFilePath(context,file.getPath()),Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO,
-                            AudioFormat.ENCODING_PCM_16BIT);
+//                    PcmToWavUtil.pcmToWav(file.getPath(),CacheUtil.getRecordSaveWAVFilePath(context,file.getPath()),Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO,
+//                            AudioFormat.ENCODING_PCM_16BIT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

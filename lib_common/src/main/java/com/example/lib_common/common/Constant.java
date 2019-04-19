@@ -89,9 +89,14 @@ public final class Constant {
          */
         public static final String ACTICITY_REGISTER = "/user/register";
         /**
-         *
+         * module_report ReportDetailActivity
          */
         public static final String ACTIVITY_REPORT_DETAIL="/report/detail";
+
+        /**
+         * module_habit AlarmNotifyActivity
+         */
+        public static final String ACTIVITY_ALARM_NOTIFY="/habit/alarm_notify";
     }
 
     public static class Url {

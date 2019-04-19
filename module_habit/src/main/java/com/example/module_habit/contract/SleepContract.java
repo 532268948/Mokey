@@ -1,7 +1,5 @@
 package com.example.module_habit.contract;
 
-import android.media.AudioRecord;
-
 import com.example.lib_common.base.BaseView;
 import com.example.lib_common.bean.ReportBean;
 import com.example.lib_common.bean.request.TurnBean;
@@ -39,10 +37,18 @@ public interface SleepContract {
         void sendSleepData(long start_time, long end_time, int unLockTimes, List<TurnBean> turnBeans);
 
         /**
-         * 存储录音
-         *
-         * @param audioRecord
+         * 时间太短，清除录音
+         * @param start_time
+         * @param stop_time
          */
-        void saveVolume(AudioRecord audioRecord);
+        void clearVolume(long start_time,long stop_time);
+
+        /**
+         * pcm文件转化为wav文件
+         * @param start_time
+         * @param stop_time
+         */
+        void pcmToWav(long start_time,long stop_time);
     }
+
 }

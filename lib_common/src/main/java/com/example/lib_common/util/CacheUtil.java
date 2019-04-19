@@ -26,7 +26,11 @@ public class CacheUtil {
         return Environment.getExternalStorageDirectory() + File.separator + "record" + File.separator + "pcm";
     }
 
-    public static String getRecordSaveWAVFilePath(Context context,String pcmFileName){
+    public static String getRecordPcmDatePath(String dir) {
+        return Environment.getExternalStorageDirectory() + File.separator + "record" + File.separator + "pcm" + File.separator + Constant.USER_ID + File.separator + dir;
+    }
+
+    public static String getRecordSaveWAVFilePath(Context context, String pcmFileName) {
         return getRecordWAVSavePath(context) + File.separator + Constant.USER_ID + File.separator + DateUtil.formatOne((new Date()).getTime()) + File.separator + getFileName(pcmFileName) + ".wav";
     }
 
@@ -34,13 +38,12 @@ public class CacheUtil {
         return Environment.getExternalStorageDirectory() + File.separator + "record" + File.separator + "wav";
     }
 
-    private static String getFileName(String path){
-        int start=path.lastIndexOf("/");
-        int end=path.lastIndexOf(".");
-        if (start!=-1 && end!=-1) {
-            return path.substring(start+1, end);
-        }
-        else {
+    public static String getFileName(String path) {
+        int start = path.lastIndexOf("/");
+        int end = path.lastIndexOf(".");
+        if (start != -1 && end != -1) {
+            return path.substring(start + 1, end);
+        } else {
             return null;
         }
     }

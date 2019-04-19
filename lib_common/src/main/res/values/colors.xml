@@ -13,6 +13,7 @@
     <color name="common_dash_line_1">#a5a8b7</color>
 
     <color name="transport">#00ffffff</color>
+    <color name="alarm_notify_bg_color">#92000000</color>
 
     <!--AlarmCardView-->
     <color name="alarm_left_top_text">#13227a</color>

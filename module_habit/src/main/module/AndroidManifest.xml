@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.module_habit">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name=".app.MyApplication"
@@ -42,6 +44,15 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.notify.AlarmNotifyActivity"
+                  android:screenOrientation="portrait"
+                  android:excludeFromRecents="true"
+                  android:launchMode="singleInstance"
+                  android:taskAffinity=""
+                  android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
+
+        </activity>
     </application>
 
 </manifest>

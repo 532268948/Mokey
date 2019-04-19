@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.example.lib_common.broadcast.TestAlarmBroadcast;
 import com.example.lib_common.common.Constant;
 
 import java.util.Calendar;
@@ -47,13 +48,13 @@ public class AlarmManagerUtil {
         cancelAlarm(context, id);
         //设置一次性闹钟
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             AlarmManagerUtil.setAlarm(context, 0, hour, minute, id, 0, tip, ringPath);
-        }else if (Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP){
+//        }else if (Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP){
 
-        }else{
+//        }else{
 
-        }
+//        }
 
     }
 
@@ -73,9 +74,9 @@ public class AlarmManagerUtil {
         cancelAlarm(context, id);
         //设置重复闹钟
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            AlarmManagerUtil.setAlarm(context, 1, hour, minute, id, 0, tip, ringPath);
-        }
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            setAlarm(context, 1, hour, minute, id, 0, tip, ringPath);
+//        }
     }
 
     /**
@@ -102,7 +103,7 @@ public class AlarmManagerUtil {
         } else if (flag == 2) {
             intervalMillis = 24 * 3600 * 1000 * 7;
         }
-        Intent intent = new Intent(Constant.Alarm.ALARM_ACTION);
+        Intent intent = new Intent(context,TestAlarmBroadcast.class);
         intent.putExtra("intervalMillis", intervalMillis);
         intent.putExtra("msg", tips);
         intent.putExtra("id", id);
