@@ -210,6 +210,16 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPlayer!=null){
+            mPlayer.release();
+            mPlayer=null;
+        }
+
+    }
+
+    @Override
     public void onCompletion(MediaPlayer mp) {
         // The media player finished playing the current song, so we go ahead
         // and start the next.

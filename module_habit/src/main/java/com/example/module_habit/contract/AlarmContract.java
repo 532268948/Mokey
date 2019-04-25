@@ -11,5 +11,7 @@ public interface AlarmContract {
 
     interface View extends BaseView {}
 
-    interface Presenter{}
+    interface Presenter{
+
+    }
 }

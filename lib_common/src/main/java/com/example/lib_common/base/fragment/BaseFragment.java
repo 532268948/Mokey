@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.base.dialog.WaittingDialog;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.MessageLooper;
 import com.example.lib_common.util.MessageLooperMgr;
@@ -30,6 +31,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     protected boolean isLoad = false;
     public T mPresenter;
     public SharedPreferencesUtil sharedPreferencesUtil;
+    public WaittingDialog mWaittingDialog;
 
 
     @Override
@@ -129,12 +131,19 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
 
     @Override
     public void showDialog(String message) {
-
+        if (mWaittingDialog == null) {
+            mWaittingDialog = new WaittingDialog(getContext());
+        }
+        if (!mWaittingDialog.isShowing()) {
+            mWaittingDialog.showWaitingDialog(message);
+        }
     }
 
     @Override
     public void dismissDialog() {
-
+        if (mWaittingDialog != null && mWaittingDialog.isShowing()) {
+            mWaittingDialog.hideWaitingDialog();
+        }
     }
 
     @Override

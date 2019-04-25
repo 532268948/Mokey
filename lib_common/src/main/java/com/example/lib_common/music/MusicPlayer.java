@@ -80,6 +80,8 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
 
     private ServiceConnection connection;
 
+    public boolean isServiceConnection = false;
+
     private MusicService service;
 
     /**
@@ -242,6 +244,11 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
         if (listeners != null) {
             listeners.remove(l);
         }
+        onPlayProgressUpdateListener = null;
+        musicCacheSuccessListener = null;
+    }
+    void unBindService(){
+        mContext.unbindService(connection);
     }
 
     void play(long musicId) {
@@ -430,6 +437,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
         }
 
         MusicItem musicItem = getMusicItem(items, musicId);
+        changeIndex(musicId);
         curItem = musicItem;
         currentMusicId = musicId;
         if (musicItem == null) {
@@ -754,6 +762,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
      */
     private boolean ShouldStop(boolean next) {
         int index = currentIndex;
+//        Log.e("MusicPlayer", "ShouldStop: "+index);
         if (next) {
             index++;
         } else {
@@ -837,6 +846,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                         serviceConnectionListener.serviceConnected();
                     }
                     service.setMusicCacheSuccessListener(musicCacheSuccessListener);
+                    isServiceConnection = true;
                 }
 
                 @Override
@@ -850,6 +860,8 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                     if (serviceConnectionListener != null) {
                         serviceConnectionListener.serviceDisconnected();
                     }
+                    isServiceConnection = false;
+
                 }
             };
         }

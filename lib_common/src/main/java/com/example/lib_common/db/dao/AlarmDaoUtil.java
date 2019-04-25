@@ -83,6 +83,26 @@ public class AlarmDaoUtil extends DaoUtil<Alarm> {
     }
 
     /**
+     * 批量更新
+     *
+     * @param list
+     */
+    public void updateBatchAlarm(List<Alarm> list) {
+        updateBatchAlarm(list, null);
+    }
+
+    /**
+     * 批量更新
+     *
+     * @param list
+     * @param updateListener
+     */
+    public void updateBatchAlarm(List<Alarm> list, DbOperateListener.OnUpdateListener<List<Alarm>> updateListener) {
+        setOnUpdateListener(updateListener);
+        updateBatch(Alarm.class, list);
+    }
+
+    /**
      * 条件查询
      */
     public void queryWhereAlarm(long memberId) {

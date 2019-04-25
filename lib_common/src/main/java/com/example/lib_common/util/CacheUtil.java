@@ -34,6 +34,10 @@ public class CacheUtil {
         return getRecordWAVSavePath(context) + File.separator + Constant.USER_ID + File.separator + DateUtil.formatOne((new Date()).getTime()) + File.separator + getFileName(pcmFileName) + ".wav";
     }
 
+    public static String getRecordWavDatePath(String dir) {
+        return Environment.getExternalStorageDirectory() + File.separator + "record" + File.separator + "wav" + File.separator + Constant.USER_ID + File.separator + dir;
+    }
+
     private static String getRecordWAVSavePath(Context context) {
         return Environment.getExternalStorageDirectory() + File.separator + "record" + File.separator + "wav";
     }

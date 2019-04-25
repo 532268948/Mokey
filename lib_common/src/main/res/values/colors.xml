@@ -131,4 +131,7 @@
 
     <!--ReportFinishDialog-->
     <color name="divider_line">#7ec7c7c7</color>
+    
+    <color name="music_download_bg">#00ffffff</color>
+    <color name="music_download_progress">#80646464</color>
 </resources>

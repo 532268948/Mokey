@@ -291,6 +291,10 @@ public class CacheableMediaPlayer extends MediaPlayer {
             public void run() {
                 String mediaUrl = url;
 
+                if (mDownloadWhilePlaying){
+                    bufferingMusicUrlList.add(mediaUrl);
+                }
+                
                 String localUrl;
                 URI originalURI = null;
                 try {
@@ -376,15 +380,19 @@ public class CacheableMediaPlayer extends MediaPlayer {
 
         try {
             //获取音乐网络数据
-            InputStream in_remoteSocket = remoteSocket.getInputStream();
-            if (in_remoteSocket == null) {
-                return;
-            }
+            InputStream in_remoteSocket = null;
+            OutputStream out_localSocket = null;
 
-            OutputStream out_localSocket = localSocket.getOutputStream();
-            if (out_localSocket == null) {
-                return;
-            }
+                in_remoteSocket = remoteSocket.getInputStream();
+                if (in_remoteSocket == null) {
+                    return;
+                }
+
+                out_localSocket = localSocket.getOutputStream();
+                if (out_localSocket == null) {
+                    return;
+                }
+            
 
             //如果要写入文件，配置相关实例
             if (mDownloadWhilePlaying) {
@@ -395,6 +403,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
                 theFile = new File(getTmpFile(Long.toString(musicId)));
                 fileOutputStream = new FileOutputStream(theFile);
             }
+
 
             try {
                 int readLength;
@@ -470,15 +479,17 @@ public class CacheableMediaPlayer extends MediaPlayer {
                 bufferingMusicUrlList.remove(mUrl);
 
             } finally {
+                Log.e("CacheableMediaPlayer", "processTrueRequestInfo: 111111111");
                 in_remoteSocket.close();
                 out_localSocket.close();
                 if (fileOutputStream != null) {
                     fileOutputStream.close();
-
+//                    Log.e("CacheableMediaPlayer", "processTrueRequestInfo: 222222");
                     //音频文件缓存完后处理
                     if (theFile != null && FileUtil.checkFileExist(theFile.getPath())) {
+//                        Log.e("CacheableMediaPlayer", "processTrueRequestInfo: 333333");
                         conver2RightAudioFile(theFile);
-                        Log.d("CacheableMediaPlayer", "processTrueRequestInfo: musicId:"+musicId+"缓存成功");
+//                        Log.e("CacheableMediaPlayer", "processTrueRequestInfo: musicId:"+musicId+"缓存成功");
                         if (musicControlInterface != null) {
                             musicControlInterface.updateBufferFinishMusicPath(theFile.getPath(),musicId);
                             bufferingMusicUrlList.remove(mUrl);
@@ -491,7 +502,10 @@ public class CacheableMediaPlayer extends MediaPlayer {
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
+//            if (BuildConfig.DEBUG){
+//                Log.e("CacheableMediaPlayer", "processTrueRequestInfo: "+e.toString());
+//            }
             if (theFile != null) {
                 FileUtil.deleteFile(theFile.getPath());
             }
@@ -524,6 +538,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("CacheableMediaPlayer", "conver2RightAudioFile: 3333333333");
         } finally {
             try {
                 if (inputStream != null) {
@@ -533,6 +548,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
                     fos.close();
                 }
             } catch (Exception e) {
+                Log.e("CacheableMediaPlayer", "conver2RightAudioFile:222");
             }
         }
     }

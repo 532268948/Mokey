@@ -26,8 +26,9 @@ public class TestAlarmBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String ring = intent.getStringExtra("ringPath");
+        String msg=intent.getStringExtra("msg");
         wakeUpAndUnlock(context);
-        ARouter.getInstance().build(Constant.Activity.ACTIVITY_ALARM_NOTIFY).withFlags(Intent.FLAG_ACTIVITY_NEW_TASK).withString("ring", ring).navigation();
+        ARouter.getInstance().build(Constant.Activity.ACTIVITY_ALARM_NOTIFY).withFlags(Intent.FLAG_ACTIVITY_NEW_TASK).withString("ring", ring).withString("msg", msg).navigation();
     }
 
 

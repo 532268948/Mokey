@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.inter.OnLoadMoreListener;
 import com.example.lib_common.base.view.MoreViewHolder;
+import com.example.lib_common.bean.BaseItem;
 
 import java.util.List;
 
@@ -124,7 +124,7 @@ public abstract class BaseRecyclerAdapter extends RecyclerView.Adapter<BaseRecyc
         notifyItemChanged(position);
     }
 
-    private List<BaseItem> getData() {
+    public List<BaseItem> getData() {
         return this.mItems;
     }
 

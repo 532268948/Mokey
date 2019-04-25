@@ -10,6 +10,7 @@ import com.example.lib_common.base.BaseView;
 public interface AlarmSettingContract {
 
     interface View extends BaseView {
+        void setSleepAlarmSuccess();
     }
 
     interface Presenter {

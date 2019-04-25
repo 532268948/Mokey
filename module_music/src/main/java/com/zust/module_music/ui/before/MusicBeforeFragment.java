@@ -79,16 +79,19 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
                 refreshData();
             }
         });
+        MusicHelper.getInstance().setMusicCacheProgressListener(this);
         MusicHelper.getInstance().setMusicCacheSuccessListener(new CacheableMediaPlayer.MusicControlInterface() {
             @Override
             public void updateBufferFinishMusicPath(String localPath, long id) {
-                for (int i = 0; i < mItems.size(); i++) {
-                    if (mItems.get(i).getItemType() == Constant.ItemType.MUSIC_BEFORE) {
-                        MusicItem musicItem = (MusicItem) mItems.get(i);
-                        musicItem.setLocalFile(localPath);
-                        if (musicItem.getMusicId() == id) {
-                            mPresenter.updateMusicDb(localPath, musicItem);
-                            break;
+                if (mItems!=null){
+                    for (int i = 0; i < mItems.size(); i++) {
+                        if (mItems.get(i).getItemType() == Constant.ItemType.MUSIC_BEFORE) {
+                            MusicItem musicItem = (MusicItem) mItems.get(i);
+                            musicItem.setLocalFile(localPath);
+                            if (musicItem.getMusicId() == id) {
+                                mPresenter.updateMusicDb(localPath, musicItem);
+                                break;
+                            }
                         }
                     }
                 }
@@ -134,7 +137,6 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
                 if (update) {
                     MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
 //                    MusicHelper.getInstance().
-                    MusicHelper.getInstance().setMusicCacheProgressListener(this);
                     update = false;
                 } else {
                     MusicHelper.getInstance().play(musicItemList.get(position).getMusicId());

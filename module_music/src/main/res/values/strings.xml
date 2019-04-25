@@ -10,4 +10,13 @@
     <string name="music_before_item_number">%d</string>
     <string name="music_story_play_title">晚安电台</string>
     <string name="music_story_play_content_time_and_times">%s | %.2f万播放</string>
+
+    <string name="music_select_title">闹铃设置</string>
+    <string name="music_select_online">在线音乐</string>
+    <string name="music_select_local">本地音乐</string>
+    <string name="music_select_system">系统铃声</string>
+
+    <string name="music_select_online_dialog_msg">歌曲未下载，是否下载？</string>
+    <string name="music_select_online_dialog_btn_cancel">我再想想</string>
+    <string name="music_select_online_dialog_btn_sure">立即下载</string>
 </resources>

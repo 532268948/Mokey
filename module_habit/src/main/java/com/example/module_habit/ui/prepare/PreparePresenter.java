@@ -1,11 +1,14 @@
 package com.example.module_habit.ui.prepare;
 
+import android.util.Log;
+
 import com.example.lib_common.base.BasePresenter;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.Alarm;
-import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.AlarmManagerUtil;
+import com.example.module_habit.BuildConfig;
 import com.example.module_habit.bean.PrepareBean;
 
 import java.util.ArrayList;
@@ -24,6 +27,9 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
             @Override
             public void onQueryAllBatchListener(List<Alarm> list) {
                 if (list!=null){
+                    if (BuildConfig.DEBUG){
+                        Log.e("PreparePresenter", "onQueryAllBatchListener: "+list);
+                    }
                     view.get().setPrepareAlarmList(list);
                 }
             }
@@ -32,6 +38,9 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
 
     @Override
     public void setSleepPrepareAlarm(final List<PrepareBean> list) {
+        if (BuildConfig.DEBUG){
+            Log.e("PreparePresenter", "setSleepPrepareAlarm: "+list);
+        }
         //获取入睡闹钟信息
         DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.Alarm.ALARM_ID_FIVE, new DbOperateListener.OnQuerySingleListener() {
             @Override
@@ -50,7 +59,7 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
                             if (i == 0) {
                                 leftTime = 30;
                             } else {
-                                leftTime = (int) list.get(i - 1).getTime();
+                                leftTime = 30-(int) list.get(i-1).getTime();
                             }
                             if ((minute - leftTime) >= 0) {
                                 setHour = hour;
@@ -59,7 +68,7 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
                                 setHour = hour - 1;
                                 setMinute = (int) (Constant.HOUR_TO_MIMUTE + (minute - leftTime));
                             }
-                            Alarm alarm1 = new Alarm(Constant.Alarm.ALARM_ID_SIX + i, setHour, setMinute, alarm.getMode(), null, list.get(i).getSleepPrepareItem().getTitle(), Constant.Alarm.ALARM_TYPE_TWO, true);
+                            Alarm alarm1 = new Alarm(Constant.Alarm.ALARM_ID_SIX + i, setHour, setMinute, alarm.getMode(), alarm.getRingPath(), list.get(i).getSleepPrepareItem().getTitle(), Constant.Alarm.ALARM_TYPE_TWO, true);
                             alarmList.add(alarm1);
                         }
 //                        List<Alarm> idList = new ArrayList<>();
@@ -86,6 +95,9 @@ public class PreparePresenter<V extends PrepareContract.View> extends BasePresen
                                                         //一次性闹钟
                                                         if (alarm.getMode() == 0) {
                                                             for (Alarm alarm1 : alarmList) {
+                                                                if (BuildConfig.DEBUG){
+                                                                    Log.e("PreparePresenter", "onInsertListener: "+alarm1.getMsg());
+                                                                }
                                                                 AlarmManagerUtil.setOnceAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm1.getRingPath(), alarm1.getMsg());
                                                             }
                                                             //重复闹钟

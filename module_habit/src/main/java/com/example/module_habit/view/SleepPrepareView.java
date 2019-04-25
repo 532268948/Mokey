@@ -7,10 +7,12 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.lib_common.util.ScreenUtil;
+import com.example.module_habit.BuildConfig;
 import com.example.module_habit.R;
 import com.example.module_habit.bean.PrepareBean;
 
@@ -108,8 +110,13 @@ public class SleepPrepareView extends View {
                 }
             }
             for (int i = 0; i < this.mPrepareList.size(); i++) {
-                this.mPrepareList.get(i).setTime(PREPARE_TOTAL_TIME * (i + 1) / ((float) this.mPrepareList.size()));
+                if (mPrepareList.get(i).getTime()<=0){
+                    this.mPrepareList.get(i).setTime(PREPARE_TOTAL_TIME * (i + 1) / ((float) this.mPrepareList.size()));
+                }
             }
+        }
+        if (BuildConfig.DEBUG){
+            Log.e("SleepPrepareView", "setData: "+this.mPrepareList);
         }
         invalidate();
     }

@@ -1,6 +1,7 @@
 package com.example.module_report.ui;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,18 +10,21 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.base.activity.BaseActivity;
+import com.example.lib_common.base.adapter.BaseRecyclerHolder;
+import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.bean.BaseItem;
+import com.example.lib_common.bean.DreamBean;
+import com.example.lib_common.bean.ReportBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_report.R;
-import com.example.lib_common.bean.DreamBean;
-import com.example.lib_common.bean.ReportBean;
 import com.example.module_report.contract.ReportDetailContract;
 import com.example.module_report.presenter.ReportDetailPresenter;
 import com.example.module_report.view.SleepQualityView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ import java.util.List;
  */
 
 @Route(path = Constant.Activity.ACTIVITY_REPORT_DETAIL)
-public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View, ReportDetailPresenter<ReportDetailContract.View>> implements ReportDetailContract.View {
+public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View, ReportDetailPresenter<ReportDetailContract.View>> implements ReportDetailContract.View, OnItemClickListener {
 
     private SleepQualityView mSleepQualityView;
     private RecyclerView mRecyclerView;
@@ -46,12 +50,14 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
     private TextView mEndStatusTv;
     private TextView mSleepStatusTv;
     private TextView mGradeStatusTv;
+    private TextView mDreamNumberTv;
 
     private List<BaseItem> mItems;
     private ReportDetailAdapter mAdapter;
 
 
     private ReportBean reportBean;
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected ReportDetailPresenter<ReportDetailContract.View> createPresenter() {
@@ -95,6 +101,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
         mEndStatusTv = findViewById(R.id.tv_end_status);
         mSleepStatusTv = findViewById(R.id.tv_sleep_status);
         mGradeStatusTv = findViewById(R.id.tv_grade_status);
+        mDreamNumberTv = findViewById(R.id.tv_dream_number);
     }
 
     @Override
@@ -111,6 +118,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 //            qualityBean.setGrade(10 + (i % 5) * 20);
 //            qualityBeans.add(qualityBean);
 //        }
+        mMediaPlayer = new MediaPlayer();
         if (reportBean != null) {
             mSleepQualityView.setData(reportBean.getQualityBeans());
             mDateTv.setText(DateUtil.formatOne(reportBean.getStartTime()));
@@ -118,7 +126,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
             mEndTimeTv.setText(DateUtil.formatTwo(reportBean.getEndTime()));
             mStartTv.setText(DateUtil.formatTwo(reportBean.getStartTime()));
             mEndTv.setText(DateUtil.formatTwo(reportBean.getEndTime()));
-            mSleepTv.setText(DateUtil.getDistanceTime(reportBean.getStartTime(), reportBean.getEndTime() ));
+            mSleepTv.setText(DateUtil.getDistanceTime(reportBean.getStartTime(), reportBean.getEndTime()));
             mGradeTv.setText(String.valueOf(reportBean.getGrade()));
             setAllStatus();
         }
@@ -126,12 +134,13 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new ReportDetailAdapter(this);
+        mAdapter.addItemClickListener(this);
         if (mItems == null) {
             mItems = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                DreamBean dreamBean = new DreamBean();
-                mItems.add(dreamBean);
-            }
+//            for (int i = 0; i < 10; i++) {
+//                DreamBean dreamBean = new DreamBean();
+//                mItems.add(dreamBean);
+//            }
         }
         if (mItems != null && mItems.size() > 0) {
             ViewUtil.setViewVisible(mFoldTitleLl);
@@ -140,6 +149,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
         }
         mAdapter.setData(mItems);
         mRecyclerView.setAdapter(mAdapter);
+        mPresenter.getDreamData(reportBean.getStartTime(), reportBean.getEndTime());
     }
 
     private void setAllStatus() {
@@ -187,7 +197,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 
         }
 
-        switch (sleepTimeStatus(reportBean.getEndTime(),reportBean.getStartTime())) {
+        switch (sleepTimeStatus(reportBean.getEndTime(), reportBean.getStartTime())) {
             case Constant.SleepStatus.SLEEP_TIME_STATUS_LOW:
                 mSleepStatusTv.setTextColor(getResources().getColor(R.color.report_detail_status_1_text_color));
                 mSleepStatusTv.setText(getResources().getString(R.string.report_detail_status_4));
@@ -262,8 +272,8 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
         }
     }
 
-    private int sleepTimeStatus(long endTime,long startTime) {
-        int hour = (int)((endTime-startTime)/Constant.HOUR);
+    private int sleepTimeStatus(long endTime, long startTime) {
+        int hour = (int) ((endTime - startTime) / Constant.HOUR);
         if (hour < Constant.Hour.HOUR_SIX && hour > Constant.Hour.HOUR_ZERO) {
             return Constant.SleepStatus.SLEEP_TIME_STATUS_LOW;
         } else if (hour >= Constant.Hour.HOUR_SIX && hour <= Constant.Hour.HOUR_TWELVE) {
@@ -284,6 +294,61 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
             return Constant.SleepStatus.SLEEP_GRADE_STATUS_HIGH;
         } else {
             return Constant.SleepStatus.SLEEP_GRADE_STATUS_ERROR;
+        }
+    }
+
+    @Override
+    public void getDreamDataSuccess(List<DreamBean> dreamBeanList) {
+        mItems.addAll(dreamBeanList);
+        if (mItems != null && mItems.size() > 0) {
+            ViewUtil.setViewVisible(mFoldTitleLl);
+            mDreamNumberTv.setText(mItems.size() + "段梦话");
+        } else {
+            ViewUtil.setViewGone(mFoldTitleLl);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(BaseRecyclerHolder holder, int position) {
+        if (holder instanceof ReportDetailHolder) {
+            if (mItems.get(position).getItemType() == Constant.ItemType.RECORD_DREAM) {
+                try {
+                    DreamBean dreamBean = (DreamBean) mItems.get(position);
+                    if (mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.stop();
+                        mMediaPlayer.reset();
+                    }
+                    mMediaPlayer.setDataSource(dreamBean.getPath());
+                    mMediaPlayer.prepare();
+                    mMediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    mMediaPlayer.release();
+                    mMediaPlayer = null;
+                }
+                for (int i = 0; i < mItems.size(); i++) {
+                    if (mItems.get(i).getItemType() == Constant.ItemType.RECORD_DREAM) {
+                        DreamBean dreamBean = (DreamBean) mItems.get(i);
+                        if (i == position) {
+                            dreamBean.setPlaying(true);
+                        } else {
+                            dreamBean.setPlaying(false);
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+        }
+    }
+
+    @Override
+    public void releaseCache() {
+        super.releaseCache();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
     }
 }

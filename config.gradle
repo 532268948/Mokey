@@ -6,7 +6,7 @@ ext {
     android = [
             applicationId    : "com.example.tianhuaye.monkey",
             compileSdkVersion: 28,
-            minSdkVersion    : 19,
+            minSdkVersion    : 21,
             targetSdkVersion : 28,
             versionCode      : 1,
             versionName      : "1.0.0",

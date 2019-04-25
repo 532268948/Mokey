@@ -10,13 +10,16 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.swipelayout.SwipeBackHelper;
 import com.example.lib_common.util.StatusBarUtil;
+import com.example.module_habit.BuildConfig;
 import com.example.module_habit.R;
 
 import java.io.IOException;
@@ -27,6 +30,7 @@ import java.io.IOException;
 @Route(path = Constant.Activity.ACTIVITY_ALARM_NOTIFY)
 public class AlarmNotifyActivity extends Activity implements SwipeBackHelper.Delegate {
 
+    private TextView mMsgTv;
     protected SwipeBackHelper mSwipeBackHelper;
     private MediaPlayer mMediaPlayer;
 
@@ -41,11 +45,18 @@ public class AlarmNotifyActivity extends Activity implements SwipeBackHelper.Del
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_alarm_notify);
+        mMsgTv = findViewById(R.id.tv_msg);
         String ring = getIntent().getStringExtra("ring");
-        startAlarm(this, ring);
+        String msg = getIntent().getStringExtra("msg");
+        startAlarm(this, ring, msg);
     }
 
-    private void startAlarm(Context context, String ring) {
+    private void startAlarm(Context context, String ring, String msg) {
+        if (BuildConfig.DEBUG){
+            Log.e("AlarmNotifyActivity", "startAlarm: ringPath:" + ring+" msg:"+msg);
+        }
+        mMsgTv.setText(msg);
+
         if (TextUtils.isEmpty(ring)) {
             mMediaPlayer = MediaPlayer.create(context, RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE));
         } else {
@@ -108,10 +119,10 @@ public class AlarmNotifyActivity extends Activity implements SwipeBackHelper.Del
 
     @Override
     protected void onDestroy() {
-        if (mMediaPlayer!=null){
+        if (mMediaPlayer != null) {
             mMediaPlayer.stop();
             mMediaPlayer.release();
-            mMediaPlayer=null;
+            mMediaPlayer = null;
         }
         super.onDestroy();
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.lib_common.base.BaseApplication;
 import com.example.lib_common.bean.MusicItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class MusicHelper {
     private static Context mContext = BaseApplication.mContext;
     private static MusicHelper mHelper;
     private CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener;
+    private CacheableMediaPlayer.OnCachedProgressUpdateListener onCachedProgressUpdateListener;
 
     public MusicHelper() {
 
@@ -49,24 +51,88 @@ public class MusicHelper {
             mPlayer.reBindForLowMemoryKilled();
         }
         mPlayer.registerCallback(listener);
+    }
 
+    public void unBingPlayer(OnMusicPlayStateListener listener) {
+        if (mPlayer != null) {
+            mPlayer.unregisterCallback(listener);
+            mPlayer.unBindService();
+            mPlayer = null;
+        }
     }
 
     public void initMusicItem(final List<MusicItem> items, final long musicId, final boolean play, OnMusicPlayStateListener listener) {
         bindPlayer(listener);
         if (mPlayer != null) {
-            mPlayer.setConnectListener(new MusicPlayer.ServiceConnectionListener() {
-                @Override
-                public void serviceConnected() {
-                    mPlayer.initMusicItemList(items, musicId, play);
-                    mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
-                }
+            if (mPlayer.isServiceConnection) {
+                mPlayer.initMusicItemList(items, musicId, play);
+            } else {
+                mPlayer.setConnectListener(new MusicPlayer.ServiceConnectionListener() {
+                    @Override
+                    public void serviceConnected() {
+                        mPlayer.initMusicItemList(items, musicId, play);
+                        mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+                        mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
+                    }
 
-                @Override
-                public void serviceDisconnected() {
+                    @Override
+                    public void serviceDisconnected() {
 
-                }
-            });
+                    }
+                });
+                mPlayer.setConnectListener(new MusicPlayer.ServiceConnectionListener() {
+                    @Override
+                    public void serviceConnected() {
+                        mPlayer.initMusicItemList(items, musicId, play);
+                        mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+                        mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
+                    }
+
+                    @Override
+                    public void serviceDisconnected() {
+
+                    }
+                });
+            }
+
+        }
+    }
+
+    public void initMusicItem(final MusicItem item, final long musicId, final boolean play, OnMusicPlayStateListener listener) {
+        bindPlayer(listener);
+        if (mPlayer != null) {
+            final List<MusicItem> items = new ArrayList<>();
+            items.add(item);
+            if (mPlayer.isServiceConnection) {
+                mPlayer.initMusicItemList(items, musicId, play);
+            } else {
+                mPlayer.setConnectListener(new MusicPlayer.ServiceConnectionListener() {
+                    @Override
+                    public void serviceConnected() {
+                        mPlayer.initMusicItemList(items, musicId, play);
+                        mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+                        mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
+                    }
+
+                    @Override
+                    public void serviceDisconnected() {
+
+                    }
+                });
+                mPlayer.setConnectListener(new MusicPlayer.ServiceConnectionListener() {
+                    @Override
+                    public void serviceConnected() {
+                        mPlayer.initMusicItemList(items, musicId, play);
+                        mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+                        mPlayer.setMusicCacheSuccessListener(musicCacheSuccessListener);
+                    }
+
+                    @Override
+                    public void serviceDisconnected() {
+
+                    }
+                });
+            }
         }
     }
 
@@ -123,16 +189,16 @@ public class MusicHelper {
     }
 
 
-
     public void setMusicCacheProgressListener(CacheableMediaPlayer.OnCachedProgressUpdateListener onCachedProgressUpdateListener) {
-        if (mPlayer != null) {
-            mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
-        }
+        this.onCachedProgressUpdateListener = onCachedProgressUpdateListener;
+//        if (mPlayer != null) {
+//            mPlayer.setMusicCacheProgressListener(onCachedProgressUpdateListener);
+//        }
 
     }
 
     public void setMusicCacheSuccessListener(CacheableMediaPlayer.MusicControlInterface musicCacheSuccessListener) {
-        this.musicCacheSuccessListener=musicCacheSuccessListener;
+        this.musicCacheSuccessListener = musicCacheSuccessListener;
 //        if (mPlayer != null) {
 //            mPlayer.setMusicCacheSuccessListener(this.musicCacheSuccessListener);
 //        }

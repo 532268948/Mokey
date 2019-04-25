@@ -13,6 +13,7 @@ import com.example.lib_common.db.entity.Alarm;
 import com.example.lib_common.util.DateUtil;
 import com.example.module_habit.BuildConfig;
 import com.example.module_habit.R;
+import com.example.module_habit.ui.alarm.AlarmActivity;
 import com.example.module_habit.ui.prepare.PrepareActivity;
 import com.example.module_habit.ui.sleep.SleepActivity;
 import com.example.module_habit.view.AlarmCardView;
@@ -42,15 +43,23 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constant.RequestAndResultCode.FRAGMENT_PREPARE_REQUEST) {
+        if (requestCode == Constant.RequestAndResultCode.FRAGMENT_LIFESTYLE_REQUES) {
             switch (resultCode) {
                 case Constant.RequestAndResultCode.ACTIVITY_PREAPRE_RESULT_OK:
                     mPresenter.getPrepareAlarm();
+                    break;
+                case Constant.RequestAndResultCode.ALARM_RESULT_OK:
+                    if (mRemindAv != null && data != null) {
+                        mRemindAv.setLeftBottomText(DateUtil.timeToStr(data.getIntExtra("hour", 0), data.getIntExtra("minute", 0)));
+                        mRemindAv.setSwitchButtonOpen(true);
+                    }
                     break;
                 default:
                     break;
             }
         }
+
+
     }
 
     @Override
@@ -69,7 +78,7 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
             @Override
             public void onEditClick() {
                 Intent intent = new Intent(getContext(), PrepareActivity.class);
-                startActivityForResult(intent, Constant.RequestAndResultCode.FRAGMENT_PREPARE_REQUEST);
+                startActivityForResult(intent, Constant.RequestAndResultCode.FRAGMENT_LIFESTYLE_REQUES);
             }
         });
 
@@ -84,6 +93,14 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
                         mPresenter.updateSleepAlarm(mSleepAlarm);
                     }
                 }
+            }
+        });
+        mRemindAv.addEditClickListener(new AlarmCardView.OnEditClickListener() {
+            @Override
+            public void onEditClick() {
+                Intent intent = new Intent(getContext(), AlarmActivity.class);
+                intent.putExtra(AlarmActivity.INTENT_SOURCE_PAGE, 1);
+                startActivityForResult(intent, Constant.RequestAndResultCode.FRAGMENT_LIFESTYLE_REQUES);
             }
         });
     }

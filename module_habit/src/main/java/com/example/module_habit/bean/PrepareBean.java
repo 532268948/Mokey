@@ -26,4 +26,12 @@ public class PrepareBean {
     public void setSleepPrepareItem(SleepPrepareItem sleepPrepareItem) {
         this.sleepPrepareItem = sleepPrepareItem;
     }
+
+    @Override
+    public String toString() {
+        return "PrepareBean{" +
+                "time=" + time +
+                ", sleepPrepareItem=" + sleepPrepareItem.toString() +
+                '}';
+    }
 }

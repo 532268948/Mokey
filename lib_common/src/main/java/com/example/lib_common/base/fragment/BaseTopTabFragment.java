@@ -29,7 +29,7 @@ public abstract class BaseTopTabFragment<V,T extends BasePresenter<V>> extends B
      */
     public abstract void addFragmentAndTitle();
 
-    protected static class TopTabFragmentPagerAdapter extends BaseFragmentPagerAdapter{
+    public static class TopTabFragmentPagerAdapter extends BaseFragmentPagerAdapter{
 
         public TopTabFragmentPagerAdapter(FragmentManager fm) {
             super(fm);

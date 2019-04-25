@@ -1,13 +1,17 @@
 package com.example.module_habit.ui.alarm;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.view.SwitchButtonView;
 import com.example.lib_common.base.view.TitleBar;
@@ -31,6 +35,7 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
     private SwitchButtonView mRepeatBtn;
     private LinearLayout mWakeMusicLl;
     private EditText mNameEt;
+    private TextView mMusicTv;
     private int hour = 7;
     private int minute = 0;
     /**
@@ -50,7 +55,23 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
 
     @Override
     public void onClick(View v) {
+        if (v.getId()==R.id.ll_alarm_wake_music){
+            ARouter.getInstance().build(Constant.Activity.ACTIVITY_MUSIC_SELECT).navigation(this,11);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        Log.e("AlarmActivity", "onActivityResult: ");
+        if (resultCode==RESULT_OK){
+            if (requestCode==11){
+                ringPath=data.getExtras().getString("ring");
+                String musicName=data.getExtras().getString("name");
+                mMusicTv.setText(musicName);
+                Log.e("AlarmActivity", "onActivityResult: "+ringPath);
+            }
+        }
     }
 
     @Override
@@ -77,7 +98,7 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
         mRepeatBtn = findViewById(R.id.switch_button_view);
         mWakeMusicLl = findViewById(R.id.ll_alarm_wake_music);
         mNameEt = findViewById(R.id.et_alarm_name);
-
+        mMusicTv=findViewById(R.id.tv_music);
         mTimePicker.setIs24HourView(true);
     }
 
@@ -130,6 +151,7 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
                 alarm_mode = 0;
             }
         });
+        mWakeMusicLl.setOnClickListener(this);
     }
 
     @Override
@@ -141,17 +163,13 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
      * 设置入睡闹钟
      */
     private void setSleepAlarm() {
-        if (alarm_mode == 0) {
-            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
-        } else if (alarm_mode == 1) {
-            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
-        }
+//        if (alarm_mode == 0) {
+//            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
+//        } else if (alarm_mode == 1) {
+//            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
+//        }
         mPresenter.saveAlarmToDB(alarm_mode,Constant.Alarm.ALARM_ID_FIVE,Constant.Alarm.ALARM_TYPE_THREE , hour, minute, ringPath, mNameEt.getText().toString());
-        Intent intent = new Intent();
-        intent.putExtra("hour", hour);
-        intent.putExtra("minute", minute);
-        setResult(Constant.RequestAndResultCode.ALARM_RESULT_OK, intent);
-        finish();
+
     }
 
     /**
@@ -171,4 +189,12 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
         finish();
     }
 
+    @Override
+    public void setSleepAlarmSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("hour", hour);
+        intent.putExtra("minute", minute);
+        setResult(Constant.RequestAndResultCode.ALARM_RESULT_OK, intent);
+        finish();
+    }
 }

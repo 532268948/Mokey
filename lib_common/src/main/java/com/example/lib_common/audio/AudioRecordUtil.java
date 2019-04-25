@@ -225,6 +225,7 @@ public class AudioRecordUtil {
 
             if (mAudioRecord != null) {
 
+                long highTime = 0L;
                 FileOutputStream os = null;
                 File file = null;
                 byte[] buffer = new byte[Constant.SleepRecord.BUFFER_SIZE];
@@ -247,11 +248,11 @@ public class AudioRecordUtil {
                     /**
                      * 开始记录
                      */
-                    if (volume>Constant.SleepRecord.VOLUME_START_RECORD){
+                    if (volume > Constant.SleepRecord.VOLUME_START_RECORD) {
+                        highTime = System.currentTimeMillis();
                         //是否正在录音
                         if (isRecord) {
                             if (readSize != AudioRecord.ERROR_INVALID_OPERATION) {
-                                Log.e("CheckMicophoneVolume", "run: read");
                                 try {
                                     os.write(buffer);
                                 } catch (IOException e) {
@@ -260,11 +261,7 @@ public class AudioRecordUtil {
                             }
                         } else {
                             try {
-                                Log.e("CheckMicophoneVolume", "run: create");
                                 file = new File(CacheUtil.getRecordSavePCMFilePath(context, new Date()));
-//                            if (!file.mkdirs()) {
-//                                file.mkdir();
-//                            }
                                 if (!file.exists()) {
                                     file.getParentFile().mkdirs();
                                     file.createNewFile();
@@ -275,22 +272,19 @@ public class AudioRecordUtil {
                             }
                             isRecord = true;
                         }
-                    }else {
-                        Log.e("CheckMicophoneVolume", "run: stop 中间");
-                        try {
-                            os.close();
-//                            PcmToWavUtil.pcmToWav(file.getPath(),CacheUtil.getRecordSaveWAVFilePath(context,file.getPath()),Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO,
-//                                    AudioFormat.ENCODING_PCM_16BIT);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    } else {
+                        if (System.currentTimeMillis() - highTime >= 5000) {
+                            try {
+                                os.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
+
                     }
                 }
-                Log.e("CheckMicophoneVolume", "run: stop 最后");
                 try {
                     os.close();
-//                    PcmToWavUtil.pcmToWav(file.getPath(),CacheUtil.getRecordSaveWAVFilePath(context,file.getPath()),Constant.SleepRecord.SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO,
-//                            AudioFormat.ENCODING_PCM_16BIT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -298,7 +292,7 @@ public class AudioRecordUtil {
                 mAudioRecord.release();
                 mAudioRecord = null;
                 mState = AudioState.IDLE;
-                isRecord=false;
+                isRecord = false;
             }
 
         }

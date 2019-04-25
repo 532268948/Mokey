@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import com.example.lib_common.base.adapter.BaseRecyclerAdapter;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
+import com.example.lib_common.base.view.MoreViewHolder;
 import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.bean.HasMoreItem;
 import com.example.lib_common.bean.MusicItem;
-import com.example.lib_common.base.view.MoreViewHolder;
 import com.example.lib_common.common.Constant;
 import com.zust.module_music.R;
 
@@ -24,7 +24,6 @@ import com.zust.module_music.R;
  * @note :
  */
 public class MusicBeforeAdapter extends BaseRecyclerAdapter {
-
 
     public MusicBeforeAdapter(Context context) {
         super(context);

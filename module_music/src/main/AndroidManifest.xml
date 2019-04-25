@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.zust.module_music">
 
@@ -8,8 +9,13 @@
             android:name=".ui.play.MusicPlayActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ui.play.StoryPlayActivity"
+        <activity
+            android:name=".ui.play.StoryPlayActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.select.MusicSelectActivity"
                   android:screenOrientation="portrait">
         </activity>
     </application>
+
 </manifest>

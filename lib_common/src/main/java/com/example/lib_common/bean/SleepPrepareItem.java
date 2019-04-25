@@ -78,4 +78,18 @@ public class SleepPrepareItem extends BaseItem {
     public void setCheckNum(int checkNum) {
         this.checkNum = checkNum;
     }
+
+    @Override
+    public String toString() {
+        return "SleepPrepareItem{" +
+                "id=" + id +
+                ", imageResId=" + imageResId +
+                ", bigImageResId=" + bigImageResId +
+                ", title='" + title + '\'' +
+                ", shortTip='" + shortTip + '\'' +
+                ", message='" + message + '\'' +
+                ", checked=" + checked +
+                ", checkNum=" + checkNum +
+                '}';
+    }
 }

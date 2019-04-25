@@ -1,8 +1,8 @@
 package com.example.lib_common.bean;
 
 import com.example.lib_common.bean.response.MusicBean;
-import com.example.lib_common.db.entity.MusicBefore;
 import com.example.lib_common.common.Constant;
+import com.example.lib_common.db.entity.MusicBefore;
 import com.example.lib_common.music.MusicSource;
 
 /**
@@ -123,19 +123,37 @@ public class MusicItem extends BaseItem {
             musicId = musicBefore.getId() == null ? -1 : musicBefore.getId();
             playTimes = musicBefore.getPlayTimes() == null ? 0 : musicBefore.getPlayTimes();
             duration = musicBefore.getDuring() == null ? "00:00" : musicBefore.getDuring();
-            name=musicBefore.getName()==null?"":musicBefore.getName();
-            author=musicBefore.getAuthor()==null?"":musicBefore.getAuthor();
-            cover=musicBefore.getCover()==null?"":musicBefore.getCover();
-            url=musicBefore.getResource()==null?"":musicBefore.getResource();
-            localFile=musicBefore.getLocalFile()==null?"":musicBefore.getLocalFile();
-            price=String.valueOf(musicBefore.getPrice());
-            if (musicBefore.getFree()==0){
-                isNeedPay=false;
-            }else {
-                isNeedPay=true;
+            name = musicBefore.getName() == null ? "" : musicBefore.getName();
+            author = musicBefore.getAuthor() == null ? "" : musicBefore.getAuthor();
+            cover = musicBefore.getCover() == null ? "" : musicBefore.getCover();
+            url = musicBefore.getResource() == null ? "" : musicBefore.getResource();
+            localFile = musicBefore.getLocalFile() == null ? "" : musicBefore.getLocalFile();
+            price = String.valueOf(musicBefore.getPrice());
+            if (musicBefore.getFree() == 0) {
+                isNeedPay = false;
+            } else {
+                isNeedPay = true;
             }
-            status=musicBefore.getStatus();
+            status = musicBefore.getStatus();
         }
+    }
+
+    public MusicItem(MusicOnlineItem musicOnlineItem) {
+        playTimes = musicOnlineItem.getPlayTimes();
+        duration = musicOnlineItem.getDuration();
+        musicId = musicOnlineItem.getMusicId();
+        name = musicOnlineItem.getName();
+        author = musicOnlineItem.getAuthor();
+        cover = musicOnlineItem.getCover();
+        url = musicOnlineItem.getUrl();
+        cachedFile = musicOnlineItem.getCachedFile();
+        localFile = musicOnlineItem.getLocalFile();
+        source = musicOnlineItem.getSource();
+        isPlaying = musicOnlineItem.isPlaying();
+        downloadWhenPlaying = musicOnlineItem.isDownloadWhenPlaying();
+        isNeedPay = musicOnlineItem.isNeedPay();
+        isHasPay = musicOnlineItem.isHasPay();
+        status = musicOnlineItem.getStatus();
     }
 
     public String getDuration() {

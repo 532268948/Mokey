@@ -3,18 +3,21 @@ package com.example.module_habit.ui.prepare;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.bean.BaseItem;
-import com.example.lib_common.bean.SleepPrepareItem;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.view.TitleBar;
+import com.example.lib_common.bean.BaseItem;
+import com.example.lib_common.bean.SleepPrepareItem;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.entity.Alarm;
+import com.example.lib_common.util.DateUtil;
 import com.example.lib_common.util.StatusBarUtil;
+import com.example.module_habit.BuildConfig;
 import com.example.module_habit.R;
 import com.example.module_habit.bean.PrepareBean;
 import com.example.module_habit.ui.prepare.adapter.PrepareAdapter;
@@ -170,10 +173,42 @@ public class PrepareActivity extends BaseActivity<PrepareContract.View, PrepareP
                 SleepPrepareItem prepareItem = (SleepPrepareItem) baseItem;
                 if (prepareItem.getChecked()) {
                     PrepareBean prepareBean = new PrepareBean();
+                    for (int i=alarmList.size()-1;i>=0;i--){
+                        if (prepareItem.getTitle().equals(alarmList.get(i).getMsg())){
+//                            int destHour=0;
+//                            int destMinute=0;
+//                            if (alarmList.get(0).getMinute()+30>=60){
+//                                destHour=alarmList.get(0).getHour()+1;
+//                                destMinute=alarmList.get(0).getMinute()+30-60;
+//                            }
+                            if (alarmList.size()==1){
+                                prepareBean.setTime(30);
+                            }else if (alarmList.size()==2){
+                                if (i == 1) {
+                                    prepareBean.setTime(30f);
+                                }else if (i==0){
+                                    prepareBean.setTime(DateUtil.getMinuteLeft(alarmList.get(0).getHour(),alarmList.get(0).getMinute(),alarmList.get(1).getHour(),alarmList.get(1).getMinute()));
+                                }
+
+                            }else if (alarmList.size()==3){
+                                if (i==2){
+                                    prepareBean.setTime(30);
+                                }else if (i==1){
+                                    prepareBean.setTime(DateUtil.getMinuteLeft(alarmList.get(0).getHour(),alarmList.get(0).getMinute(),alarmList.get(2).getHour(),alarmList.get(2).getMinute()));
+                                }else if (i==0){
+                                    prepareBean.setTime(DateUtil.getMinuteLeft(alarmList.get(0).getHour(),alarmList.get(0).getMinute(),alarmList.get(1).getHour(),alarmList.get(1).getMinute()));
+                                }
+                            }
+                        }
+                    }
+
                     prepareBean.setSleepPrepareItem((SleepPrepareItem) baseItem);
                     list.add(prepareBean);
                 }
             }
+        }
+        if (BuildConfig.DEBUG){
+            Log.e("PrepareActivity", "setPrepareAlarmList: "+list);
         }
         mSleepPrepareView.setData(list);
     }

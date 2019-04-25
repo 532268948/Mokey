@@ -25,7 +25,7 @@ public final class Constant {
     public static final long DAY = 24 * 60 * 60 * 1000L;
     public static final long WEEK = 7 * 24 * 60 * 60 * 1000L;
 
-    public static final String BASE_URL = "http://192.168.2.85:8080/";
+    public static final String BASE_URL = "http://192.168.43.72:8080/";
     public static final String MESSAGE_GET_DATA_FALSE = "获取数据失败";
 
     public static String TOKEN = "";
@@ -97,6 +97,11 @@ public final class Constant {
          * module_habit AlarmNotifyActivity
          */
         public static final String ACTIVITY_ALARM_NOTIFY="/habit/alarm_notify";
+
+        /**
+         * module_music MusicSelectActivity
+         */
+        public static final String ACTIVITY_MUSIC_SELECT="/music/wake_music";
     }
 
     public static class Url {
@@ -129,10 +134,12 @@ public final class Constant {
         public static final int SLEEP_REQUEST = 3;
         public static final int ALARM_RESULT_OK = 4;
         /**
-         * 睡前准备
+         * LifeStyleFragment
          */
-        public static final int FRAGMENT_PREPARE_REQUEST = 5;
+        public static final int FRAGMENT_LIFESTYLE_REQUES = 5;
+
         public static final int ACTIVITY_PREAPRE_RESULT_OK = 6;
+
     }
 
     public static class ItemType {
@@ -153,6 +160,16 @@ public final class Constant {
          * 睡眠质量报告
          */
         public static final int SLEEP_REPORT = 4;
+
+        /**
+         * 在线音乐
+         */
+        public static final int MUSIC_ONLINE=5;
+
+        /**
+         * 梦话
+         */
+        public static final int RECORD_DREAM=6;
     }
 
     /**
@@ -163,6 +180,11 @@ public final class Constant {
          * 睡前小曲
          */
         public static final int MUSIC_BEFORE = 0;
+
+        /**
+         * 睡前小曲
+         */
+        public static final int MUSIC_ONLINE = 1;
     }
 
     public static class SleepQuality {
@@ -227,7 +249,7 @@ public final class Constant {
     public static class SleepRecord {
         public static final int SAMPLE_RATE_IN_HZ=8000;
         public static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
-        public static final double VOLUME_START_RECORD = 20f;
+        public static final double VOLUME_START_RECORD = 40f;
         public static final double VOLUME_STOP_RECORD = 20f;
     }
 }
