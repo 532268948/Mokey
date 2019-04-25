@@ -80,13 +80,13 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                                     if (BuildConfig.DEBUG) {
                                                                         Log.e("PreparePresenter", "onInsertListener: " + alarm1.getMsg());
                                                                     }
-                                                                    AlarmManagerUtil.setOnceAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm1.getRingPath(), alarm1.getMsg());
+                                                                    AlarmManagerUtil.setOnceAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm.getRingPath(), alarm1.getMsg());
                                                                 }
                                                                 AlarmManagerUtil.setOnceAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                                                 //重复闹钟
                                                             } else if (alarm.getMode() == 1) {
                                                                 for (Alarm alarm1 : list) {
-                                                                    AlarmManagerUtil.setRepeatAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm1.getRingPath(), alarm1.getMsg());
+                                                                    AlarmManagerUtil.setRepeatAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm.getRingPath(), alarm1.getMsg());
                                                                 }
                                                                 AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                                             }
