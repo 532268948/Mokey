@@ -134,6 +134,13 @@ public class OnlineFragment extends BaseListFragment<OnlineContract.View, Online
             showEmpty();
         } else {
             showNormal();
+            if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem()!=null){
+                for (MusicOnlineItem musicItem:musicItemList){
+                    if (musicItem.getMusicId()==MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()){
+                        musicItem.setPlaying(true);
+                    }
+                }
+            }
             mAdapter.refreshData(musicItemList);
         }
     }

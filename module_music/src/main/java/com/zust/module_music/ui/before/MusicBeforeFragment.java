@@ -215,6 +215,14 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         mItems.clear();
         if (musicItemList != null && musicItemList.size() != 0) {
             showNormal();
+            if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem()!=null){
+                for (MusicItem musicItem:musicItemList){
+                    if (musicItem.getMusicId()==MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()){
+                        musicItem.setPlaying(true);
+                    }
+                }
+            }
+
             mItems.addAll(musicItemList);
             mItems.add(new HasMoreItem(true, Constant.ItemType.LOAD_MORE_DATA));
             if (mAdapter != null) {
