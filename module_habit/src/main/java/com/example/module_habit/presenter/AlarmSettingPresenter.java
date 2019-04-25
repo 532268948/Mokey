@@ -99,6 +99,19 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                     }
                                                 }
                                             });
+                                        }else {
+                                            //一次性闹钟
+                                            if (alarm.getMode() == 0) {
+                                                AlarmManagerUtil.setOnceAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
+                                                //重复闹钟
+                                            } else if (alarm.getMode() == 1) {
+                                                AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
+                                            }
+                                            if (BuildConfig.DEBUG){
+                                                Log.e("AlarmSettingPresenter", "onUpdateListener: "+list);
+                                            }
+                                            view.get().dismissDialog();
+                                            view.get().setSleepAlarmSuccess();
                                         }
                                     }
                                 });
