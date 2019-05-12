@@ -68,6 +68,7 @@ public class BaseObserver<T> extends ResourceObserver<T> {
             mView.clearLoginInformation();
             return;
         }
+
     }
 
     @Override

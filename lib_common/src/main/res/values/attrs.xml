@@ -46,4 +46,11 @@
         <attr name="grid_span_count" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="SmallSleepProgressView">
+        <attr name="circleWidth" format="dimension" />
+        <attr name="betaAngle" format="integer" />
+        <attr name="firstColor" format="color" />
+        <attr name="secondColor" format="color" />
+    </declare-styleable>
+
 </resources>

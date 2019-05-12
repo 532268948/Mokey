@@ -100,6 +100,7 @@ public class TitleBar extends RelativeLayout {
             ViewUtil.setViewGone(mLeftIv);
         }
         if (this.mRightIcon != 0) {
+            ViewUtil.setViewVisible(mRightIv);
             mRightIv.setImageResource(this.mRightIcon);
             mRightIv.setOnClickListener(new OnClickListener() {
                 @Override
@@ -113,6 +114,7 @@ public class TitleBar extends RelativeLayout {
             ViewUtil.setViewVisible(mRightIv);
         }
         if (this.mRightText != 0) {
+            ViewUtil.setViewVisible(mRightTv);
             mRightTv.setText(mRightText);
             mRightTv.setTextColor(mRightTextColor);
             mRightTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);

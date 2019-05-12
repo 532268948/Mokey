@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
-import com.example.lib_common.bean.BaseItem;
-import com.example.lib_common.bean.HasMoreItem;
-import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseListFragment;
 import com.example.lib_common.base.inter.OnItemClickListener;
 import com.example.lib_common.base.inter.OnLoadMoreListener;
+import com.example.lib_common.bean.BaseItem;
+import com.example.lib_common.bean.HasMoreItem;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.music.CacheableMediaPlayer;
 import com.example.lib_common.music.MusicHelper;
@@ -83,7 +83,7 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         MusicHelper.getInstance().setMusicCacheSuccessListener(new CacheableMediaPlayer.MusicControlInterface() {
             @Override
             public void updateBufferFinishMusicPath(String localPath, long id) {
-                if (mItems!=null){
+                if (mItems != null) {
                     for (int i = 0; i < mItems.size(); i++) {
                         if (mItems.get(i).getItemType() == Constant.ItemType.MUSIC_BEFORE) {
                             MusicItem musicItem = (MusicItem) mItems.get(i);
@@ -134,13 +134,13 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
 //                        musicItem.setPlaying(false);
 //                    }
                 }
-                if (update) {
-                    MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
+//                if (update) {
+                MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
 //                    MusicHelper.getInstance().
-                    update = false;
-                } else {
-                    MusicHelper.getInstance().play(musicItemList.get(position).getMusicId());
-                }
+//                    update = false;
+//                } else {
+//                    MusicHelper.getInstance().play(musicItemList.get(position).getMusicId());
+//                }
 //                mAdapter.notifyDataSetChanged();
             }
 
@@ -199,6 +199,7 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
                 mAdapter.notifyItemChanged(mItems.size() - 1);
             }
         }
+        updateMusicPlay();
     }
 
     @Override
@@ -215,9 +216,9 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         mItems.clear();
         if (musicItemList != null && musicItemList.size() != 0) {
             showNormal();
-            if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem()!=null){
-                for (MusicItem musicItem:musicItemList){
-                    if (musicItem.getMusicId()==MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()){
+            if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem() != null) {
+                for (MusicItem musicItem : musicItemList) {
+                    if (musicItem.getMusicId() == MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()) {
                         musicItem.setPlaying(true);
                     }
                 }
@@ -231,6 +232,7 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         } else {
             showEmpty();
         }
+        updateMusicPlay();
     }
 
     @Override
@@ -373,5 +375,27 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
     @Override
     public void updateCachedProgress(int progress) {
         Log.e("MusicBeforeFragment", "updateCachedProgress: " + progress);
+    }
+
+    private void updateMusicPlay() {
+        if (MusicHelper.getInstance().getMusicPlayer() == null) {
+            return;
+        }
+        if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem() != null) {
+            for (BaseItem baseItem : mItems) {
+                if (baseItem.getItemType() == Constant.ItemType.MUSIC_BEFORE) {
+                    MusicItem musicItem = (MusicItem) baseItem;
+                    if (musicItem.getMusicId() == MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()) {
+                        ((MusicItem) baseItem).setPlaying(true);
+                    } else {
+                        ((MusicItem) baseItem).setPlaying(false);
+                    }
+                }
+            }
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+            ((MusicFragment) getParentFragment()).showBigMusicView(MusicState.Playing);
+        }
     }
 }

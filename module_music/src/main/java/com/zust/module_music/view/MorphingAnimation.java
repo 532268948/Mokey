@@ -89,32 +89,21 @@ public class MorphingAnimation {
                 int padding;
 
                 if (mFromWidth > mToWidth) {
-//                    leftOffset = (mFromWidth - value);
                     rightOffset = mFromWidth;
-//                    padding = (int) (mPadding - mPadding * animation.getAnimatedFraction());
                     leftOffset = (mFromWidth - value);
-//                    rightOffset = mFromWidth - leftOffset;
                     padding = (int) (mPadding * animation.getAnimatedFraction());
                 } else {
-//                    leftOffset = (mToWidth - value);
                     rightOffset = mToWidth;
-//                    padding = (int) (mPadding * animation.getAnimatedFraction());
                     leftOffset = (mToWidth - value);
-//                    rightOffset = mToWidth - leftOffset;
                     padding = (int) (mPadding - mPadding * animation.getAnimatedFraction());
                 }
-
-                Log.e("MorphingAnimation", "onAnimationUpdate: leftOffset"+leftOffset+"padding:"+padding+"rightOffset"+rightOffset);
                 mDrawable.setBounds(leftOffset + padding, padding, rightOffset - padding, mView.getHeight() - padding);
             }
         });
 
         ObjectAnimator bgColorAnimation = ObjectAnimator.ofInt(mDrawable, "color", mFromColor, mToColor);
         bgColorAnimation.setEvaluator(new ArgbEvaluator());
-
         ObjectAnimator cornerAnimation = ObjectAnimator.ofFloat(mDrawable, "cornerRadius", mFromCornerRadius, mToCornerRadius);
-
-//        ObjectAnimator viewWidthAnimation=ObjectAnimator.ofFloat(mView,"width",mFromCornerRadius,mToWidth);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(mDuration);
         animatorSet.playTogether(widthAnimation, bgColorAnimation, cornerAnimation);

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/habit_small_sleep_type_1_bg_color"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.alarm.SmallSleepActivity">
+
+    <com.example.lib_common.base.view.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_title_bar_height"
+        app:left_icon="@drawable/common_title_bar_back"
+        app:right_icon="@drawable/report_detail_share"/>
+
+
+        <com.example.lib_common.base.view.CountDownView
+            android:id="@+id/marqueen_view"
+            android:layout_marginTop="50dp"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:text="科学小盹*消除睡眠"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:gravity="center"
+        android:textColor="@color/habit_small_sleep_msg_color"
+        android:textSize="13sp"
+        android:text="有研究表明，10分钟的超短时间休息，可以最高性价比地消除身体疲劳，其'疗效'甚至超过了150分钟"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/tv_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shape_small_sleep_finish_btn_bg"
+        android:gravity="center"
+        android:paddingLeft="22dp"
+        android:paddingTop="8dp"
+        android:paddingRight="22dp"
+        android:paddingBottom="8dp"
+        android:text="结束休息"
+        android:textColor="@color/white"
+        android:textSize="14dp"/>
+</LinearLayout>

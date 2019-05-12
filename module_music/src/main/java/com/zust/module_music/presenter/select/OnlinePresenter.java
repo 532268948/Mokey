@@ -2,6 +2,7 @@ package com.zust.module_music.presenter.select;
 
 import com.example.lib_common.base.BaseObserver;
 import com.example.lib_common.base.BasePresenter;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.bean.MusicOnlineItem;
 import com.example.lib_common.bean.ResponseWrapper;
 import com.example.lib_common.bean.response.MusicBean;
@@ -111,5 +112,24 @@ public class OnlinePresenter<V extends OnlineContract.View> extends BasePresente
                         }
                     }
                 }));
+    }
+
+    @Override
+    public void updateMusicDb(final String localFile, final MusicItem musicItem) {
+        if (musicItem == null) {
+            return;
+        }
+        DBManager.getInstance(context.get()).getMusicBeforeDB().queryMusicById(musicItem.getMusicId(), new DbOperateListener.OnQuerySingleListener<MusicBefore>() {
+            @Override
+            public void onQuerySingleListener(MusicBefore entry) {
+                if (entry == null) {
+                    musicItem.setLocalFile(localFile);
+                    DBManager.getInstance(context.get()).getMusicBeforeDB().insertSingle(new MusicBefore(musicItem));
+                } else {
+                    musicItem.setLocalFile(localFile);
+                    DBManager.getInstance(context.get()).getMusicBeforeDB().updateSingleMusic(new MusicBefore(musicItem));
+                }
+            }
+        });
     }
 }

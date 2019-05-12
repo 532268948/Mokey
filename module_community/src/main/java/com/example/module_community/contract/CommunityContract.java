@@ -1,6 +1,7 @@
 package com.example.module_community.contract;
 
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.bean.response.FirstPageBean;
 
 /**
  * @author: tianhuaye
@@ -10,8 +11,10 @@ import com.example.lib_common.base.BaseView;
 public interface CommunityContract {
 
     interface View extends BaseView {
+        void getDataSuccess(FirstPageBean firstPageBean);
     }
 
     interface Presenter {
+        void getFirstPageMessage();
     }
 }

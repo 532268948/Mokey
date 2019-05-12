@@ -1,6 +1,7 @@
 package com.zust.module_music.ui.select;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -53,7 +54,7 @@ public class MusicSelectActivity extends BaseTopTabActivity<MusicSelectContract.
         if (fragmentList == null) {
             fragmentList = new ArrayList<>(3);
             fragmentList.add(new OnlineFragment());
-            fragmentList.add(new OnlineFragment());
+            fragmentList.add(new Fragment());
             fragmentList.add(new SystemMusicFragment());
         }
         if (titleList == null) {

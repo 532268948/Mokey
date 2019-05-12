@@ -400,7 +400,7 @@ public class CacheableMediaPlayer extends MediaPlayer {
                 if (!dirs.exists()) {
                     dirs.mkdirs();
                 }
-                theFile = new File(getTmpFile(Long.toString(musicId)));
+                theFile = new File(getTmpFile(FileUtil.getFileName(mUrl)));
                 fileOutputStream = new FileOutputStream(theFile);
             }
 

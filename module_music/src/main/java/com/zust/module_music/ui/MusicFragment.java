@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.base.fragment.BaseTopTabFragment;
 import com.example.lib_common.base.view.TitleBar;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.music.MusicHelper;
 import com.example.lib_common.music.MusicState;
 import com.example.lib_common.test.BlankFragment;
@@ -88,22 +88,11 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
 
     @Override
     public void showBigMusicView(MusicState state) {
-        ViewUtil.setViewVisible(mFloatingMusicView);
-        MusicItem musicItem = MusicHelper.getInstance().getMusicPlayer().getCurMusicItem();
-        if (musicItem != null) {
-            mFloatingMusicView.setMessage(musicItem, state);
-//            if (state == MusicState.Stopped) {
-//                mFloatingMusicView.setAudio(musicItem.getName());
-//            } else if (state == MusicState.Preparing){
-//
-//            }else if (state==MusicState.Playing){
-//
-//            }else if (state==MusicState.Paused){
-//
-//            }else if (state==MusicState.Completed){
-//
-//            }
-        }
+            ViewUtil.setViewVisible(mFloatingMusicView);
+            MusicItem musicItem = MusicHelper.getInstance().getMusicPlayer().getCurMusicItem();
+            if (musicItem != null) {
+                mFloatingMusicView.setMessage(musicItem, state);
+            }
 
     }
 

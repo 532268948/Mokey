@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_user">
+          package="com.example.module_user">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -8,11 +9,14 @@
             android:name=".ui.login.LoginActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".ui.UserEditActivity">
+        </activity>
     </application>
+
 </manifest>

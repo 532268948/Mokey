@@ -61,11 +61,24 @@ public class OnlineFragment extends BaseListFragment<OnlineContract.View, Online
         mRefreshLayout = view.findViewById(R.id.refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mEmpty = view.findViewById(R.id.empty);
+        if (mAdapter == null) {
+            mAdapter = new OnlineAdapter(getContext());
+        }
+        if (mItems == null) {
+            mItems = new ArrayList<>();
+        }
+        mAdapter.setData(mItems);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
     @Override
     public void initListener() {
+        mAdapter.addLoadMoreListener(this);
+        mAdapter.addItemClickListener(this);
+        mAdapter.addPlayBtnClickListener(this);
+        Log.e("OnlineFragment", "initListener: " + Thread.currentThread());
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -73,6 +86,30 @@ public class OnlineFragment extends BaseListFragment<OnlineContract.View, Online
             }
         });
         MusicHelper.getInstance().setMusicCacheProgressListener(OnlineFragment.this);
+        MusicHelper.getInstance().setMusicCacheSuccessListener(new CacheableMediaPlayer.MusicControlInterface() {
+            @Override
+            public void updateBufferFinishMusicPath(final String localPath, final long id) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mAdapter != null) {
+                            if (mAdapter.getData() != null) {
+                                for (int i = 0; i < mAdapter.getData().size(); i++) {
+                                    if (mAdapter.getData().get(i).getItemType() == Constant.ItemType.MUSIC_ONLINE) {
+                                        MusicOnlineItem musicItem = (MusicOnlineItem) mAdapter.getData().get(i);
+                                        if (musicItem.getMusicId() == id) {
+                                            musicItem.setLocalFile(localPath);
+                                            mPresenter.updateMusicDb(localPath, new MusicItem(musicItem));
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void refreshData() {
@@ -85,18 +122,8 @@ public class OnlineFragment extends BaseListFragment<OnlineContract.View, Online
 
     @Override
     public void initData() {
-        if (mAdapter == null) {
-            mAdapter = new OnlineAdapter(getContext());
-        }
-        if (mItems == null) {
-            mItems = new ArrayList<>();
-        }
-        mAdapter.setData(mItems);
-        mAdapter.addLoadMoreListener(this);
-        mAdapter.addItemClickListener(this);
-        mAdapter.addPlayBtnClickListener(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
+
+
 
         mPresenter.getOnlineMusicList(currentPage);
 
@@ -129,14 +156,14 @@ public class OnlineFragment extends BaseListFragment<OnlineContract.View, Online
         if (mRefreshLayout != null) {
             mRefreshLayout.setRefreshing(false);
         }
-        if (musicItemList == null||musicItemList.size()==0) {
+        if (musicItemList == null || musicItemList.size() == 0) {
             mAdapter.setEmpty();
             showEmpty();
         } else {
             showNormal();
-            if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem()!=null){
-                for (MusicOnlineItem musicItem:musicItemList){
-                    if (musicItem.getMusicId()==MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()){
+            if (MusicHelper.getInstance().getMusicPlayer().getCurMusicItem() != null) {
+                for (MusicOnlineItem musicItem : musicItemList) {
+                    if (musicItem.getMusicId() == MusicHelper.getInstance().getMusicPlayer().getCurMusicItem().getMusicId()) {
                         musicItem.setPlaying(true);
                     }
                 }

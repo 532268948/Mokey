@@ -31,6 +31,20 @@ public final class Constant {
     public static String TOKEN = "";
     public static Long USER_ID = 0L;
 
+    public static class BiliBili {
+        public static final String LIVE_BASE_URL = "http://live.bilibili.com/";
+        public static final String LIVE_URL="AppIndex/home?_device=android&_hwid=51e96f5f2f54d5f9&_ulv=10000&access_key=563d6046f06289cbdcb472601ce5a761&appkey=c1b107428d337928&build=410000&platform=android&scale=xxhdpi&sign=fbdcfe141853f7e2c84c4d401f6a8758";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+//        public static final String BASE_URL = "http://192.168.43.72:8080/";
+
+    }
+
     public static class Alarm {
         public static final String ALARM_ACTION = "com.example.alarm.clock";
         public static final int ALARM_MODE_ONCE = 0;
@@ -91,17 +105,17 @@ public final class Constant {
         /**
          * module_report ReportDetailActivity
          */
-        public static final String ACTIVITY_REPORT_DETAIL="/report/detail";
+        public static final String ACTIVITY_REPORT_DETAIL = "/report/detail";
 
         /**
          * module_habit AlarmNotifyActivity
          */
-        public static final String ACTIVITY_ALARM_NOTIFY="/habit/alarm_notify";
+        public static final String ACTIVITY_ALARM_NOTIFY = "/habit/alarm_notify";
 
         /**
          * module_music MusicSelectActivity
          */
-        public static final String ACTIVITY_MUSIC_SELECT="/music/wake_music";
+        public static final String ACTIVITY_MUSIC_SELECT = "/music/wake_music";
     }
 
     public static class Url {
@@ -109,7 +123,8 @@ public final class Constant {
         public static final String USER_INFORMATION = "user/information";
         public static final String MUSIC_BEFORE = "music/sleep_before";
         public static final String SLEEP_USER_DATA = "sleep/user_all_sleep_data";
-        public static final String SLEEP_DATA_SEND="sleep/send_sleep_data";
+        public static final String SLEEP_DATA_SEND = "sleep/send_sleep_data";
+        public static final String COMMUNITY_FIRS_PAGE = "AppIndex/home?_device=android&_hwid=51e96f5f2f54d5f9&_ulv=10000&access_key=563d6046f06289cbdcb472601ce5a761&appkey=c1b107428d337928&build=410000&platform=android&scale=xxhdpi&sign=fbdcfe141853f7e2c84c4d401f6a8758";
     }
 
     public static class HttpCode {
@@ -133,6 +148,7 @@ public final class Constant {
         public static final int LOGIN_RESULT_OK = 2;
         public static final int SLEEP_REQUEST = 3;
         public static final int ALARM_RESULT_OK = 4;
+
         /**
          * LifeStyleFragment
          */
@@ -140,6 +156,7 @@ public final class Constant {
 
         public static final int ACTIVITY_PREAPRE_RESULT_OK = 6;
 
+        public static final int ALARM_REQUEST = 7;
     }
 
     public static class ItemType {
@@ -164,12 +181,15 @@ public final class Constant {
         /**
          * 在线音乐
          */
-        public static final int MUSIC_ONLINE=5;
+        public static final int MUSIC_ONLINE = 5;
 
         /**
          * 梦话
          */
-        public static final int RECORD_DREAM=6;
+        public static final int RECORD_DREAM = 6;
+
+        public static final int LIVE_ITEM = 7;
+        public static final int LIVE_ITEM_PARTITION = 8;
     }
 
     /**
@@ -247,7 +267,7 @@ public final class Constant {
     }
 
     public static class SleepRecord {
-        public static final int SAMPLE_RATE_IN_HZ=8000;
+        public static final int SAMPLE_RATE_IN_HZ = 8000;
         public static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
         public static final double VOLUME_START_RECORD = 40f;
         public static final double VOLUME_STOP_RECORD = 20f;

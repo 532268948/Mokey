@@ -24,6 +24,7 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
     public void saveAlarmToDB(int alarm_mode, long id, int type, int hour, int minute, String ringPath, String tip) {
         view.get().showDialog(null);
         final Alarm alarm = new Alarm(id, hour, minute, alarm_mode, ringPath, tip, type, true);
+        //获取晨起闹中
         DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(Constant.Alarm.ALARM_ID_FOUR, new DbOperateListener.OnQuerySingleListener<Alarm>() {
             @Override
             public void onQuerySingleListener(Alarm entry) {
@@ -90,8 +91,8 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                                 }
                                                                 AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                                             }
-                                                            if (BuildConfig.DEBUG){
-                                                                Log.e("AlarmSettingPresenter", "onUpdateListener: "+list);
+                                                            if (BuildConfig.DEBUG) {
+                                                                Log.e("AlarmSettingPresenter", "onUpdateListener: " + list);
                                                             }
                                                             view.get().dismissDialog();
                                                             view.get().setSleepAlarmSuccess();
@@ -99,7 +100,7 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                     }
                                                 }
                                             });
-                                        }else {
+                                        } else {
                                             //一次性闹钟
                                             if (alarm.getMode() == 0) {
                                                 AlarmManagerUtil.setOnceAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
@@ -107,8 +108,8 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                             } else if (alarm.getMode() == 1) {
                                                 AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                             }
-                                            if (BuildConfig.DEBUG){
-                                                Log.e("AlarmSettingPresenter", "onUpdateListener: "+list);
+                                            if (BuildConfig.DEBUG) {
+                                                Log.e("AlarmSettingPresenter", "onUpdateListener: " + list);
                                             }
                                             view.get().dismissDialog();
                                             view.get().setSleepAlarmSuccess();
@@ -120,6 +121,70 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                     });
                 } else {
                     DBManager.getInstance(context.get()).getAlarmDB().insertAlarm(alarm);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void saveMorningAlarmTpDB(final int alarm_mode, final long id, int type, final int hour, final int minute, final String ringPath, final String tip) {
+        view.get().showDialog(null);
+        DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(id, new DbOperateListener.OnQuerySingleListener<Alarm>() {
+            @Override
+            public void onQuerySingleListener(Alarm entry) {
+                if (entry != null) {
+                    entry.setMode(alarm_mode);
+                    entry.setHour(hour);
+                    entry.setMinute(minute);
+                    entry.setRingPath(ringPath);
+                    entry.setMsg(tip);
+                    entry.setOpen(true);
+                    DBManager.getInstance(context.get()).getAlarmDB().updateSingleAlarm(entry, new DbOperateListener.OnUpdateListener() {
+                        @Override
+                        public void onUpdateListener(boolean type) {
+                            if (type) {
+                                if (alarm_mode == 0) {
+                                    AlarmManagerUtil.setOnceAlarm(context.get(), (int) id, hour, minute, ringPath, tip);
+                                } else if (alarm_mode == 1) {
+                                    AlarmManagerUtil.setRepeatAlarm(context.get(), (int) id, hour, minute, ringPath, tip);
+                                }
+                                view.get().dismissDialog();
+                                view.get().setMorningAlarmSuccess();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
+    public void saveCustomAlarmToDB(final int alarm_mode, final long id, int type, final int hour, final int minute, final String ringPath, final String tip) {
+        view.get().showDialog(null);
+        DBManager.getInstance(context.get()).getAlarmDB().queryWhereAlarm(id, new DbOperateListener.OnQuerySingleListener<Alarm>() {
+            @Override
+            public void onQuerySingleListener(Alarm entry) {
+                if (entry != null) {
+                    entry.setMode(alarm_mode);
+                    entry.setHour(hour);
+                    entry.setMinute(minute);
+                    entry.setRingPath(ringPath);
+                    entry.setMsg(tip);
+                    entry.setOpen(true);
+                    DBManager.getInstance(context.get()).getAlarmDB().updateSingleAlarm(entry, new DbOperateListener.OnUpdateListener() {
+                        @Override
+                        public void onUpdateListener(boolean type) {
+                            if (type) {
+                                if (alarm_mode == 0) {
+                                    AlarmManagerUtil.setOnceAlarm(context.get(), (int) id, hour, minute, ringPath, tip);
+                                } else if (alarm_mode == 1) {
+                                    AlarmManagerUtil.setRepeatAlarm(context.get(), (int) id, hour, minute, ringPath, tip);
+                                }
+                                view.get().dismissDialog();
+                                view.get().setCustomAlarmSuccess();
+                            }
+                        }
+                    });
                 }
             }
         });

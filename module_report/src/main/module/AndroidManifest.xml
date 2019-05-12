@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.module_report">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.module_report">
 
     <application
         android:name=".app.MyApplication"
@@ -9,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/main_tab_btn_habit_pressed"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:name">
         <activity android:name=".container.ContainerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

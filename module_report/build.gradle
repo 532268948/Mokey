@@ -3,6 +3,7 @@ if (rootProject.ext.isModule.toBoolean()) {
 } else {
     apply plugin: 'com.android.library'
 }
+apply plugin: 'com.mob.sdk'
 
 
 android {

@@ -1,14 +1,15 @@
 package com.example.module_report.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.module_report.R;
 import com.example.lib_common.bean.QualityBean;
+import com.example.module_report.R;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class SleepQualityView extends View {
             AVERAGE_WIDTH = ((float) getWidth()) / ((float) (this.qualityBeanList.size() + 1));
             for (int i = 0; i < qualityBeanList.size(); i++) {
                 float x = (i + 1) * AVERAGE_WIDTH;
-                RectF oval = new RectF(x - 6f, ((float)getHeight()) * (qualityBeanList.get(i).getGrade()) / 10f, x + 6f, getHeight());
+                RectF oval = new RectF(x - 6f, ((float) getHeight()) * (qualityBeanList.get(i).getGrade()) / 10f, x + 6f, getHeight());
                 switch (qualityBeanList.get(i).getType()) {
                     case 0:
                         mQualityPaint.setColor(getResources().getColor(R.color.sleep_quality_error_color));
@@ -86,5 +87,21 @@ public class SleepQualityView extends View {
     public void setData(List<QualityBean> qualityBeanList) {
         this.qualityBeanList = qualityBeanList;
         invalidate();
+    }
+
+    public Bitmap createBitmap() {
+
+        //由于直接new出来的view是不会走测量、布局、绘制的方法的，所以需要我们手动去调这些方法，不然生成的图片就是黑色的。
+        int widthMeasureSpec = MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY);
+        int heightMeasureSpec = MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY);
+
+        measure(widthMeasureSpec, heightMeasureSpec);
+        layout(0, 0, getWidth(), getHeight());
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        draw(canvas);
+
+        return bitmap;
     }
 }

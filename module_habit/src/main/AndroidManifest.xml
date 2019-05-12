@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.example.module_habit">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -32,13 +33,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.notify.AlarmNotifyActivity"
-                  android:screenOrientation="portrait"
-                  android:excludeFromRecents="true"
-                  android:launchMode="singleInstance"
-                  android:taskAffinity=""
-                  android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
-
+        <activity
+            android:name=".ui.notify.AlarmNotifyActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
+        </activity>
+        <activity android:name=".ui.alarm.SmallSleepActivity">
         </activity>
     </application>
 

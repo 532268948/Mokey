@@ -69,9 +69,9 @@ public class SplashPresenter<V extends SplashContract.View> extends BasePresente
         //初始化闹钟信息
         List<Alarm> alarmList = new ArrayList<>();
         //三个基础闹钟
-        Alarm alarm1 = new Alarm(Constant.Alarm.ALARM_ID_ONE, 7, 30, Constant.Alarm.ALARM_MODE_ONCE, null, null, Constant.Alarm.ALARM_TYPE_ONE, false);
-        Alarm alarm2 = new Alarm(Constant.Alarm.ALARM_ID_TWO, 7, 30, Constant.Alarm.ALARM_MODE_ONCE, null, null, Constant.Alarm.ALARM_TYPE_ONE, false);
-        Alarm alarm3 = new Alarm(Constant.Alarm.ALARM_ID_THREE, 7, 30, Constant.Alarm.ALARM_MODE_ONCE, null, null, Constant.Alarm.ALARM_TYPE_ONE, false);
+        Alarm alarm1 = new Alarm(Constant.Alarm.ALARM_ID_ONE, 7, 30, Constant.Alarm.ALARM_MODE_ONCE, null, context.get().getResources().getString(com.example.module_habit.R.string.habit_alarm_number_1), Constant.Alarm.ALARM_TYPE_ONE, false);
+        Alarm alarm2 = new Alarm(Constant.Alarm.ALARM_ID_TWO, 7, 30, Constant.Alarm.ALARM_MODE_ONCE, null, context.get().getResources().getString(com.example.module_habit.R.string.habit_alarm_number_2), Constant.Alarm.ALARM_TYPE_ONE, false);
+        Alarm alarm3 = new Alarm(Constant.Alarm.ALARM_ID_THREE, 7, 30, Constant.Alarm.ALARM_MODE_ONCE, null, context.get().getResources().getString(com.example.module_habit.R.string.habit_alarm_number_3), Constant.Alarm.ALARM_TYPE_ONE, false);
         alarmList.add(alarm1);
         alarmList.add(alarm2);
         alarmList.add(alarm3);

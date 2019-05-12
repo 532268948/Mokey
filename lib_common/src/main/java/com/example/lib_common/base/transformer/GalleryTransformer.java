@@ -1,6 +1,5 @@
 package com.example.lib_common.base.transformer;
 
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -14,6 +13,8 @@ public class GalleryTransformer implements ViewPager.PageTransformer {
 
     @Override
     public void transformPage(View page, float position) {
+
+//        Log.e("GalleryTransformer", "transformPage: "+page.getTag()+" "+position);
 
         if (position < -1) { // [-Infinity,-1)
             page.setScaleX(MIN_SCALE);

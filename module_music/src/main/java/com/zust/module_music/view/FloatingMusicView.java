@@ -122,7 +122,7 @@ public class FloatingMusicView extends RelativeLayout {
 
     public FloatingMusicView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mContext = context;
+        this.mContext = context.getApplicationContext();
         initAttributes(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.music_play, this, true);
         mCoverIv = findViewById(R.id.iv_music_cover);

@@ -25,6 +25,7 @@ import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_community.ui.CommunityFragment;
 import com.example.module_habit.ui.HabitFragment;
 import com.example.module_report.ui.ReportFragment;
+import com.example.module_user.ui.UserEditActivity;
 import com.example.module_user.ui.login.LoginActivity;
 import com.example.tianhuaye.monkey.R;
 import com.example.tianhuaye.monkey.contract.MainContract;
@@ -75,6 +76,17 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
         mLeftHeadIv = view.findViewById(R.id.iv_left_head);
         mLeftNicknameTv = view.findViewById(R.id.tv_left_nickname);
         mLeftGenderIv = view.findViewById(R.id.iv_left_gender);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(Constant.TOKEN)){
+                    startActivity(new Intent(MainActivity.this,UserEditActivity.class));
+                }else {
+                    gotoLoginActivity();
+                }
+            }
+        });
     }
 
     @Override
@@ -153,8 +165,14 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
                 mViewPager.setCurrentItem(2);
                 return true;
             case R.id.navigation_person:
-                mViewPager.setCurrentItem(3);
-                return true;
+                if(TextUtils.isEmpty(Constant.TOKEN)){
+                    gotoLoginActivity();
+                    return false;
+                }else {
+                    mViewPager.setCurrentItem(3);
+                    return true;
+                }
+
             default:
                 return false;
         }
@@ -205,5 +223,13 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
 
     private void setUserInfo(LoginItem userInfo) {
         Glide.with(MainActivity.this).load(Constant.BASE_URL + userInfo.getHead()).into(mHeadIv);
+        Glide.with(MainActivity.this).load(Constant.BASE_URL + userInfo.getHead()).into(mLeftHeadIv);
+        mLeftNicknameTv.setText(userInfo.getNickname());
+        if (userInfo.getGender()==0){
+            Glide.with(MainActivity.this).load(R.drawable.main_left_male).into(mLeftGenderIv);
+        }else if (userInfo.getGender()==1){
+            Glide.with(MainActivity.this).load(R.drawable.main_left_female).into(mLeftGenderIv);
+        }
+
     }
 }

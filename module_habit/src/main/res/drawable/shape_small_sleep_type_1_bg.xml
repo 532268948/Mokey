@@ -1,0 +1,5 @@
+<shape android:shape="oval"
+       xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/habit_small_sleep_type_1_bg_color"/>
+    <corners android:radius="100dp"/>
+</shape>

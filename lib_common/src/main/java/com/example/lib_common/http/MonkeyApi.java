@@ -72,4 +72,6 @@ public interface MonkeyApi {
      */
     @POST(Constant.Url.SLEEP_DATA_SEND)
     Observable<ResponseWrapper<SleepBean>> sendSleepData(@Query("token") String token, @Body SleepData sleepData);
+
+
 }

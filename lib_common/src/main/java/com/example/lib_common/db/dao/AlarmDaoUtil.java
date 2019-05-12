@@ -115,9 +115,20 @@ public class AlarmDaoUtil extends DaoUtil<Alarm> {
      * @param memberId            闹钟id
      * @param querySingleListener 查询结果监听回调
      */
-    public void queryWhereAlarm(long memberId, DbOperateListener.OnQuerySingleListener querySingleListener) {
+    public void queryWhereAlarm(long memberId, DbOperateListener.OnQuerySingleListener<Alarm> querySingleListener) {
         setOnQuerySingleListener(querySingleListener);
         query(Alarm.class, AlarmDao.Properties.Id.eq(memberId));
+    }
+
+    /**
+     * 条件查询
+     *
+     * @param open 闹钟是否开启
+     * @param queryAllListener
+     */
+    public void querwhereAlarm(boolean open,DbOperateListener.OnQueryAllListener<Alarm> queryAllListener){
+        setOnQueryAllListener(queryAllListener);
+        query(Alarm.class, AlarmDao.Properties.Open.eq(open));
     }
 
     /**
@@ -135,7 +146,7 @@ public class AlarmDaoUtil extends DaoUtil<Alarm> {
      * @param type             闹钟类型
      * @param queryAllListener
      */
-    public void queryWhereTypeAlarm(int type, DbOperateListener.OnQueryAllListener queryAllListener) {
+    public void queryWhereTypeAlarm(int type, DbOperateListener.OnQueryAllListener<Alarm> queryAllListener) {
         setOnQueryAllListener(queryAllListener);
         queryAll(Alarm.class, daoSession.queryBuilder(Alarm.class).where(AlarmDao.Properties.Type.eq(type)).build());
     }
@@ -143,7 +154,7 @@ public class AlarmDaoUtil extends DaoUtil<Alarm> {
     /**
      * 查询全部
      */
-    public void queryAllAlarm(DbOperateListener.OnQueryAllListener onQueryAllListener) {
+    public void queryAllAlarm(DbOperateListener.OnQueryAllListener<Alarm> onQueryAllListener) {
         setOnQueryAllListener(onQueryAllListener);
         queryAll(Alarm.class, null);
     }

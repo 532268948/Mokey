@@ -1,10 +1,10 @@
 package com.example.module_habit.ui.lifestyle;
 
 import com.example.lib_common.base.BasePresenter;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.Alarm;
-import com.example.lib_common.common.Constant;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import java.util.List;
 public class LifestylePresenter<V extends LifestyleContract.View> extends BasePresenter<V> implements LifestyleContract.Presenter {
     @Override
     public void getPrepareAlarm() {
-        DBManager.getInstance(context.get()).getAlarmDB().queryWhereTypeAlarm(Constant.Alarm.ALARM_TYPE_TWO, new DbOperateListener.OnQueryAllListener() {
+        DBManager.getInstance(context.get()).getAlarmDB().queryWhereTypeAlarm(Constant.Alarm.ALARM_TYPE_TWO, new DbOperateListener.OnQueryAllListener<Alarm>() {
             @Override
-            public void onQueryAllBatchListener(List list) {
+            public void onQueryAllBatchListener(List<Alarm> list) {
                 if (list != null) {
                     view.get().setPrepareAlarm(list);
                 }

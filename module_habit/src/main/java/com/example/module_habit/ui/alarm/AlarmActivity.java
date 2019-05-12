@@ -1,7 +1,9 @@
 package com.example.module_habit.ui.alarm;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +18,7 @@ import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.view.SwitchButtonView;
 import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.common.Constant;
-import com.example.lib_common.util.AlarmManagerUtil;
+import com.example.lib_common.util.FileUtil;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_habit.R;
 import com.example.module_habit.contract.AlarmSettingContract;
@@ -28,6 +30,11 @@ import com.example.module_habit.presenter.AlarmSettingPresenter;
 public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, AlarmSettingPresenter<AlarmSettingContract.View>> implements AlarmSettingContract.View {
 
     public static final String INTENT_SOURCE_PAGE = "sourcePage";
+    public static final String INTENT_CUSTOM_ID = "customAlarmId";
+    public static final String INTENT_RING_PATH = "ringPath";
+    public static final String INTENT_NAME = "alarm_name";
+    public static final String INTENT_HOUR = "hour";
+    public static final String INTENT_MINUTE = "minute";
 
     private LinearLayout mParentLl;
     private TitleBar mTitleBar;
@@ -38,15 +45,17 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
     private TextView mMusicTv;
     private int hour = 7;
     private int minute = 0;
+    private String name = "";
     /**
      * 0一次 1重复
      */
     private int alarm_mode = 0;
     private String ringPath;
     /**
-     * 1 lifestyleFragment 2 SleepActivity
+     * 1 lifestyleFragment 2 SleepActivity 3AlarmFragment
      */
     private int sourcePage = 0;
+    private int customAlarmId = 0;
 
     @Override
     protected AlarmSettingPresenter<AlarmSettingContract.View> createPresenter() {
@@ -55,8 +64,8 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.ll_alarm_wake_music){
-            ARouter.getInstance().build(Constant.Activity.ACTIVITY_MUSIC_SELECT).navigation(this,11);
+        if (v.getId() == R.id.ll_alarm_wake_music) {
+            ARouter.getInstance().build(Constant.Activity.ACTIVITY_MUSIC_SELECT).navigation(this, 11);
         }
     }
 
@@ -64,12 +73,12 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        Log.e("AlarmActivity", "onActivityResult: ");
-        if (resultCode==RESULT_OK){
-            if (requestCode==11){
-                ringPath=data.getExtras().getString("ring");
-                String musicName=data.getExtras().getString("name");
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 11) {
+                ringPath = data.getExtras().getString("ring");
+                String musicName = data.getExtras().getString("name");
                 mMusicTv.setText(musicName);
-                Log.e("AlarmActivity", "onActivityResult: "+ringPath);
+                Log.e("AlarmActivity", "onActivityResult: " + ringPath);
             }
         }
     }
@@ -83,6 +92,11 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
     @Override
     public void initIntent(Intent intent) {
         sourcePage = intent.getIntExtra(INTENT_SOURCE_PAGE, 0);
+        customAlarmId = (int) intent.getLongExtra(INTENT_CUSTOM_ID, 0);
+        hour = intent.getIntExtra(INTENT_HOUR, -1);
+        minute = intent.getIntExtra(INTENT_MINUTE, -1);
+        ringPath = intent.getStringExtra(INTENT_RING_PATH);
+        name = intent.getStringExtra(INTENT_NAME);
     }
 
     @Override
@@ -98,8 +112,17 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
         mRepeatBtn = findViewById(R.id.switch_button_view);
         mWakeMusicLl = findViewById(R.id.ll_alarm_wake_music);
         mNameEt = findViewById(R.id.et_alarm_name);
-        mMusicTv=findViewById(R.id.tv_music);
+        mMusicTv = findViewById(R.id.tv_music);
         mTimePicker.setIs24HourView(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (hour >= 0) {
+                mTimePicker.setHour(hour);
+            }
+            if (minute >= 0) {
+                mTimePicker.setMinute(minute);
+            }
+        }
+
     }
 
     @Override
@@ -128,6 +151,8 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
                     setSleepAlarm();
                 } else if (sourcePage == 2) {
                     setMorningAlarm();
+                } else if (sourcePage == 3) {
+                    setCustomAlarm();
                 }
             }
         });
@@ -156,7 +181,18 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
 
     @Override
     public void initData() {
+        if (!TextUtils.isEmpty(ringPath)) {
+            mMusicTv.setText(FileUtil.getFileName(ringPath));
+        }
 
+        if (!TextUtils.isEmpty(name)) {
+            mNameEt.setText(name);
+        }
+
+    }
+
+    private void setCustomAlarm() {
+        mPresenter.saveCustomAlarmToDB(alarm_mode, customAlarmId, Constant.Alarm.ALARM_TYPE_ONE, hour, minute, ringPath, mNameEt.getText().toString());
     }
 
     /**
@@ -168,7 +204,7 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
 //        } else if (alarm_mode == 1) {
 //            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FIVE, hour, minute, ringPath, mNameEt.getText().toString());
 //        }
-        mPresenter.saveAlarmToDB(alarm_mode,Constant.Alarm.ALARM_ID_FIVE,Constant.Alarm.ALARM_TYPE_THREE , hour, minute, ringPath, mNameEt.getText().toString());
+        mPresenter.saveAlarmToDB(alarm_mode, Constant.Alarm.ALARM_ID_FIVE, Constant.Alarm.ALARM_TYPE_THREE, hour, minute, ringPath, mNameEt.getText().toString());
 
     }
 
@@ -176,12 +212,21 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
      * 设置晨起闹钟
      */
     private void setMorningAlarm() {
-        if (alarm_mode == 0) {
-            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
-        } else if (alarm_mode == 1) {
-            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
-        }
-        mPresenter.saveAlarmToDB(alarm_mode, Constant.Alarm.ALARM_ID_FOUR, Constant.Alarm.ALARM_TYPE_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
+//        if (alarm_mode == 0) {
+//            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
+//        } else if (alarm_mode == 1) {
+//            AlarmManagerUtil.setRepeatAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
+//        }
+//        mPresenter.saveAlarmToDB(alarm_mode, Constant.Alarm.ALARM_ID_FOUR, Constant.Alarm.ALARM_TYPE_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
+//        Intent intent = new Intent();
+//        intent.putExtra("hour", hour);
+//        intent.putExtra("minute", minute);
+//        setResult(Constant.RequestAndResultCode.ALARM_RESULT_OK, intent);
+//        finish();
+    }
+
+    @Override
+    public void setSleepAlarmSuccess() {
         Intent intent = new Intent();
         intent.putExtra("hour", hour);
         intent.putExtra("minute", minute);
@@ -190,7 +235,19 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
     }
 
     @Override
-    public void setSleepAlarmSuccess() {
+    public void setCustomAlarmSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("id", customAlarmId);
+        intent.putExtra("hour", hour);
+        intent.putExtra("minute", minute);
+        intent.putExtra("msg", mNameEt.getText().toString());
+        intent.putExtra("ringPath", ringPath);
+        setResult(Constant.RequestAndResultCode.ALARM_RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public void setMorningAlarmSuccess() {
         Intent intent = new Intent();
         intent.putExtra("hour", hour);
         intent.putExtra("minute", minute);

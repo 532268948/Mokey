@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/common_title_bar_height">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,12 +29,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:gravity="center_vertical"
         android:layout_marginRight="@dimen/dp_12">
 
         <ImageView
             android:id="@+id/right_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:scaleType="centerInside"/>
 
         <TextView
@@ -44,7 +45,8 @@
             android:padding="10dp"
             android:gravity="center"
             android:textColor="@color/title_bar_right_text_color"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -55,4 +57,4 @@
         android:layout_alignParentBottom="true"
         android:visibility="gone"
         android:background="#99A0A0A0" />
-</merge>
+</RelativeLayout>

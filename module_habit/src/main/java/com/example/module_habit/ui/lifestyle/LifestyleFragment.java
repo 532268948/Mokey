@@ -2,11 +2,13 @@ package com.example.module_habit.ui.lifestyle;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.example.lib_common.base.fragment.BaseFragment;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.entity.Alarm;
@@ -99,6 +101,8 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
             @Override
             public void onEditClick() {
                 Intent intent = new Intent(getContext(), AlarmActivity.class);
+                intent.putExtra("hour", mSleepAlarm.getHour());
+                intent.putExtra("minute", mSleepAlarm.getMinute());
                 intent.putExtra(AlarmActivity.INTENT_SOURCE_PAGE, 1);
                 startActivityForResult(intent, Constant.RequestAndResultCode.FRAGMENT_LIFESTYLE_REQUES);
             }
@@ -115,6 +119,10 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.fb_sleep) {
+            if (TextUtils.isEmpty(Constant.TOKEN)) {
+                ARouter.getInstance().build(Constant.Activity.ACTIVITY_LOGIN).navigation();
+                return;
+            }
             startActivity(new Intent(getContext(), SleepActivity.class));
         }
     }
@@ -142,8 +150,8 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
                     for (int j = 0; j < titles.length; j++) {
                         if (alarmList.get(i).getMsg().equals(titles[j])) {
                             src[i] = images[j];
-                            if (BuildConfig.DEBUG){
-                                Log.d("LifestyleFragment", "PrepareAlarm: "+alarmList.get(i).toString());
+                            if (BuildConfig.DEBUG) {
+                                Log.d("LifestyleFragment", "PrepareAlarm: " + alarmList.get(i).toString());
                             }
                             break;
                         }

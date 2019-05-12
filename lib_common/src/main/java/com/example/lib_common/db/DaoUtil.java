@@ -1,5 +1,8 @@
 package com.example.lib_common.db;
 
+import android.util.Log;
+
+import com.example.lib_common.BuildConfig;
 import com.example.lib_common.db.entity.DaoSession;
 
 import org.greenrobot.greendao.async.AsyncOperation;
@@ -30,12 +33,15 @@ public class DaoUtil<T> extends DbOperate {
      * @param cls
      * @return
      */
-    public <T> void query(Class cls, WhereCondition whereCondition) {
+    public <T> void query(Class cls, final WhereCondition whereCondition) {
         AsyncSession asyncSession = daoSession.startAsyncSession();
         asyncSession.setListenerMainThread(new AsyncOperationListener() {
             @Override
             public void onAsyncOperationCompleted(AsyncOperation operation) {
                 if (operation.isCompletedSucessfully() && onQuerySingleListener != null) {
+                    if (BuildConfig.DEBUG){
+                        Log.e("DaoUtil", "onAsyncOperationCompleted: "+operation.getResult());
+                    }
                     onQuerySingleListener.onQuerySingleListener(operation.getResult());
                 } else if (onQuerySingleListener != null) {
                     onQuerySingleListener.onQuerySingleListener(null);
@@ -92,6 +98,9 @@ public class DaoUtil<T> extends DbOperate {
             @Override
             public void onAsyncOperationCompleted(AsyncOperation operation) {
                 List<T> result = (List<T>) operation.getResult();
+                if (BuildConfig.DEBUG){
+                    Log.e("DaoUtil", "onAsyncOperationCompleted: "+result);
+                }
                 onQueryAllListener.onQueryAllBatchListener(result);
             }
         });

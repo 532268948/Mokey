@@ -4,6 +4,8 @@ if (rootProject.ext.isModule.toBoolean()) {
     apply plugin: 'com.android.library'
 }
 
+apply plugin: 'com.mob.sdk'
+
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion

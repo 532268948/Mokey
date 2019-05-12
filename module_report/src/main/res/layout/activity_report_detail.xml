@@ -11,11 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
         app:title_text="@string/report_title"
-        app:left_icon="@drawable/common_title_bar_back" />
+        app:left_icon="@drawable/common_title_bar_back"
+        app:right_icon="@drawable/report_detail_share"/>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nest_scroll_view"
         android:layout_below="@+id/title_bar"
         android:layout_width="match_parent"
+        android:background="@color/report_detail_bg_color"
         android:layout_height="match_parent">
 
         <LinearLayout

@@ -11,10 +11,16 @@ public interface AlarmSettingContract {
 
     interface View extends BaseView {
         void setSleepAlarmSuccess();
+        void setCustomAlarmSuccess();
+        void setMorningAlarmSuccess();
     }
 
     interface Presenter {
 
         void saveAlarmToDB(int alarm_mode,long id,int type, int hour, int minute, String ringPath, String tip);
+
+        void saveMorningAlarmTpDB(int alarm_mode,long id,int type, int hour, int minute, String ringPath, String tip);
+
+        void saveCustomAlarmToDB(int alarm_mode,long id,int type, int hour, int minute, String ringPath, String tip);
     }
 }

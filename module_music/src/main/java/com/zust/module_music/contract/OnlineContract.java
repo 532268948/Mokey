@@ -1,6 +1,7 @@
 package com.zust.module_music.contract;
 
 import com.example.lib_common.base.BaseView;
+import com.example.lib_common.bean.MusicItem;
 import com.example.lib_common.bean.MusicOnlineItem;
 
 import java.util.List;
@@ -25,5 +26,12 @@ public interface OnlineContract {
     interface Presenter {
         void getOnlineMusicList(int currentPage);
         void refreshOnlineMusicList();
+
+        /**
+         * 更新音乐本地缓存路径
+         * @param localFile
+         * @param id
+         */
+        void updateMusicDb(String localFile,MusicItem musicItem);
     }
 }

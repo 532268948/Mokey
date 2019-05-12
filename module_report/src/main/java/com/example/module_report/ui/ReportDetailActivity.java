@@ -1,7 +1,10 @@
 package com.example.module_report.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.media.MediaPlayer;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,18 +15,26 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.base.activity.BaseActivity;
 import com.example.lib_common.base.adapter.BaseRecyclerHolder;
 import com.example.lib_common.base.inter.OnItemClickListener;
+import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.bean.DreamBean;
 import com.example.lib_common.bean.ReportBean;
 import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.DateUtil;
+import com.example.lib_common.util.ShareSdkUtil;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.lib_common.util.ViewUtil;
 import com.example.module_report.R;
 import com.example.module_report.contract.ReportDetailContract;
 import com.example.module_report.presenter.ReportDetailPresenter;
 import com.example.module_report.view.SleepQualityView;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +47,8 @@ import java.util.List;
 @Route(path = Constant.Activity.ACTIVITY_REPORT_DETAIL)
 public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View, ReportDetailPresenter<ReportDetailContract.View>> implements ReportDetailContract.View, OnItemClickListener {
 
+    private TitleBar mTitleBar;
+    private NestedScrollView mNestedScrollView;
     private SleepQualityView mSleepQualityView;
     private RecyclerView mRecyclerView;
     private LinearLayout mFoldTitleLl;
@@ -87,6 +100,8 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 
     @Override
     public void initView() {
+        mTitleBar=findViewById(R.id.title_bar);
+        mNestedScrollView=findViewById(R.id.nest_scroll_view);
         mSleepQualityView = findViewById(R.id.sleep_quality_view);
         mRecyclerView = findViewById(R.id.recycler_view);
         mFoldTitleLl = findViewById(R.id.ll_fold);
@@ -106,7 +121,90 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 
     @Override
     public void initListener() {
+        mTitleBar.setLeftIconClickListener(new TitleBar.LeftIconClickListener() {
+            @Override
+            public void leftIconClick() {
+                finish();
+            }
+        });
+        mTitleBar.setRightIconClickListener(new TitleBar.RightIconClickListener() {
+            @Override
+            public void rightIconClick() {
+                checkPermission();
+//                ShareSdkUtil.QQFriendsShareUrl(ReportDetailActivity.this,null,null,null);
+            }
+        });
+    }
 
+    private void checkPermission(){
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        ShareSdkUtil.QQFriendsShareImage(ReportDetailActivity.this,null,saveImage(shotScrollView(mNestedScrollView)),null);
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        onBackPressed();
+                    }
+                })
+                .start();
+    }
+
+    /**
+     *  对ScrollView进行截图
+     * @param scrollView
+     * @return
+     */
+    public Bitmap shotScrollView(NestedScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap = null;
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+            scrollView.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.report_detail_bg_color));
+        }
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h, Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * 保存bitmap到本地
+     *
+     * @param bitmap
+     * @return
+     */
+    private String saveImage(Bitmap bitmap) {
+
+        File path = getCacheDir();
+
+        String fileName = "shareImage.png";
+
+        File file = new File(path, fileName);
+
+        if (file.exists()) {
+            file.delete();
+        }
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file.getAbsolutePath();
     }
 
     @Override
