@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -78,7 +77,7 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
                 ringPath = data.getExtras().getString("ring");
                 String musicName = data.getExtras().getString("name");
                 mMusicTv.setText(musicName);
-                Log.e("AlarmActivity", "onActivityResult: " + ringPath);
+//                Log.e("AlarmActivity", "onActivityResult: " + ringPath);
             }
         }
     }
@@ -212,6 +211,7 @@ public class AlarmActivity extends BaseActivity<AlarmSettingContract.View, Alarm
      * 设置晨起闹钟
      */
     private void setMorningAlarm() {
+        mPresenter.saveMorningAlarmTpDB(alarm_mode, Constant.Alarm.ALARM_ID_FOUR, Constant.Alarm.ALARM_TYPE_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
 //        if (alarm_mode == 0) {
 //            AlarmManagerUtil.setOnceAlarm(this, (int) Constant.Alarm.ALARM_ID_FOUR, hour, minute, ringPath, mNameEt.getText().toString());
 //        } else if (alarm_mode == 1) {

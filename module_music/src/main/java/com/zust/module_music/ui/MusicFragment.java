@@ -1,6 +1,5 @@
 package com.zust.module_music.ui;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +96,14 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (MusicHelper.getInstance().getMusicPlayer()==null||MusicHelper.getInstance().getMusicPlayer().getCurMusicItem()==null){
+            hideMusicView();
+        }
+    }
+
+    @Override
     public void changeSmallMusicView() {
 
     }
@@ -114,7 +121,6 @@ public class MusicFragment extends BaseTopTabFragment<MusicContract.View, MusicP
 
     @Override
     public void onPlayClick(MusicItem musicItem) {
-        Log.d("MusicFragment", "onPlayClick: " + musicItem.isPlaying());
         if (musicItem.isPlaying()) {
             MusicHelper.getInstance().pause();
         } else {

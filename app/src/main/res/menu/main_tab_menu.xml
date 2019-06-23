@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:icon="@drawable/main_bottom_tab_bilibili"
         android:title="@string/main_bottom_tab_1" />
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:icon="@drawable/main_bottom_tab_music"
         android:title="@string/main_bottom_tab_2" />
     <item
         android:id="@+id/navigation_habit"
-        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:icon="@drawable/main_bottom_tab_lifestyle"
         android:title="@string/main_bottom_tab_3" />
     <item
         android:id="@+id/navigation_person"
-        android:icon="@drawable/main_tab_btn_habit_pressed"
+        android:icon="@drawable/main_bottom_tab_report"
         android:title="@string/main_bottom_tab_4" />
 </menu>

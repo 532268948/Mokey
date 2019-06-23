@@ -254,6 +254,7 @@ public class AudioRecordUtil {
                         if (isRecord) {
                             if (readSize != AudioRecord.ERROR_INVALID_OPERATION) {
                                 try {
+                                    Log.e("Checkrecord", "run: record");
                                     os.write(buffer);
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -267,6 +268,7 @@ public class AudioRecordUtil {
                                     file.createNewFile();
                                 }
                                 os = new FileOutputStream(file);
+                                Log.e("Checkfinish", "run: finish");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -275,7 +277,10 @@ public class AudioRecordUtil {
                     } else {
                         if (System.currentTimeMillis() - highTime >= 5000) {
                             try {
-                                os.close();
+                                if (os!=null){
+                                    os.close();
+                                }
+                                isRecord=false;
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

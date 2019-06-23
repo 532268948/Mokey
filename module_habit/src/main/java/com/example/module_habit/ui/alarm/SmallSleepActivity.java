@@ -36,7 +36,7 @@ public class SmallSleepActivity extends AppCompatActivity {
         mMarqueeView = findViewById(R.id.marqueen_view);
         mFinishTv = findViewById(R.id.tv_finish);
         mTitleBar = findViewById(R.id.title_bar);
-        mMarqueeView.start(Constant.HOUR_TO_MIMUTE * 12);
+        mMarqueeView.start(Constant.HOUR_TO_MIMUTE * 10);
         mMarqueeView.setSleepFinishListener(new CountDownView.OnSleepFinishListener() {
             @Override
             public void onSleepFinish() {

@@ -93,7 +93,7 @@ public class MusicOnlineViewHolder extends BaseRecyclerHolder {
 
     public void setNumber(int position) {
         if (mNumberTv != null) {
-            mNumberTv.setText(String.format(mContext.getResources().getString(R.string.music_before_item_number), position));
+            mNumberTv.setText(String.format(mContext.getResources().getString(R.string.music_before_item_number), position+1));
         }
     }
 

@@ -254,6 +254,10 @@ public class TitleBar extends RelativeLayout {
         }
     }
 
+    public void setTitleTextStr(String str){
+        mTitleTv.setText(str);
+    }
+
     public interface LeftIconClickListener {
         /**
          * 左边按钮被点击

@@ -7,6 +7,7 @@
     <!--small sleep-->
     <string name="small_sleep_1">科学小盹</string>
     <string name="small_sleep_2">高效午休</string>
+
     <string name="small_sleep_3">差旅模式</string>
     <string name="small_sleep_4">完整午休</string>
     <string name="small_sleep_tip_1">消除疲劳</string>
@@ -76,4 +77,7 @@
     <string name="dialog_report_finish_msg">睡眠报告已生成，是否前往质量报告详情页面</string>
     <string name="dialog_report_finish_btn_cancel">取消</string>
     <string name="dialog_report_finish_btn_sure">确定</string>
+
+    <!--MonthReportActivity-->
+    <string name="month_report_title">%d 月睡眠报告</string>
 </resources>

@@ -14,8 +14,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
-        app:left_icon="@drawable/common_title_bar_back"
-        app:right_icon="@drawable/report_detail_share"/>
+        app:left_icon="@drawable/common_title_bar_back"/>
 
 
         <com.example.lib_common.base.view.CountDownView

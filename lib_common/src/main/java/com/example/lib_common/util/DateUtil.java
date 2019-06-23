@@ -54,6 +54,11 @@ public class DateUtil {
         return sdf.format(timeStamp);
     }
 
+    public static String formatThree(long timeStamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM");
+        return sdf.format(timeStamp);
+    }
+
     public static String getDistanceTime(long time1, long time2) {
         long day = 0;
         long hour = 0;

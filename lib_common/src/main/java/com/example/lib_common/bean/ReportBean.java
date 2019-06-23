@@ -134,4 +134,16 @@ public class ReportBean extends BaseItem implements Serializable {
     public void setQualityBeans(List<QualityBean> qualityBeans) {
         this.qualityBeans = qualityBeans;
     }
+
+    @Override
+    public String toString() {
+        return "ReportBean{" +
+                "uid=" + uid +
+                ", nickname='" + nickname + '\'' +
+                ", grade=" + grade +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", qualityBeans=" + qualityBeans +
+                '}';
+    }
 }

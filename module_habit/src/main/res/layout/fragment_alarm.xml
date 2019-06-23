@@ -156,18 +156,34 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <com.example.lib_common.base.view.SquareImageView
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/test_img" />
+                        android:background="@drawable/shape_small_sleep_type_1_bg">
+                        <com.example.lib_common.base.view.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/small_sleep_type_1" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|bottom"
+                            android:paddingBottom="10dp"
+                            android:text="15 min"
+                            android:textSize="24sp"
+                            android:textColor="@color/habit_small_sleep_time_text_color"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/habit_alarm_number_3"
+                        android:text="@string/small_sleep_2"
                         android:textColor="@color/small_sleep_name_color"
                         android:textSize="@dimen/small_sleep_name_size" />
 
@@ -210,18 +226,34 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <com.example.lib_common.base.view.SquareImageView
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/test_img" />
+                        android:background="@drawable/shape_small_sleep_type_1_bg">
+                        <com.example.lib_common.base.view.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/small_sleep_type_1" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|bottom"
+                            android:paddingBottom="10dp"
+                            android:text="20 min"
+                            android:textSize="24sp"
+                            android:textColor="@color/habit_small_sleep_time_text_color"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/habit_alarm_number_3"
+                        android:text="@string/small_sleep_3"
                         android:textColor="@color/small_sleep_name_color"
                         android:textSize="@dimen/small_sleep_name_size" />
 
@@ -259,18 +291,34 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <com.example.lib_common.base.view.SquareImageView
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/test_img" />
+                        android:background="@drawable/shape_small_sleep_type_1_bg">
+                        <com.example.lib_common.base.view.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/small_sleep_type_1" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|bottom"
+                            android:paddingBottom="10dp"
+                            android:text="30 min"
+                            android:textSize="24sp"
+                            android:textColor="@color/habit_small_sleep_time_text_color"/>
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/habit_alarm_number_3"
+                        android:text="@string/small_sleep_4"
                         android:textColor="@color/small_sleep_name_color"
                         android:textSize="@dimen/small_sleep_name_size" />
 

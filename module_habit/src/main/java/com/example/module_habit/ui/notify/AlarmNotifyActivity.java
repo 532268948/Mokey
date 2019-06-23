@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.lib_common.common.Constant;
+import com.example.lib_common.music.MusicHelper;
 import com.example.lib_common.swipelayout.SwipeBackHelper;
 import com.example.lib_common.util.StatusBarUtil;
 import com.example.module_habit.BuildConfig;
@@ -45,6 +46,7 @@ public class AlarmNotifyActivity extends Activity implements SwipeBackHelper.Del
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_alarm_notify);
+        MusicHelper.getInstance().unBingPlayer(null);
         mMsgTv = findViewById(R.id.tv_msg);
         String ring = getIntent().getStringExtra("ring");
         String msg = getIntent().getStringExtra("msg");

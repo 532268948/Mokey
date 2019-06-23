@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
@@ -17,12 +18,11 @@ import com.bumptech.glide.Glide;
 import com.example.lib_common.base.BasePresenter;
 import com.example.lib_common.base.activity.BaseBottomTabActivity;
 import com.example.lib_common.bean.response.LoginItem;
+import com.example.lib_common.common.Constant;
 import com.example.lib_common.db.DBManager;
 import com.example.lib_common.db.DbOperateListener;
 import com.example.lib_common.db.entity.User;
-import com.example.lib_common.common.Constant;
 import com.example.lib_common.util.StatusBarUtil;
-import com.example.module_community.ui.CommunityFragment;
 import com.example.module_habit.ui.HabitFragment;
 import com.example.module_report.ui.ReportFragment;
 import com.example.module_user.ui.UserEditActivity;
@@ -80,9 +80,9 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(Constant.TOKEN)){
-                    startActivity(new Intent(MainActivity.this,UserEditActivity.class));
-                }else {
+                if (!TextUtils.isEmpty(Constant.TOKEN)) {
+                    startActivity(new Intent(MainActivity.this, UserEditActivity.class));
+                } else {
                     gotoLoginActivity();
                 }
             }
@@ -128,7 +128,8 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
         if (fragmentList == null) {
             fragmentList = new ArrayList<>();
         }
-        fragmentList.add(new CommunityFragment());
+//        fragmentList.add(new CommunityFragment());
+        fragmentList.add(new Fragment());
         fragmentList.add(new MusicFragment());
         fragmentList.add(new HabitFragment());
         fragmentList.add(new ReportFragment());
@@ -165,10 +166,10 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
                 mViewPager.setCurrentItem(2);
                 return true;
             case R.id.navigation_person:
-                if(TextUtils.isEmpty(Constant.TOKEN)){
+                if (TextUtils.isEmpty(Constant.TOKEN)) {
                     gotoLoginActivity();
                     return false;
-                }else {
+                } else {
                     mViewPager.setCurrentItem(3);
                     return true;
                 }
@@ -225,9 +226,9 @@ public class MainActivity extends BaseBottomTabActivity<MainContract.View, MainP
         Glide.with(MainActivity.this).load(Constant.BASE_URL + userInfo.getHead()).into(mHeadIv);
         Glide.with(MainActivity.this).load(Constant.BASE_URL + userInfo.getHead()).into(mLeftHeadIv);
         mLeftNicknameTv.setText(userInfo.getNickname());
-        if (userInfo.getGender()==0){
+        if (userInfo.getGender() == 0) {
             Glide.with(MainActivity.this).load(R.drawable.main_left_male).into(mLeftGenderIv);
-        }else if (userInfo.getGender()==1){
+        } else if (userInfo.getGender() == 1) {
             Glide.with(MainActivity.this).load(R.drawable.main_left_female).into(mLeftGenderIv);
         }
 

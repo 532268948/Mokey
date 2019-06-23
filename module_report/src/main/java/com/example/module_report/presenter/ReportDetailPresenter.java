@@ -1,5 +1,6 @@
 package com.example.module_report.presenter;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -42,10 +43,13 @@ public class ReportDetailPresenter<V extends ReportDetailContract.View> extends 
             @Override
             public void subscribe(ObservableEmitter<List<DreamBean>> emitter) throws Exception {
                 List<DreamBean> dreamBeanList = new ArrayList<>();
+                MediaPlayer mediaPlayer = null;
+//                MediaPlayer mediaPlayer = new MediaPlayer();
                 File file = new File(CacheUtil.getRecordWavDatePath(DateUtil.formatOne(startTime)));
                 if (file.exists() && file.isDirectory()) {
                     List<File> fileList = Arrays.asList(file.listFiles());
                     if (fileList != null) {
+                        Log.e("ReportDetailPresenter", "subscribe: " + fileList.size());
                         for (File file1 : fileList) {
                             if (file1.exists()) {
                                 long record_time = Long.valueOf(CacheUtil.getFileName(file1.getAbsolutePath()));
@@ -54,20 +58,27 @@ public class ReportDetailPresenter<V extends ReportDetailContract.View> extends 
                                     dreamBean.setItemType(Constant.ItemType.RECORD_DREAM);
                                     dreamBean.setPath(file1.getAbsolutePath());
                                     dreamBean.setDream_time(record_time);
-                                    MediaPlayer mediaPlayer = new MediaPlayer();
-                                    mediaPlayer.setDataSource(file1.getAbsolutePath());
-                                    mediaPlayer.prepare();
-                                    int during=mediaPlayer.getDuration();
-                                    mediaPlayer.release();
-                                    mediaPlayer=null;
+                                    try {
+                                        mediaPlayer = new MediaPlayer();
+                                        mediaPlayer.setDataSource(file1.getAbsolutePath());
+                                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                                        mediaPlayer.prepare();
+                                        int duration = mediaPlayer.getDuration();
+                                        dreamBean.setDuring(duration);
+                                    } catch (Exception e) {
+                                        mediaPlayer = null;
+                                    }
                                     dreamBeanList.add(dreamBean);
-                                    dreamBean.setDuring(during);
+                                    mediaPlayer = null;
                                 }
                             }
                         }
                     }
                 }
                 if (DateUtil.formatOne(startTime).equals(DateUtil.formatOne(stopTime))) {
+//                    mediaPlayer.release();
+//                    mediaPlayer=null;
+                    mediaPlayer = null;
                     emitter.onNext(dreamBeanList);
                     return;
                 }
@@ -84,19 +95,26 @@ public class ReportDetailPresenter<V extends ReportDetailContract.View> extends 
                                     dreamBean.setItemType(Constant.ItemType.RECORD_DREAM);
                                     dreamBean.setPath(file1.getAbsolutePath());
                                     dreamBean.setDream_time(record_time);
-                                    MediaPlayer mediaPlayer = new MediaPlayer();
-                                    mediaPlayer.setDataSource(file1.getAbsolutePath());
-                                    mediaPlayer.prepare();
-                                    int during=mediaPlayer.getDuration();
-                                    mediaPlayer.release();
-                                    mediaPlayer=null;
+                                    try {
+                                        mediaPlayer = new MediaPlayer();
+                                        mediaPlayer.setDataSource(file1.getAbsolutePath());
+                                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                                        mediaPlayer.prepare();
+                                        int duration = mediaPlayer.getDuration();
+                                        dreamBean.setDuring(duration);
+                                    } catch (Exception e) {
+                                        mediaPlayer = null;
+                                    }
                                     dreamBeanList.add(dreamBean);
-                                    dreamBean.setDuring(during);
+                                    mediaPlayer = null;
                                 }
                             }
                         }
                     }
                 }
+//                mediaPlayer.release();
+//                mediaPlayer=null;
+                mediaPlayer = null;
                 emitter.onNext(dreamBeanList);
             }
         }).subscribeOn(Schedulers.io())
@@ -118,7 +136,7 @@ public class ReportDetailPresenter<V extends ReportDetailContract.View> extends 
                     @Override
                     public void onError(Throwable e) {
                         if (BuildConfig.DEBUG) {
-                            Log.e("ReportDetailPresenter", "onError: ");
+                            Log.e("ReportDetailPresenter", "onError: " + e.getMessage());
                         }
                     }
 
@@ -172,4 +190,6 @@ public class ReportDetailPresenter<V extends ReportDetailContract.View> extends 
     private int byteArrayToInt(byte[] b, int start, int end) {
         return ByteBuffer.wrap(b, start, end).order(ByteOrder.LITTLE_ENDIAN).getInt();
     }
+
+
 }

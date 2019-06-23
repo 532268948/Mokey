@@ -124,6 +124,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                     OnMusicPlayStateListener l = listeners.get(i);
                     if (l != null) {
                         l.onStopped(curItem);
+                        curItem.setPlaying(false);
                     }
                 }
             }
@@ -133,6 +134,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                     OnMusicPlayStateListener l = listeners.get(i);
                     if (l != null) {
                         l.onPrepare(curItem);
+                        curItem.setPlaying(false);
                     }
                 }
             }
@@ -142,6 +144,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                     OnMusicPlayStateListener l = listeners.get(i);
                     if (l != null) {
                         l.onPlay(getCurMusicItem());
+                        curItem.setPlaying(true);
                     }
                 }
             }
@@ -151,6 +154,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                     OnMusicPlayStateListener l = listeners.get(i);
                     if (l != null) {
                         l.onPaused(curItem);
+                        curItem.setPlaying(false);
                     }
                 }
             }
@@ -160,6 +164,7 @@ public class MusicPlayer implements OnMusicPlayerCallBack {
                     OnMusicPlayStateListener l = listeners.get(i);
                     if (l != null) {
                         l.onComplete(curItem);
+                        curItem.setPlaying(false);
                     }
                     if (service != null) {
                         next(true);

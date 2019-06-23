@@ -100,8 +100,8 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 
     @Override
     public void initView() {
-        mTitleBar=findViewById(R.id.title_bar);
-        mNestedScrollView=findViewById(R.id.nest_scroll_view);
+        mTitleBar = findViewById(R.id.title_bar);
+        mNestedScrollView = findViewById(R.id.nest_scroll_view);
         mSleepQualityView = findViewById(R.id.sleep_quality_view);
         mRecyclerView = findViewById(R.id.recycler_view);
         mFoldTitleLl = findViewById(R.id.ll_fold);
@@ -117,6 +117,8 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
         mSleepStatusTv = findViewById(R.id.tv_sleep_status);
         mGradeStatusTv = findViewById(R.id.tv_grade_status);
         mDreamNumberTv = findViewById(R.id.tv_dream_number);
+
+        mMediaPlayer = new MediaPlayer();
     }
 
     @Override
@@ -124,7 +126,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
         mTitleBar.setLeftIconClickListener(new TitleBar.LeftIconClickListener() {
             @Override
             public void leftIconClick() {
-                finish();
+                onBackPressed();
             }
         });
         mTitleBar.setRightIconClickListener(new TitleBar.RightIconClickListener() {
@@ -134,16 +136,30 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 //                ShareSdkUtil.QQFriendsShareUrl(ReportDetailActivity.this,null,null,null);
             }
         });
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+
+                for (int i = 0; i < mItems.size(); i++) {
+                    if (mItems.get(i).getItemType() == Constant.ItemType.RECORD_DREAM) {
+                        DreamBean dreamBean = (DreamBean) mItems.get(i);
+                        dreamBean.setPlaying(false);
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                mMediaPlayer.reset();
+            }
+        });
     }
 
-    private void checkPermission(){
+    private void checkPermission() {
         AndPermission.with(this)
                 .runtime()
                 .permission(Permission.Group.STORAGE)
                 .onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-                        ShareSdkUtil.QQFriendsShareImage(ReportDetailActivity.this,null,saveImage(shotScrollView(mNestedScrollView)),null);
+                        ShareSdkUtil.QQFriendsShareImage(ReportDetailActivity.this, null, saveImage(shotScrollView(mNestedScrollView)), null);
                     }
                 })
                 .onDenied(new Action<List<String>>() {
@@ -156,7 +172,8 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
     }
 
     /**
-     *  对ScrollView进行截图
+     * 对ScrollView进行截图
+     *
      * @param scrollView
      * @return
      */
@@ -216,7 +233,7 @@ public class ReportDetailActivity extends BaseActivity<ReportDetailContract.View
 //            qualityBean.setGrade(10 + (i % 5) * 20);
 //            qualityBeans.add(qualityBean);
 //        }
-        mMediaPlayer = new MediaPlayer();
+
         if (reportBean != null) {
             mSleepQualityView.setData(reportBean.getQualityBeans());
             mDateTv.setText(DateUtil.formatOne(reportBean.getStartTime()));

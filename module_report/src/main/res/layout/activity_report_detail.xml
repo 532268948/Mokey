@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
         app:title_text="@string/report_title"
+        android:background="@color/white"
         app:left_icon="@drawable/common_title_bar_back"
         app:right_icon="@drawable/report_detail_share"/>
 

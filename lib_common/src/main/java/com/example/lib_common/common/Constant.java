@@ -269,7 +269,7 @@ public final class Constant {
     public static class SleepRecord {
         public static final int SAMPLE_RATE_IN_HZ = 8000;
         public static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
-        public static final double VOLUME_START_RECORD = 40f;
+        public static final double VOLUME_START_RECORD = 30f;
         public static final double VOLUME_STOP_RECORD = 20f;
     }
 }

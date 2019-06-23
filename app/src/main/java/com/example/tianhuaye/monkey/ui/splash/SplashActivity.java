@@ -146,7 +146,7 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
 //            builder.setContentText("内容8.0");
             builder.setNumber(3);
             builder.setOngoing(true);
-            Intent intent = new Intent(this, AlarmNotifyActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(pendingIntent);
 

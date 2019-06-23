@@ -284,4 +284,26 @@ public class MusicItem extends BaseItem {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "MusicItem{" +
+                "playTimes=" + playTimes +
+                ", duration='" + duration + '\'' +
+                ", musicId=" + musicId +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", cover='" + cover + '\'' +
+                ", url='" + url + '\'' +
+                ", cachedFile='" + cachedFile + '\'' +
+                ", localFile='" + localFile + '\'' +
+                ", source=" + source +
+                ", isPlaying=" + isPlaying +
+                ", downloadWhenPlaying=" + downloadWhenPlaying +
+                ", isNeedPay=" + isNeedPay +
+                ", isHasPay=" + isHasPay +
+                ", price='" + price + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

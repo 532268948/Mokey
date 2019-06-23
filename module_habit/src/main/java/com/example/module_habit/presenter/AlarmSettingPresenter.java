@@ -48,8 +48,11 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                             if (list.get(0).getMinute() + 30 >= 60) {
                                                 lastHour = list.get(0).getHour() + 1;
                                                 lastMinute = list.get(0).getMinute() + 30 - 60;
+                                            }else {
+                                                lastHour=list.get(0).getHour();
+                                                lastMinute=list.get(0).getMinute()+30;
                                             }
-                                            //尖酸上次睡前闹钟与这次的时间差
+                                            //计算上次睡前闹钟与这次的时间差
                                             int leftHour = 0;
                                             int leftMinute = 0;
                                             if (alarm.getMinute() - lastMinute < 0) {
@@ -69,6 +72,9 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                     alarm1.setMinute(alarm1.getMinute() + leftMinute);
                                                 }
                                             }
+                                            if (BuildConfig.DEBUG) {
+                                                Log.e("AlarmSettingPresenter", "onQueryAllBatchListener: " + list);
+                                            }
 
                                             DBManager.getInstance(context.get()).getAlarmDB().updateBatchAlarm(list, new DbOperateListener.OnUpdateListener<List<Alarm>>() {
                                                 @Override
@@ -76,11 +82,12 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                     if (type) {
                                                         if (alarm.getMode() != null) {
                                                             //一次性闹钟
+
                                                             if (alarm.getMode() == 0) {
                                                                 for (Alarm alarm1 : list) {
-                                                                    if (BuildConfig.DEBUG) {
-                                                                        Log.e("PreparePresenter", "onInsertListener: " + alarm1.getMsg());
-                                                                    }
+//                                                                    if (BuildConfig.DEBUG) {
+//                                                                        Log.e("PreparePresenter", "onInsertListener: " + alarm1.getMsg());
+//                                                                    }
                                                                     AlarmManagerUtil.setOnceAlarm(context.get(), alarm1.getId().intValue(), alarm1.getHour(), alarm1.getMinute(), alarm.getRingPath(), alarm1.getMsg());
                                                                 }
                                                                 AlarmManagerUtil.setOnceAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
@@ -91,9 +98,9 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                                                 }
                                                                 AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                                             }
-                                                            if (BuildConfig.DEBUG) {
-                                                                Log.e("AlarmSettingPresenter", "onUpdateListener: " + list);
-                                                            }
+//                                                            if (BuildConfig.DEBUG) {
+//                                                                Log.e("AlarmSettingPresenter", "onUpdateListener: " + list);
+//                                                            }
                                                             view.get().dismissDialog();
                                                             view.get().setSleepAlarmSuccess();
                                                         }
@@ -108,9 +115,9 @@ public class AlarmSettingPresenter<V extends AlarmSettingContract.View> extends 
                                             } else if (alarm.getMode() == 1) {
                                                 AlarmManagerUtil.setRepeatAlarm(context.get(), alarm.getId().intValue(), alarm.getHour(), alarm.getMinute(), alarm.getRingPath(), alarm.getMsg());
                                             }
-                                            if (BuildConfig.DEBUG) {
-                                                Log.e("AlarmSettingPresenter", "onUpdateListener: " + list);
-                                            }
+//                                            if (BuildConfig.DEBUG) {
+//                                                Log.e("AlarmSettingPresenter", "onUpdateListener: " + list);
+//                                            }
                                             view.get().dismissDialog();
                                             view.get().setSleepAlarmSuccess();
                                         }

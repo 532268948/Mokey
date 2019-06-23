@@ -49,6 +49,7 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
             switch (resultCode) {
                 case Constant.RequestAndResultCode.ACTIVITY_PREAPRE_RESULT_OK:
                     mPresenter.getPrepareAlarm();
+                    mPresenter.getSleepAlarm();
                     break;
                 case Constant.RequestAndResultCode.ALARM_RESULT_OK:
                     if (mRemindAv != null && data != null) {
@@ -139,14 +140,14 @@ public class LifestyleFragment extends BaseFragment<LifestyleContract.View, Life
     @Override
     public void setPrepareAlarm(List<Alarm> alarmList) {
 
-        boolean open = true;
+        boolean open = false;
         this.mPrepareList = alarmList;
 
         if (alarmList != null) {
             int[] src = new int[alarmList.size()];
             for (int i = 0; i < alarmList.size(); i++) {
                 if (alarmList.get(i) != null) {
-                    open = open && alarmList.get(i).getOpen();
+                    open = alarmList.get(i).getOpen();
                     for (int j = 0; j < titles.length; j++) {
                         if (alarmList.get(i).getMsg().equals(titles[j])) {
                             src[i] = images[j];

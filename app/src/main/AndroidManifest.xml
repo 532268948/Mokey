@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.MainActivity"
+            android:launchMode="singleInstance"/>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/splash_theme">

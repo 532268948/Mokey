@@ -135,6 +135,7 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
 //                    }
                 }
 //                if (update) {
+                Log.e("MusicBeforeFragment", "onItemClick: "+musicItemList);
                 MusicHelper.getInstance().initMusicItem(musicItemList, musicItemList.get(position).getMusicId(), true, this);
 //                    MusicHelper.getInstance().
 //                    update = false;
@@ -187,7 +188,7 @@ public class MusicBeforeFragment extends BaseListFragment<MusicBeforeContract.Vi
         } else {
             if (musicItemList != null && musicItemList.size() != 0) {
                 if (mItems.get(mItems.size() - 1).getItemType() == Constant.ItemType.LOAD_MORE_DATA) {
-                    mItems.addAll(mItems.size() - 2, musicItemList);
+                    mItems.addAll(mItems.size() - 1, musicItemList);
                 }
                 if (mAdapter != null) {
                     mAdapter.notifyItemRangeChanged(mItems.size() - musicItemList.size() - 1, musicItemList.size() + 1);

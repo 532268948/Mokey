@@ -7,9 +7,11 @@
               android:orientation="vertical">
 
     <com.example.lib_common.base.view.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_title_bar_height"
-        app:title_text="@string/report_title"/>
+        app:title_text="@string/report_title"
+        app:right_icon="@drawable/report_detail_share"/>
 
     <com.example.lib_common.base.view.RefreshLayout
         android:id="@+id/refresh_layout"

@@ -1,19 +1,24 @@
 package com.example.module_report.ui;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.base.fragment.BaseFragment;
 import com.example.lib_common.base.view.RefreshLayout;
+import com.example.lib_common.base.view.TitleBar;
 import com.example.lib_common.base.view.WrapContentHeightViewPager;
-import com.example.module_report.R;
+import com.example.lib_common.bean.BaseItem;
 import com.example.lib_common.bean.ReportBean;
+import com.example.lib_common.common.Constant;
+import com.example.lib_common.util.DateUtil;
+import com.example.module_report.R;
 import com.example.module_report.contract.ReportContract;
 import com.example.module_report.presenter.ReportPresenter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +30,7 @@ import java.util.List;
 public class ReportFragment extends BaseFragment<ReportContract.View, ReportPresenter<ReportContract.View>> implements ReportContract.View {
 
     private RefreshLayout mSwipeRefreshLayout;
+    private TitleBar mTitleBar;
 
     private WrapContentHeightViewPager mViewPager;
     private ReportPagerAdapter mPagerAdapter;
@@ -38,6 +44,7 @@ public class ReportFragment extends BaseFragment<ReportContract.View, ReportPres
     @Override
     public View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
+        mTitleBar = view.findViewById(R.id.title_bar);
         mViewPager = view.findViewById(R.id.view_pager);
         mSwipeRefreshLayout = view.findViewById(R.id.refresh_layout);
         if (mItems == null) {
@@ -57,6 +64,22 @@ public class ReportFragment extends BaseFragment<ReportContract.View, ReportPres
             @Override
             public void onRefresh() {
                 mPresenter.getUserSleepData();
+            }
+        });
+        mTitleBar.setRightIconClickListener(new TitleBar.RightIconClickListener() {
+            @Override
+            public void rightIconClick() {
+//                showError("tt");
+                final MonthDailog monthDailog = new MonthDailog();
+                monthDailog.setMonthClickListener(new MonthDailog.MonthOnClick() {
+                    @Override
+                    public void onMonthClick(int month) {
+                        monthDailog.dismiss();
+                        getMmonthData(month);
+
+                    }
+                });
+                monthDailog.show(getFragmentManager(), "month");
             }
         });
     }
@@ -83,6 +106,25 @@ public class ReportFragment extends BaseFragment<ReportContract.View, ReportPres
         if (mPagerAdapter != null) {
             mPagerAdapter.notifyDataSetChanged();
         }
+        mViewPager.setCurrentItem(mItems.size() - 1);
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void getMmonthData(int month) {
+        List<ReportBean> list = new ArrayList<>();
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(i).getItemType() == Constant.ItemType.SLEEP_REPORT) {
+                ReportBean reportBean = (ReportBean) mItems.get(i);
+                String monthStr = DateUtil.formatThree(reportBean.getStartTime());
+                if (Integer.valueOf(monthStr) == month) {
+                    list.add(reportBean);
+                }
+            }
+        }
+        Intent intent = new Intent(getContext(), MonthReportActivity.class);
+        intent.putExtra("report", (Serializable) list);
+        intent.putExtra("month",month);
+        startActivity(intent);
+
     }
 }
